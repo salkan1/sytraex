@@ -90,3 +90,10 @@ footer {
   border-top: 1px solid #333;
   padding: 20px 0;
 }
+
+.logo-img {
+  height: 60px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
