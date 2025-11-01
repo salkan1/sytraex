@@ -9,7 +9,7 @@ body {
 
 /* ======= ÜST MENÜ ======= */
 header {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,20 +17,24 @@ header {
   border-bottom: 1px solid #333;
 }
 
-/* Logo ve yazı yan yana */
+/* Logo alanı: logo + yazılar */
 .logo {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.logo-img {
-  height: 45px;
-  margin: 0;
-  vertical-align: middle;
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.logo h1 {
+.logo-img {
+  height: 45px;
+}
+
+.logo-text h1 {
   margin: 0;
   font-size: 28px;
   letter-spacing: 2px;
@@ -38,19 +42,25 @@ header {
   font-weight: bold;
 }
 
-.logo p {
+.logo-text p {
   margin: 0;
-  font-size: 12px;
+  font-size: 13px;
   color: #ccc;
-  text-align: left;
+  margin-top: 4px;
 }
 
 /* Menü bağlantıları */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
 nav ul {
   list-style: none;
+  display: flex;
   margin: 0;
   padding: 0;
-  display: flex;
   gap: 20px;
 }
 
@@ -65,7 +75,24 @@ nav a:hover {
   color: #ff9900;
 }
 
-/* ======= ANA ALAN (Hero) ======= */
+/* Dil seçimi */
+.lang-switch {
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+.lang-switch a {
+  color: #ffcc00;
+  text-decoration: none;
+  margin: 0 5px;
+  font-weight: bold;
+}
+
+.lang-switch a:hover {
+  color: #fff;
+}
+
+/* ======= ANA ALAN ======= */
 .hero {
   padding: 120px 20px;
   max-width: 700px;
@@ -122,15 +149,23 @@ footer {
   padding: 20px 0;
 }
 
-/* ======= MOBİL UYUMLULUK ======= */
+/* ======= MOBİL ======= */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
     gap: 15px;
-    text-align: center;
   }
 
   .logo {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo-text {
+    align-items: center;
+  }
+
+  nav {
     flex-direction: column;
   }
 
@@ -139,11 +174,7 @@ footer {
     gap: 10px;
   }
 
-  .hero h2 {
-    font-size: 28px;
-  }
-
-  .logo-img {
-    height: 40px;
+  .lang-switch {
+    margin-top: 10px;
   }
 }
