@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kayıt Ol | Feniks Solution</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 40px;
+    }
+    form {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #333;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 450px;
+      margin: auto;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+    input, select {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      background: #ff9900;
+      color: #000;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #ffcc00;
+    }
+    h2 { color: #ffcc00; }
+  </style>
+</head>
+<body>
+
+  <h2>Kayıt Ol</h2>
+  <form id="registerForm">
+    <input type="text" id="name" placeholder="Ad Soyad" required>
+    <input type="email" id="email" placeholder="E-posta Adresi" required>
+    <input type="tel" id="phone" placeholder="Telefon Numarası" required>
+    <input type="text" id="city" placeholder="İl" required>
+    <input type="text" id="country" placeholder="Ülke" required>
+    <input type="date" id="birth" placeholder="Doğum Tarihi" required>
+
+    <button type="button" onclick="sendVerification()">Onay Kodu Gönder</button>
+    
+    <div id="verifySection" style="display:none; margin-top:20px;">
+      <input type="text" id="emailCode" placeholder="E-posta Onay Kodu">
+      <input type="text" id="smsCode" placeholder="SMS Onay Kodu">
+      <button type="submit">Kaydı Tamamla</button>
+    </div>
+  </form>
+
+  <script>
+    function sendVerification() {
+      alert("E-posta ve SMS onay kodu gönderildi!");
+      document.getElementById('verifySection').style.display = 'block';
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert("Kayıt başarıyla tamamlandı!");
+      // burada veriler backend'e gönderilebilir
+    });
+  </script>
+
+</body>
+</html>
