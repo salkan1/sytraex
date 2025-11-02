@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sytraex Whitepaper v1.0</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="logo.png">
+  <style>
+    .content {
+      max-width: 900px;
+      margin: 50px auto;
+      text-align: left;
+      line-height: 1.8;
+    }
+    h2, h3 {
+      color: #ff9900;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+    table, th, td {
+      border: 1px solid #555;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background: #222;
+      color: #ffcc00;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="logo.png" alt="Sytraex Logo" class="logo-img">
+    <div class="logo-text">
+      <h1>Sytraex</h1>
+      <p>Share Your Travel Experience</p>
+    </div>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Ana Sayfa</a></li>
+      <li><a href="register.html">Kayıt Ol</a></li>
+      <li><a href="whitepaper.html" class="active">Whitepaper</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>🧭 Sytraex Whitepaper v1.0</h2>
+  <p>“Share Your Travel Experience – Earn. Connect. Explore.”</p>
+</section>
+
+<div class="content">
+  <h3>🌍 1. Giriş</h3>
+  <p>Sytraex, seyahat tutkunlarını bir araya getiren, kullanıcıların seyahat deneyimlerini paylaşarak gelir elde edebileceği, aynı zamanda staking ve harcama altyapısı barındıran bir sosyal platformdur.
+  Platformun amacı, seyahat eden bireyleri, yerel işletmeleri ve yatırımcıları tek bir ekosistemde buluşturarak seyahat ekonomisine blockchain tabanlı bir değer sistemi kazandırmaktır.</p>
+
+  <h3>💡 2. Vizyon ve Misyon</h3>
+  <p><strong>Vizyon:</strong> Dünyayı gezen herkesin deneyimini paylaşarak kazandığı, global bir seyahat topluluğu yaratmak.</p>
+  <p><strong>Misyon:</strong></p>
+  <ul>
+    <li>Seyahat deneyimlerini dijital varlığa dönüştürmek</li>
+    <li>Kullanıcı katkılarını ödüllendirmek</li>
+    <li>Coin’in gerçek hayatta harcanabileceği bir ekosistem inşa etmek</li>
+  </ul>
+
+  <h3>🔗 3. Sytraex Coin (SYX)</h3>
+  <p>SYX, Sytraex platformunun yerel token’ıdır. ERC-20 standardında veya alternatif olarak bir layer-2 ağında (ör. Polygon, Arbitrum) işlem görmesi planlanmaktadır.</p>
+
+  <table>
+    <tr><th>Token Adı</th><th>Sembol</th><th>Toplam Arz</th></tr>
+    <tr><td>Sytraex Coin</td><td>SYX</td><td>100.000.000</td></tr>
+  </table>
+
+  <p><strong>Kullanım Alanları:</strong></p>
+  <ul>
+    <li>Paylaşım ödülleri (Travel-to-Earn)</li>
+    <li>Staking getirileri</li>
+    <li>Platform içi alışveriş (konaklama, yeme-içme, biletleme, hediyelik)</li>
+    <li>NFT seyahat rozetleri satın alma</li>
+  </ul>
+
+  <h3>🏕️ 4. Ekosistem Özellikleri</h3>
+  <h4>🧳 a) Travel-to-Earn</h4>
+  <ul>
+    <li>Kullanıcılar seyahat deneyimi, rota, vlog, blog veya fotoğraf paylaşır.</li>
+    <li>Beğeni, görüntüleme ve etkileşim oranına göre SYX token kazanır.</li>
+    <li>Özgün içerikler algoritma tarafından doğrulanır.</li>
+  </ul>
+
+  <h4>💰 b) Staking Sistemi</h4>
+  <p>Kullanıcılar, ellerindeki SYX token’larını stake ederek pasif gelir elde eder ve “Travel Tier” seviyelerini yükseltir.</p>
+
+  <table>
+    <tr><th>Tier</th><th>Minimum Stake</th><th>Aylık Ödül</th><th>Avantaj</th></tr>
+    <tr><td>Explorer</td><td>500 SYX</td><td>%3</td><td>Profil rozeti</td></tr>
+    <tr><td>Voyager</td><td>2.000 SYX</td><td>%5</td><td>Paylaşım kazanç çarpanı +1.2x</td></tr>
+    <tr><td>Nomad</td><td>10.000 SYX</td><td>%8</td><td>Partner otellerde indirim</td></tr>
+  </table>
+
+  <h3>🏨 5. Kullanım Alanları</h3>
+  <ul>
+    <li>🌆 Konaklama: Partner otellerde ödeme</li>
+    <li>🍽️ Yeme & İçme: Restoran ve kafe anlaşmaları</li>
+    <li>🎟️ Etkinlik & Biletleme: Tur, festival, uçuş rezervasyonları</li>
+    <li>🎁 Marketplace: Seyahat ekipmanları & NFT rozetleri</li>
+  </ul>
+
+  <h3>⚙️ 6. Ekosistem Altyapısı</h3>
+  <ul>
+    <li><strong>Frontend:</strong> Next.js + Tailwind CSS</li>
+    <li><strong>Backend:</strong> Supabase + Node.js</li>
+    <li><strong>Blockchain:</strong> MetaMask / WalletConnect entegrasyonu</li>
+    <li><strong>Ödül Motoru:</strong> Proof of Experience algoritması</li>
+  </ul>
+
+  <h3>🔒 7. Güvenlik ve Doğrulama</h3>
+  <ul>
+    <li>Kullanıcı doğrulaması (KYC & anti-spam filtreleri)</li>
+    <li>IP / coğrafi etiketleme ile “gerçek seyahat doğrulaması”</li>
+    <li>Akıllı kontrat denetimleri (Certik veya benzeri)</li>
+  </ul>
+
+  <h3>📈 8. Tokenomics</h3>
+  <table>
+    <tr><th>Kategori</th><th>Oran</th><th>Açıklama</th></tr>
+    <tr><td>Public Sale</td><td>%25</td><td>ICO / IEO</td></tr>
+    <tr><td>Team & Advisors</td><td>%15</td><td>12 ay kilitli</td></tr>
+    <tr><td>Staking Rewards</td><td>%30</td><td>Topluluk ödülleri</td></tr>
+    <tr><td>Ecosystem & Partnerships</td><td>%20</td><td>İşbirlikleri</td></tr>
+    <tr><td>Reserve & Liquidity</td><td>%10</td><td>DEX/CEX likiditesi</td></tr>
+  </table>
+
+  <h3>🚀 9. Yol Haritası (Roadmap)</h3>
+  <ul>
+    <li><strong>Q4 2025:</strong> Web & mobil sürüm (beta), SYX token lansmanı, staking modülü</li>
+    <li><strong>Q1 2026:</strong> Travel-to-Earn sistemi, partner otel & restoran entegrasyonları</li>
+    <li><strong>Q2 2026:</strong> NFT Rozet sistemi, SYX Wallet, mobil uygulama (iOS & Android)</li>
+    <li><strong>Q3 2026:</strong> Global partner ağı, multi-chain destek (Polygon, BSC, Solana)</li>
+  </ul>
+
+  <h3>🌐 10. Sonuç</h3>
+  <p>Sytraex, seyahat + blockchain + sosyal etkileşim üçlüsünü birleştirerek kullanıcılarına kazanç, deneyim ve bağlantı sunan bir ekosistem kurmayı hedefliyor.  
+  <strong>“Keşfet. Paylaş. Kazan.”</strong> mottosuyla, seyahat dünyasına yepyeni bir değer önerisi getiriyor.</p>
+</div>
+
+<footer>
+  <p>© 2025 Sytraex | Share Your Travel Experience</p>
+</footer>
+
+</body>
+</html>
