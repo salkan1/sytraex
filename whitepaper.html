@@ -1,158 +1,164 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sytraex Whitepaper v1.0</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="logo.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SYTX | Travel-to-Earn Revolution</title>
   <style>
-    .content {
-      max-width: 900px;
-      margin: 50px auto;
-      text-align: left;
-      line-height: 1.8;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #0a0a0a;
+      color: #eaeaea;
+      line-height: 1.6;
     }
-    h2, h3 {
-      color: #ff9900;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      margin-bottom: 30px;
-    }
-    table, th, td {
-      border: 1px solid #555;
-      padding: 8px;
+    header {
+      background: linear-gradient(90deg, #ff6600, #ff9900);
+      padding: 15px 0;
       text-align: center;
     }
-    th {
-      background: #222;
-      color: #ffcc00;
+    header h1 { font-size: 32px; letter-spacing: 2px; color: #fff; }
+    nav {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+    nav a {
+      color: #ff9900;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: #fff; }
+
+    section {
+      padding: 60px 10%;
+      max-width: 1000px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      color: #ff9900;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+    p {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+    .tokenomics-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .tokenomics-table th, .tokenomics-table td {
+      border: 1px solid #444;
+      padding: 10px;
+      text-align: center;
+    }
+    .tokenomics-table th {
+      background-color: #222;
+      color: #ff9900;
+    }
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      background: #111;
+      color: #777;
+      font-size: 14px;
+    }
+    .btn {
+      background: #ff9900;
+      color: #000;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #fff;
+      color: #000;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">
-    <img src="logo.png" alt="Sytraex Logo" class="logo-img">
-    <div class="logo-text">
-      <h1>Sytraex</h1>
-      <p>Share Your Travel Experience</p>
-    </div>
-  </div>
-  <nav>
-    <ul>
-      <li><a href="index.html">Ana Sayfa</a></li>
-      <li><a href="register.html">Kayıt Ol</a></li>
-      <li><a href="whitepaper.html" class="active">Whitepaper</a></li>
-    </ul>
-  </nav>
+  <h1>SYTX COIN</h1>
+  <p>Travel-to-Earn Blockchain Ecosystem</p>
 </header>
 
-<section class="hero">
-  <h2>🧭 Sytraex Whitepaper v1.0</h2>
-  <p>“Share Your Travel Experience – Earn. Connect. Explore.”</p>
+<nav>
+  <a href="#about">About</a>
+  <a href="#tokenomics">Tokenomics</a>
+  <a href="#roadmap">Roadmap</a>
+  <a href="#whitepaper">Whitepaper</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section id="about">
+  <h2>About SYTX</h2>
+  <p>
+    SYTX Coin is a next-generation <b>Travel-to-Earn</b> platform built to reward travelers, explorers, and digital nomads around the world.
+    Every trip, shared experience, and verified travel action turns into measurable rewards.
+  </p>
+  <p>
+    Our mission is to merge blockchain with real-world tourism, creating a circular economy where tokens gain real value through partnerships with hotels, restaurants, and global travel agencies.
+  </p>
+  <p>
+    With SYTX, traveling becomes not just an expense, but an investment in your experience, your community, and the planet.
+  </p>
+  <a href="#whitepaper" class="btn">Read Whitepaper</a>
 </section>
 
-<div class="content">
-  <h3>🌍 1. Giriş</h3>
-  <p>Sytraex, seyahat tutkunlarını bir araya getiren, kullanıcıların seyahat deneyimlerini paylaşarak gelir elde edebileceği, aynı zamanda staking ve harcama altyapısı barındıran bir sosyal platformdur.
-  Platformun amacı, seyahat eden bireyleri, yerel işletmeleri ve yatırımcıları tek bir ekosistemde buluşturarak seyahat ekonomisine blockchain tabanlı bir değer sistemi kazandırmaktır.</p>
-
-  <h3>💡 2. Vizyon ve Misyon</h3>
-  <p><strong>Vizyon:</strong> Dünyayı gezen herkesin deneyimini paylaşarak kazandığı, global bir seyahat topluluğu yaratmak.</p>
-  <p><strong>Misyon:</strong></p>
-  <ul>
-    <li>Seyahat deneyimlerini dijital varlığa dönüştürmek</li>
-    <li>Kullanıcı katkılarını ödüllendirmek</li>
-    <li>Coin’in gerçek hayatta harcanabileceği bir ekosistem inşa etmek</li>
-  </ul>
-
-  <h3>🔗 3. Sytraex Coin (SYTX)</h3>
-  <p>SYTX, Sytraex platformunun yerel token’ıdır. ERC-20 standardında veya alternatif olarak bir layer-2 ağında (ör. Polygon, Arbitrum) işlem görmesi planlanmaktadır.</p>
-
-  <table>
-    <tr><th>Token Adı</th><th>Sembol</th><th>Toplam Arz</th></tr>
-    <tr><td>Sytraex Coin</td><td>SYTX</td><td>100.000.000</td></tr>
+<section id="tokenomics">
+  <h2>Tokenomics</h2>
+  <table class="tokenomics-table">
+    <tr><th>Allocation</th><th>Percentage</th><th>Details</th></tr>
+    <tr><td>Public Sale</td><td>25%</td><td>ICO / Launchpad</td></tr>
+    <tr><td>Team & Advisors</td><td>15%</td><td>12-Month Vesting</td></tr>
+    <tr><td>Reserve & Liquidity</td><td>10%</td><td>DEX/CEX Liquidity</td></tr>
+    <tr><td>Marketing & Community</td><td>15%</td><td>Campaigns, Rewards</td></tr>
+    <tr><td>Travel Rewards</td><td>25%</td><td>Travel-to-Earn Incentives</td></tr>
+    <tr><td>Partnerships</td><td>10%</td><td>Hotels, Airlines, Agencies</td></tr>
   </table>
+</section>
 
-  <p><strong>Kullanım Alanları:</strong></p>
-  <ul>
-    <li>Paylaşım ödülleri (Travel-to-Earn)</li>
-    <li>Staking getirileri</li>
-    <li>Platform içi alışveriş (konaklama, yeme-içme, biletleme, hediyelik)</li>
-    <li>NFT seyahat rozetleri satın alma</li>
-  </ul>
+<section id="roadmap">
+  <h2>Roadmap</h2>
+  <p><b>Q4 2025</b> — Smart contract deployment & token launch.</p>
+  <p><b>Q1 2026</b> — DEX listing, staking system, community expansion.</p>
+  <p><b>Q2 2026</b> — Mobile app beta, first global travel partnerships.</p>
+  <p><b>Q3 2026</b> — NFT travel badges & gamification launch.</p>
+  <p><b>Q4 2026</b> — CEX listings and international expansion.</p>
+</section>
 
-  <h3>🏕️ 4. Ekosistem Özellikleri</h3>
-  <h4>🧳 a) Travel-to-Earn</h4>
-  <ul>
-    <li>Kullanıcılar seyahat deneyimi, rota, vlog, blog veya fotoğraf paylaşır.</li>
-    <li>Beğeni, görüntüleme ve etkileşim oranına göre SYTX token kazanır.</li>
-    <li>Özgün içerikler algoritma tarafından doğrulanır.</li>
-  </ul>
+<section id="whitepaper">
+  <h2>Whitepaper</h2>
+  <p>
+    You can download the official <b>SYTX Whitepaper v1.1</b> to explore our full vision, technology, and roadmap.
+  </p>
+  <a href="whitepaper.pdf" class="btn" target="_blank">Download Whitepaper (PDF)</a>
+</section>
 
-  <h4>💰 b) Staking Sistemi</h4>
-  <p>Kullanıcılar, ellerindeki SYTX token’larını stake ederek pasif gelir elde eder ve “Travel Tier” seviyelerini yükseltir.</p>
-
-  <table>
-    <tr><th>Tier</th><th>Minimum Stake</th><th>Aylık Ödül</th><th>Avantaj</th></tr>
-    <tr><td>Explorer</td><td>500 SYTX</td><td>%3</td><td>Profil rozeti</td></tr>
-    <tr><td>Voyager</td><td>2.000 SYTX</td><td>%5</td><td>Paylaşım kazanç çarpanı +1.2x</td></tr>
-    <tr><td>Nomad</td><td>10.000 SYTX</td><td>%8</td><td>Partner otellerde indirim</td></tr>
-  </table>
-
-  <h3>🏨 5. Kullanım Alanları</h3>
-  <ul>
-    <li>🌆 Konaklama: Partner otellerde ödeme</li>
-    <li>🍽️ Yeme & İçme: Restoran ve kafe anlaşmaları</li>
-    <li>🎟️ Etkinlik & Biletleme: Tur, festival, uçuş rezervasyonları</li>
-    <li>🎁 Marketplace: Seyahat ekipmanları & NFT rozetleri</li>
-  </ul>
-
-  <h3>⚙️ 6. Ekosistem Altyapısı</h3>
-  <ul>
-    <li><strong>Frontend:</strong> Next.js + Tailwind CSS</li>
-    <li><strong>Backend:</strong> Supabase + Node.js</li>
-    <li><strong>Blockchain:</strong> MetaMask / WalletConnect entegrasyonu</li>
-    <li><strong>Ödül Motoru:</strong> Proof of Experience algoritması</li>
-  </ul>
-
-  <h3>🔒 7. Güvenlik ve Doğrulama</h3>
-  <ul>
-    <li>Kullanıcı doğrulaması (KYC & anti-spam filtreleri)</li>
-    <li>IP / coğrafi etiketleme ile “gerçek seyahat doğrulaması”</li>
-    <li>Akıllı kontrat denetimleri (Certik veya benzeri)</li>
-  </ul>
-
-  <h3>📈 8. Tokenomics</h3>
-  <table>
-    <tr><th>Kategori</th><th>Oran</th><th>Açıklama</th></tr>
-    <tr><td>Public Sale</td><td>%25</td><td>ICO / IEO</td></tr>
-    <tr><td>Team & Advisors</td><td>%15</td><td>12 ay kilitli</td></tr>
-    <tr><td>Staking Rewards</td><td>%30</td><td>Topluluk ödülleri</td></tr>
-    <tr><td>Ecosystem & Partnerships</td><td>%20</td><td>İşbirlikleri</td></tr>
-    <tr><td>Reserve & Liquidity</td><td>%10</td><td>DEX/CEX likiditesi</td></tr>
-  </table>
-
-  <h3>🚀 9. Yol Haritası (Roadmap)</h3>
-  <ul>
-    <li><strong>Q4 2025:</strong> Web & mobil sürüm (beta), SYTX token lansmanı, staking modülü</li>
-    <li><strong>Q1 2026:</strong> Travel-to-Earn sistemi, partner otel & restoran entegrasyonları</li>
-    <li><strong>Q2 2026:</strong> NFT Rozet sistemi, SYTX Wallet, mobil uygulama (iOS & Android)</li>
-    <li><strong>Q3 2026:</strong> Global partner ağı, multi-chain destek (Polygon, BSC, Solana)</li>
-  </ul>
-
-  <h3>🌐 10. Sonuç</h3>
-  <p>Sytraex, seyahat + blockchain + sosyal etkileşim üçlüsünü birleştirerek kullanıcılarına kazanç, deneyim ve bağlantı sunan bir ekosistem kurmayı hedefliyor.  
-  <strong>“Keşfet. Paylaş. Kazan.”</strong> mottosuyla, seyahat dünyasına yepyeni bir değer önerisi getiriyor.</p>
-</div>
+<section id="contact">
+  <h2>Contact</h2>
+  <p>
+    📧 info@sytraex.com  
+    <br>
+    🌍 <a href="https://sytraex.com" style="color:#ff9900;">www.sytraex.com</a>  
+    <br>
+    🕊 <a href="https://twitter.com/sytraex" style="color:#ff9900;">@sytraex</a>  
+    | 💬 Telegram: <a href="https://t.me/sytraex" style="color:#ff9900;">@sytraex</a>
+  </p>
+</section>
 
 <footer>
-  <p>© 2025 Sytraex | Share Your Travel Experience</p>
+  © 2025 SYTX Coin | Powered by Sytraex Technologies
 </footer>
 
 </body>
