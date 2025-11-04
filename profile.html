@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profilim | Sytraex</title>
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 40px;
+    }
+    header {
+      background: rgba(255,255,255,0.05);
+      padding: 10px 0;
+      text-align: left;
+      padding-left: 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+    .home-link {
+      color: #ffcc00;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .home-link:hover { color: #fff; }
+
+    .profile-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #333;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 450px;
+      margin: 100px auto;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
+    h2 { color: #ffcc00; }
+    .info { margin: 10px 0; }
+
+    button {
+      background: #ff9900;
+      color: #000;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 20px;
+    }
+    button:hover { background: #ffcc00; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="home-link">🏠 Ana Sayfa</a>
+  </header>
+
+  <div class="profile-box">
+    <h2>Profil Bilgilerim</h2>
+    <div id="profileData"></div>
+    <button id="logoutBtn">Çıkış Yap</button>
+  </div>
+
+  <script>
+    const loggedIn = localStorage.getItem('loggedIn');
+    const userData = JSON.parse(localStorage.getItem('sytraexUser'));
+
+    // Eğer giriş yapılmamışsa, login sayfasına yönlendir
+    if (!loggedIn || !userData) {
+      alert("Lütfen önce giriş yapın.");
+      window.location.href = "login.html";
+    } else {
+      document.getElementById('profileData').innerHTML = `
+        <p class="info"><strong>Ad Soyad:</strong> ${userData.name}</p>
+        <p class="info"><strong>E-posta:</strong> ${userData.email}</p>
+        <p class="info"><strong>Telefon:</strong> ${userData.phone}</p>
+        <p class="info"><strong>Şehir:</strong> ${userData.city}</p>
+        <p class="info"><strong>Ülke:</strong> ${userData.country}</p>
+        <p class="info"><strong>Doğum Tarihi:</strong> ${userData.birth}</p>
+      `;
+    }
+
+    // Çıkış işlemi
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('loggedIn');
+      alert("Çıkış yapıldı.");
+      window.location.href = "login.html";
+    });
+  </script>
+
+</body>
+</html>
