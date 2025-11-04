@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giriş Yap | Sytraex</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 40px;
+    }
+    header {
+      background: rgba(255,255,255,0.05);
+      padding: 10px 0;
+      text-align: left;
+      padding-left: 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+    .home-link {
+      color: #ffcc00;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .home-link:hover { color: #fff; }
+
+    form {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #333;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 450px;
+      margin: 100px auto;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      background: #ff9900;
+      color: #000;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover { background: #ffcc00; }
+    h2 { color: #ffcc00; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="home-link">🏠 Ana Sayfa</a>
+  </header>
+
+  <h2>Giriş Yap</h2>
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="E-posta Adresi" required>
+    <input type="tel" id="phone" placeholder="Telefon Numarası" required>
+    <button type="submit">Giriş Yap</button>
+  </form>
+
+  <p>Hesabınız yok mu? <a href="register.html" style="color:#ffcc00;">Kayıt Ol</a></p>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const userData = JSON.parse(localStorage.getItem('sytraexUser'));
+
+      if (!userData) {
+        alert("Kayıt bulunamadı. Lütfen önce kayıt olun.");
+        return;
+      }
+
+      if (userData.email === email && userData.phone === phone) {
+        alert("Giriş başarılı! Hoş geldin " + userData.name + " 🌟");
+        localStorage.setItem('loggedIn', 'true');
+        window.location.href = "profile.html";
+      } else {
+        alert("E-posta veya telefon bilgisi hatalı!");
+      }
+    });
+  </script>
+
+</body>
+</html>
