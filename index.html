@@ -45,5 +45,37 @@
   <footer>
     <p>© 2025 Sytraex | Share Your Travel Experience</p>
   </footer>
+
+<script>
+  // Kullanıcı giriş yapmış mı kontrol et
+  const loggedIn = localStorage.getItem('loggedIn');
+
+  // Menüdeki ilgili linkleri seçelim
+  const registerLink = document.querySelector('a[href="register.html"], a[href="https://sytraex.com/register.html"]');
+  const loginLink = document.querySelector('a[href="login.html"], a[href="https://sytraex.com/login.html"]');
+
+  // Profil linki oluştur
+  const profileLink = document.createElement('a');
+  profileLink.href = "profile.html";
+  profileLink.textContent = "Profilim";
+  profileLink.style.color = "#ffcc00";
+  profileLink.style.fontWeight = "bold";
+  profileLink.style.marginLeft = "15px";
+
+  if (loggedIn === "true") {
+    // Giriş yapılmışsa: kayıt ol / giriş linklerini gizle, profil linkini ekle
+    if (registerLink) registerLink.style.display = "none";
+    if (loginLink) {
+      loginLink.style.display = "none";
+      loginLink.parentNode.insertBefore(profileLink, loginLink.nextSibling);
+    }
+  } else {
+    // Giriş yapılmamışsa: her şey normal kalsın
+    if (registerLink) registerLink.style.display = "inline";
+    if (loginLink) loginLink.style.display = "inline";
+  }
+</script>
+
+  
 </body>
 </html>
