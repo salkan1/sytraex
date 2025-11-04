@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="tr">
-<header>
-  <a href="index.html" class="home-link">Ana Sayfa</a>
-</header>
-
-  <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kayıt Ol | Feniks Solution</title>
+  <title>Kayıt Ol | Sytraex</title>
   <link rel="stylesheet" href="style.css">
   <style>
     body {
@@ -18,16 +14,33 @@
       margin: 0;
       padding: 40px;
     }
+    header {
+      background: rgba(255,255,255,0.05);
+      padding: 10px 0;
+      text-align: left;
+      padding-left: 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+    .home-link {
+      color: #ffcc00;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .home-link:hover { color: #fff; }
+
     form {
       background: rgba(255,255,255,0.05);
       border: 1px solid #333;
       border-radius: 15px;
       padding: 30px;
       max-width: 450px;
-      margin: auto;
+      margin: 100px auto;
       box-shadow: 0 0 20px rgba(255,255,255,0.1);
     }
-    input, select {
+    input {
       width: 90%;
       padding: 10px;
       margin: 10px 0;
@@ -44,42 +57,46 @@
       cursor: pointer;
       transition: 0.3s;
     }
-    button:hover {
-      background: #ffcc00;
-    }
+    button:hover { background: #ffcc00; }
     h2 { color: #ffcc00; }
   </style>
 </head>
 <body>
+
+  <header>
+    <a href="index.html" class="home-link">🏠 Ana Sayfa</a>
+  </header>
 
   <h2>Kayıt Ol</h2>
   <form id="registerForm">
     <input type="text" id="name" placeholder="Ad Soyad" required>
     <input type="email" id="email" placeholder="E-posta Adresi" required>
     <input type="tel" id="phone" placeholder="Telefon Numarası" required>
+    <input type="password" id="password" placeholder="Şifre" required>
     <input type="text" id="city" placeholder="İl" required>
     <input type="text" id="country" placeholder="Ülke" required>
     <input type="date" id="birth" placeholder="Doğum Tarihi" required>
 
-    <button type="button" onclick="sendVerification()">Onay Kodu Gönder</button>
-    
-    <div id="verifySection" style="display:none; margin-top:20px;">
-      <input type="text" id="emailCode" placeholder="E-posta Onay Kodu">
-      <input type="text" id="smsCode" placeholder="SMS Onay Kodu">
-      <button type="submit">Kaydı Tamamla</button>
-    </div>
+    <button type="submit">Kayıt Ol</button>
   </form>
 
   <script>
-    function sendVerification() {
-      alert("E-posta ve SMS onay kodu gönderildi!");
-      document.getElementById('verifySection').style.display = 'block';
-    }
-
     document.getElementById('registerForm').addEventListener('submit', (e) => {
       e.preventDefault();
+
+      const user = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        password: document.getElementById('password').value,
+        city: document.getElementById('city').value,
+        country: document.getElementById('country').value,
+        birth: document.getElementById('birth').value
+      };
+
+      localStorage.setItem('sytraexUser', JSON.stringify(user));
       alert("Kayıt başarıyla tamamlandı!");
-      // burada veriler backend'e gönderilebilir
+      window.location.href = "login.html";
     });
   </script>
 
