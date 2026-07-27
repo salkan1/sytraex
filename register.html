@@ -17,7 +17,7 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Index ile uyumlu Header Stilleri */
+    /* Index ile Uyumlu Header Stilleri */
     header {
       background: rgba(15, 23, 42, 0.95);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -372,7 +372,7 @@
       </div>
 
       <!-- E-posta ve SMS Doğrulama Butonu -->
-      <button type="button" class="btn-secondary" onclick="sendVerification()">Onay Kodu Gönder</button>
+      <button type="button" class="btn-secondary" id="sendCodeBtn">Onay Kodu Gönder</button>
 
       <div id="verifySection" style="display:none; margin-bottom: 15px;">
         <div class="form-group">
@@ -392,49 +392,75 @@
         <input type="number" id="captchaAnswer" placeholder="Sonuç" required>
       </div>
 
-      <button type="submit">Kayıt Ol</button>
+      <button type="submit" id="submitBtn">Kayıt Ol</button>
     </form>
   </div>
 
-  <script>
-    // Systemde var olan örnek kullanıcı adları veritabanı
-    const existingUsernames = ["admin", "sytraex", "user1", "ahmet", "mehmet", "selcuk", "sytx_dev"];
+  <!-- Firebase SDK Kurulumu ve Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // 1. Kullanıcı Adı Çakışma ve Öneri Kontrolü
+    // Firebase Konfigürasyonu
+    const firebaseConfig = {
+      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
+      authDomain: "sytraex-462b0.firebaseapp.com",
+      projectId: "sytraex-462b0",
+      storageBucket: "sytraex-462b0.firebasestorage.app",
+      messagingSenderId: "379245018695",
+      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62",
+      measurementId: "G-60667BRD3S"
+    };
+
+    // Firebase Başlatma
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 1. Kullanıcı Adı Çakışma Kontrolü (Firebase Veritabanından)
     const usernameInput = document.getElementById('username');
     const usernameStatus = document.getElementById('usernameStatus');
 
-    usernameInput.addEventListener('input', checkUsername);
+    usernameInput.addEventListener('blur', checkUsernameFirebase);
 
-    function checkUsername() {
+    async function checkUsernameFirebase() {
       const val = usernameInput.value.trim().toLowerCase();
       if (!val) {
         usernameStatus.innerHTML = '';
         return;
       }
 
-      if (existingUsernames.includes(val)) {
-        // Alınmışsa alternatif öneriler üret
-        const sug1 = `${val}_sytx`;
-        const sug2 = `${val}${Math.floor(Math.random() * 899 + 100)}`;
-        const sug3 = `${val}_2026`;
+      try {
+        const q = query(collection(db, "users"), where("username", "==", val));
+        const querySnapshot = await getDocs(q);
 
-        usernameStatus.innerHTML = `
-          <div class="username-msg error">❌ Bu kullanıcı adı zaten alınmış! Kullanabileceğiniz öneriler:</div>
-          <div class="suggestions">
-            <span class="suggestion-chip" onclick="applySuggestion('${sug1}')">${sug1}</span>
-            <span class="suggestion-chip" onclick="applySuggestion('${sug2}')">${sug2}</span>
-            <span class="suggestion-chip" onclick="applySuggestion('${sug3}')">${sug3}</span>
-          </div>
-        `;
-      } else {
-        usernameStatus.innerHTML = `<div class="username-msg success">✔ Bu kullanıcı adı kullanılabilir.</div>`;
+        if (!querySnapshot.empty) {
+          const sug1 = `${val}_sytx`;
+          const sug2 = `${val}${Math.floor(Math.random() * 899 + 100)}`;
+          const sug3 = `${val}_2026`;
+
+          usernameStatus.innerHTML = `
+            <div class="username-msg error">❌ Bu kullanıcı adı zaten alınmış! Kullanabileceğiniz öneriler:</div>
+            <div class="suggestions">
+              <span class="suggestion-chip" id="sug1">${sug1}</span>
+              <span class="suggestion-chip" id="sug2">${sug2}</span>
+              <span class="suggestion-chip" id="sug3">${sug3}</span>
+            </div>
+          `;
+
+          document.getElementById('sug1').onclick = () => applySuggestion(sug1);
+          document.getElementById('sug2').onclick = () => applySuggestion(sug2);
+          document.getElementById('sug3').onclick = () => applySuggestion(sug3);
+        } else {
+          usernameStatus.innerHTML = `<div class="username-msg success">✔ Bu kullanıcı adı kullanılabilir.</div>`;
+        }
+      } catch (err) {
+        console.error("Kullanıcı adı kontrolü hatası:", err);
       }
     }
 
     function applySuggestion(sug) {
       usernameInput.value = sug;
-      checkUsername();
+      checkUsernameFirebase();
     }
 
     // 2. Canlı Şifre Karmaşıklık Kontrolü
@@ -474,7 +500,7 @@
     document.getElementById('captchaQuestion').innerText = `${num1} + ${num2} = ?`;
 
     // 4. Onay Kodu Gönderme Fonksiyonu
-    function sendVerification() {
+    document.getElementById('sendCodeBtn').addEventListener('click', () => {
       const email = document.getElementById('email').value;
       const phone = document.getElementById('phone').value;
 
@@ -485,23 +511,20 @@
 
       alert("E-posta ve SMS onay kodu gönderildi!");
       document.getElementById('verifySection').style.display = 'block';
-    }
+    });
 
-    // 5. Form Gönderim Kontrolleri
-    document.getElementById('registerForm').addEventListener('submit', (e) => {
+    // 5. Formu Firebase'e Kaydetme
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.innerText = "Kayıt Yapılıyor...";
+      submitBtn.disabled = true;
 
       const username = usernameInput.value.trim().toLowerCase();
       const pass = passwordInput.value;
       const confirmPass = document.getElementById('confirmPassword').value;
       const userCaptcha = parseInt(document.getElementById('captchaAnswer').value, 10);
-
-      // Kullanıcı adı kontrolü
-      if (existingUsernames.includes(username)) {
-        alert("Lütfen kullanılabilir bir kullanıcı adı seçiniz!");
-        usernameInput.focus();
-        return;
-      }
 
       // Şifre karmaşıklık kontrolü
       const isPasswordValid = pass.length >= 8 &&
@@ -512,40 +535,59 @@
 
       if (!isPasswordValid) {
         alert("Şifreniz belirtilen tüm güvenlik kriterlerini karşılamalıdır!");
-        passwordInput.focus();
+        submitBtn.innerText = "Kayıt Ol";
+        submitBtn.disabled = false;
         return;
       }
 
       // Şifre eşleşme kontrolü
       if (pass !== confirmPass) {
-        alert("Girdiğiniz şifreler birbiriyle eşleşmiyor! Lütfen tekrar kontrol edin.");
+        alert("Girdiğiniz şifreler birbiriyle eşleşmiyor!");
+        submitBtn.innerText = "Kayıt Ol";
+        submitBtn.disabled = false;
         return;
       }
 
-      // İnsan doğrulama testi kontrolü
+      // Captcha kontrolü
       if (userCaptcha !== captchaResult) {
-        alert("Güvenlik doğrulaması cevabı hatalı! Lütfen tekrar deneyin.");
+        alert("Güvenlik doğrulaması cevabı hatalı!");
+        submitBtn.innerText = "Kayıt Ol";
+        submitBtn.disabled = false;
         return;
       }
 
-      // Verileri Nesneye Aktarma
-      const user = {
-        name: document.getElementById('name').value,
-        username: username,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        password: pass,
-        city: document.getElementById('city').value,
-        country: document.getElementById('country').value,
-        birth: document.getElementById('birth').value,
-        secretQuestion: document.getElementById('secretQuestion').value,
-        secretAnswer: document.getElementById('secretAnswer').value
-      };
+      try {
+        // Firebase Firestore'a Kaydetme
+        const userData = {
+          name: document.getElementById('name').value.trim(),
+          username: username,
+          email: document.getElementById('email').value.trim(),
+          phone: document.getElementById('phone').value.trim(),
+          password: pass,
+          city: document.getElementById('city').value.trim(),
+          country: document.getElementById('country').value.trim(),
+          birth: document.getElementById('birth').value,
+          secretQuestion: document.getElementById('secretQuestion').value,
+          secretAnswer: document.getElementById('secretAnswer').value.trim(),
+          createdAt: new Date().toISOString()
+        };
 
-      // Yerel hafızaya kaydetme ve yönlendirme
-      localStorage.setItem('sytraexUser', JSON.stringify(user));
-      alert("Kayıt başarıyla tamamlandı!");
-      window.location.href = "login.html";
+        // 'users' koleksiyonunda benzersiz doküman olarak saklıyoruz
+        await setDoc(doc(db, "users", username), userData);
+
+        // Tarayıcı oturumunu güncelle
+        localStorage.setItem('sytraexUser', JSON.stringify(userData));
+        localStorage.setItem('loggedIn', 'true');
+
+        alert("Kayıt veritabanına başarıyla eklendi!");
+        window.location.href = "profile.html";
+
+      } catch (error) {
+        console.error("Veritabanı kayıt hatası:", error);
+        alert("Kayıt oluşturulurken bir hata oluştu: " + error.message);
+        submitBtn.innerText = "Kayıt Ol";
+        submitBtn.disabled = false;
+      }
     });
   </script>
 
