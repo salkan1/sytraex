@@ -12,7 +12,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #0f172a; /* style.css yoksa varsayılan koyu tema */
+      background-color: #0f172a;
       color: #ffffff;
       font-family: Arial, sans-serif;
     }
@@ -114,6 +114,7 @@
 
     .form-group {
       margin-bottom: 15px;
+      position: relative;
     }
 
     .form-group label {
@@ -178,6 +179,72 @@
       background: rgba(255, 204, 0, 0.1);
     }
 
+    /* Kullanıcı Adı Uyarı ve Öneri Alanı */
+    .username-msg {
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .username-msg.error {
+      color: #ff4d4d;
+    }
+
+    .username-msg.success {
+      color: #2ecc71;
+    }
+
+    .suggestions {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .suggestion-chip {
+      background: rgba(255, 204, 0, 0.2);
+      color: #ffcc00;
+      border: 1px solid #ffcc00;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .suggestion-chip:hover {
+      background: #ffcc00;
+      color: #000;
+    }
+
+    /* Şifre Kuralları Kutusu */
+    .password-rules {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 5px;
+      font-size: 12px;
+    }
+
+    .password-rules p {
+      margin: 0 0 5px 0;
+      color: #aaa;
+      font-weight: bold;
+    }
+
+    .rule-item {
+      color: #ff4d4d;
+      margin: 3px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.3s;
+    }
+
+    .rule-item.valid {
+      color: #2ecc71;
+    }
+
     /* İnsan Doğrulama Alanı */
     .captcha-box {
       background: rgba(0, 0, 0, 0.3);
@@ -233,6 +300,12 @@
         <input type="text" id="name" placeholder="Ad Soyad" required>
       </div>
 
+      <!-- Kullanıcı Adı Alanı ve Öneri Mekanizması -->
+      <div class="form-group">
+        <input type="text" id="username" placeholder="Kullanıcı Adı" required autocomplete="off">
+        <div id="usernameStatus"></div>
+      </div>
+
       <div class="form-group">
         <input type="email" id="email" placeholder="E-posta Adresi" required>
       </div>
@@ -241,16 +314,26 @@
         <input type="tel" id="phone" placeholder="Telefon Numarası" required>
       </div>
 
-      <!-- Şifre ve Şifre Onayla (Yapıştırma Engelli) -->
+      <!-- Şifre ve Güvenlik Kuralları -->
       <div class="form-group">
         <input type="password" id="password" placeholder="Şifre" required autocomplete="new-password">
+        
+        <div class="password-rules">
+          <p>Şifre Kriterleri:</p>
+          <div class="rule-item" id="ruleLength">✖ En az 8 karakter</div>
+          <div class="rule-item" id="ruleUpper">✖ En az 1 Büyük Harf (A-Z)</div>
+          <div class="rule-item" id="ruleLower">✖ En az 1 Küçük Harf (a-z)</div>
+          <div class="rule-item" id="ruleNumber">✖ En az 1 Rakam (0-9)</div>
+          <div class="rule-item" id="ruleSpecial">✖ En az 1 Özel Karakter (!@#$%^&*)</div>
+        </div>
       </div>
 
+      <!-- Şifre Onayla (Yapıştırma Engelli) -->
       <div class="form-group">
         <input 
           type="password" 
           id="confirmPassword" 
-          placeholder="Şifreyi Onayla (Lütfen elle yazınız)" 
+          placeholder="Şifreyi Onayla (Elle yazınız)" 
           required 
           onpaste="return false;" 
           oncopy="return false;" 
@@ -314,13 +397,83 @@
   </div>
 
   <script>
-    // 1. İnsan Kontrolü (Math Captcha) Oluşturma
+    // Systemde var olan örnek kullanıcı adları veritabanı
+    const existingUsernames = ["admin", "sytraex", "user1", "ahmet", "mehmet", "selcuk", "sytx_dev"];
+
+    // 1. Kullanıcı Adı Çakışma ve Öneri Kontrolü
+    const usernameInput = document.getElementById('username');
+    const usernameStatus = document.getElementById('usernameStatus');
+
+    usernameInput.addEventListener('input', checkUsername);
+
+    function checkUsername() {
+      const val = usernameInput.value.trim().toLowerCase();
+      if (!val) {
+        usernameStatus.innerHTML = '';
+        return;
+      }
+
+      if (existingUsernames.includes(val)) {
+        // Alınmışsa alternatif öneriler üret
+        const sug1 = `${val}_sytx`;
+        const sug2 = `${val}${Math.floor(Math.random() * 899 + 100)}`;
+        const sug3 = `${val}_2026`;
+
+        usernameStatus.innerHTML = `
+          <div class="username-msg error">❌ Bu kullanıcı adı zaten alınmış! Kullanabileceğiniz öneriler:</div>
+          <div class="suggestions">
+            <span class="suggestion-chip" onclick="applySuggestion('${sug1}')">${sug1}</span>
+            <span class="suggestion-chip" onclick="applySuggestion('${sug2}')">${sug2}</span>
+            <span class="suggestion-chip" onclick="applySuggestion('${sug3}')">${sug3}</span>
+          </div>
+        `;
+      } else {
+        usernameStatus.innerHTML = `<div class="username-msg success">✔ Bu kullanıcı adı kullanılabilir.</div>`;
+      }
+    }
+
+    function applySuggestion(sug) {
+      usernameInput.value = sug;
+      checkUsername();
+    }
+
+    // 2. Canlı Şifre Karmaşıklık Kontrolü
+    const passwordInput = document.getElementById('password');
+
+    passwordInput.addEventListener('input', () => {
+      const val = passwordInput.value;
+
+      const isLength = val.length >= 8;
+      const isUpper = /[A-Z]/.test(val);
+      const isLower = /[a-z]/.test(val);
+      const isNumber = /[0-9]/.test(val);
+      const isSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val);
+
+      updateRuleStatus('ruleLength', isLength, "En az 8 karakter");
+      updateRuleStatus('ruleUpper', isUpper, "En az 1 Büyük Harf (A-Z)");
+      updateRuleStatus('ruleLower', isLower, "En az 1 Küçük Harf (a-z)");
+      updateRuleStatus('ruleNumber', isNumber, "En az 1 Rakam (0-9)");
+      updateRuleStatus('ruleSpecial', isSpecial, "En az 1 Özel Karakter (!@#$%^&*)");
+    });
+
+    function updateRuleStatus(elementId, isValid, text) {
+      const el = document.getElementById(elementId);
+      if (isValid) {
+        el.classList.add('valid');
+        el.innerText = `✔ ${text}`;
+      } else {
+        el.classList.remove('valid');
+        el.innerText = `✖ ${text}`;
+      }
+    }
+
+    // 3. İnsan Kontrolü (Math Captcha)
     let num1 = Math.floor(Math.random() * 10) + 1;
     let num2 = Math.floor(Math.random() * 10) + 1;
     let captchaResult = num1 + num2;
     document.getElementById('captchaQuestion').innerText = `${num1} + ${num2} = ?`;
 
-    // 2. Doğrulama Kodu Gönderme Fonksiyonu
+    // 4. Onay Kodu Gönderme Fonksiyonu
     function sendVerification() {
       const email = document.getElementById('email').value;
       const phone = document.getElementById('phone').value;
@@ -334,13 +487,34 @@
       document.getElementById('verifySection').style.display = 'block';
     }
 
-    // 3. Form Gönderim Kontrolleri
+    // 5. Form Gönderim Kontrolleri
     document.getElementById('registerForm').addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const pass = document.getElementById('password').value;
+      const username = usernameInput.value.trim().toLowerCase();
+      const pass = passwordInput.value;
       const confirmPass = document.getElementById('confirmPassword').value;
       const userCaptcha = parseInt(document.getElementById('captchaAnswer').value, 10);
+
+      // Kullanıcı adı kontrolü
+      if (existingUsernames.includes(username)) {
+        alert("Lütfen kullanılabilir bir kullanıcı adı seçiniz!");
+        usernameInput.focus();
+        return;
+      }
+
+      // Şifre karmaşıklık kontrolü
+      const isPasswordValid = pass.length >= 8 &&
+                              /[A-Z]/.test(pass) &&
+                              /[a-z]/.test(pass) &&
+                              /[0-9]/.test(pass) &&
+                              /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pass);
+
+      if (!isPasswordValid) {
+        alert("Şifreniz belirtilen tüm güvenlik kriterlerini karşılamalıdır!");
+        passwordInput.focus();
+        return;
+      }
 
       // Şifre eşleşme kontrolü
       if (pass !== confirmPass) {
@@ -357,6 +531,7 @@
       // Verileri Nesneye Aktarma
       const user = {
         name: document.getElementById('name').value,
+        username: username,
         email: document.getElementById('email').value,
         phone: document.getElementById('phone').value,
         password: pass,
