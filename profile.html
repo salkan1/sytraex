@@ -85,7 +85,7 @@
       font-size: 14px;
     }
 
-    /* Profil Ana Düzeni (Layout) */
+    /* Profil Ana Düzeni */
     .profile-layout {
       display: flex;
       max-width: 1100px;
@@ -208,7 +208,7 @@
       padding: 30px;
       box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
       backdrop-filter: blur(8px);
-      text-align: left; /* Tüm yazılar sola dayalı */
+      text-align: left;
     }
 
     .content-section {
@@ -219,16 +219,52 @@
       display: block;
     }
 
-    .content-panel h2 {
-      color: #ffcc00;
-      margin-top: 0;
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding-bottom: 12px;
       margin-bottom: 25px;
+    }
+
+    .section-header h2 {
+      color: #ffcc00;
+      margin: 0;
       font-size: 22px;
     }
 
-    /* Sola Dayalı Liste Tablosu */
+    /* Düzenle / Kaydet Butonları */
+    .action-btn {
+      background: rgba(255, 204, 0, 0.15);
+      color: #ffcc00;
+      border: 1px solid #ffcc00;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 13px;
+      transition: 0.3s;
+    }
+
+    .action-btn:hover {
+      background: #ffcc00;
+      color: #000;
+    }
+
+    .btn-cancel {
+      background: transparent;
+      color: #aaa;
+      border: 1px solid #666;
+      margin-right: 8px;
+    }
+
+    .btn-cancel:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    /* Sola Dayalı Grid Yapısı */
     .info-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -246,7 +282,7 @@
       display: block;
       font-size: 12px;
       color: #aaa;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -255,6 +291,19 @@
       font-size: 15px;
       color: #fff;
       font-weight: 500;
+    }
+
+    /* Düzenleme Modundaki Input Stilleri */
+    .info-card input, .info-card select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ffcc00;
+      border-radius: 6px;
+      background: #0f172a;
+      color: #fff;
+      font-size: 14px;
+      box-sizing: border-box;
+      outline: none;
     }
 
     .empty-msg {
@@ -331,7 +380,13 @@
 
       <!-- 1. Profil Bilgileri Sekmesi -->
       <div id="profileSec" class="content-section active">
-        <h2>Profil Bilgilerim</h2>
+        <div class="section-header">
+          <h2>Profil Bilgilerim</h2>
+          <div id="buttonGroup">
+            <button class="action-btn" id="editBtn" onclick="enableEditMode()">✏️ Bilgileri Düzenle</button>
+          </div>
+        </div>
+
         <div class="info-grid" id="profileData">
           <!-- JS ile Dinamik Doldurulur -->
         </div>
@@ -339,13 +394,17 @@
 
       <!-- 2. Gönderilerim Sekmesi -->
       <div id="postsSec" class="content-section">
-        <h2>Gönderilerim</h2>
+        <div class="section-header">
+          <h2>Gönderilerim</h2>
+        </div>
         <p class="empty-msg">Henüz paylaşılmış bir seyahat deneyiminiz bulunmuyor.</p>
       </div>
 
       <!-- 3. Mesajlar Sekmesi -->
       <div id="messagesSec" class="content-section">
-        <h2>Mesajlar</h2>
+        <div class="section-header">
+          <h2>Mesajlar</h2>
+        </div>
         <p class="empty-msg">Gelen veya giden mesajınız bulunmamaktadır.</p>
       </div>
 
@@ -356,22 +415,30 @@
   <script>
     // Kullanıcı Oturum Kontrolü
     const loggedIn = localStorage.getItem('loggedIn');
-    const userData = JSON.parse(localStorage.getItem('sytraexUser'));
+    let userData = JSON.parse(localStorage.getItem('sytraexUser'));
+
+    const secretQuestionMap = {
+      'pet': 'İlk evcil hayvanınızın adı?',
+      'school': 'İlkokul öğretmeninizin adı?',
+      'city': 'Annenizin doğduğu şehir?',
+      'car': 'İlk arabanızın markası?'
+    };
 
     if (!loggedIn || !userData) {
       alert("Lütfen önce giriş yapın.");
       window.location.href = "login.html";
     } else {
-      // Sol Menüdeki Kullanıcı Adını Güncelle
-      document.getElementById('sidebarUsername').innerText = userData.username ? `@${userData.username}` : `@${userData.name.toLowerCase().replace(/\s+/g, '')}`;
+      renderProfileData();
 
-      // Profil Bilgilerini Sola Dayalı Olarak Ekrana Bastırma
-      const secretQuestionMap = {
-        'pet': 'İlk evcil hayvanınızın adı?',
-        'school': 'İlkokul öğretmeninizin adı?',
-        'city': 'Annenizin doğduğu şehir?',
-        'car': 'İlk arabanızın markası?'
-      };
+      // Önceden Yüklenmiş Profil Fotoğrafı Kontrolü
+      if (localStorage.getItem('sytraexAvatar')) {
+        document.getElementById('avatarImage').src = localStorage.getItem('sytraexAvatar');
+      }
+    }
+
+    // Profil Bilgilerini Ekrana Okuma Modunda Bastırma
+    function renderProfileData() {
+      document.getElementById('sidebarUsername').innerText = userData.username ? `@${userData.username}` : `@${userData.name.toLowerCase().replace(/\s+/g, '')}`;
 
       document.getElementById('profileData').innerHTML = `
         <div class="info-card">
@@ -408,17 +475,92 @@
         </div>
       `;
 
-      // Önceden Yüklenmiş Profil Fotoğrafı Var Mı Kontrolü
-      if (localStorage.getItem('sytraexAvatar')) {
-        document.getElementById('avatarImage').src = localStorage.getItem('sytraexAvatar');
-      }
+      document.getElementById('buttonGroup').innerHTML = `
+        <button class="action-btn" onclick="enableEditMode()">✏️ Bilgileri Düzenle</button>
+      `;
     }
 
-    // Profil Fotoğrafı Yükleme İşlemi (Base64 Kayıt)
+    // Bilgileri Düzenleme Modunu Açma
+    function enableEditMode() {
+      document.getElementById('profileData').innerHTML = `
+        <div class="info-card">
+          <label>Kullanıcı Adı</label>
+          <input type="text" id="edit_username" value="${userData.username || ''}">
+        </div>
+        <div class="info-card">
+          <label>Ad Soyad</label>
+          <input type="text" id="edit_name" value="${userData.name || ''}">
+        </div>
+        <div class="info-card">
+          <label>E-posta Adresi</label>
+          <input type="email" id="edit_email" value="${userData.email || ''}">
+        </div>
+        <div class="info-card">
+          <label>Telefon Numarası</label>
+          <input type="tel" id="edit_phone" value="${userData.phone || ''}">
+        </div>
+        <div class="info-card">
+          <label>İl / Şehir</label>
+          <input type="text" id="edit_city" value="${userData.city || ''}">
+        </div>
+        <div class="info-card">
+          <label>Ülke</label>
+          <input type="text" id="edit_country" value="${userData.country || ''}">
+        </div>
+        <div class="info-card">
+          <label>Doğum Tarihi</label>
+          <input type="date" id="edit_birth" value="${userData.birth || ''}">
+        </div>
+        <div class="info-card">
+          <label>Gizli Soru</label>
+          <select id="edit_secretQuestion">
+            <option value="pet" ${userData.secretQuestion === 'pet' ? 'selected' : ''}>İlk evcil hayvanınızın adı nedir?</option>
+            <option value="school" ${userData.secretQuestion === 'school' ? 'selected' : ''}>İlkokul öğretmeninizin adı nedir?</option>
+            <option value="city" ${userData.secretQuestion === 'city' ? 'selected' : ''}>Annenizin doğduğu şehir neresidir?</option>
+            <option value="car" ${userData.secretQuestion === 'car' ? 'selected' : ''}>İlk sahip olduğunuz arabanın markası nedir?</option>
+          </select>
+        </div>
+      `;
+
+      document.getElementById('buttonGroup').innerHTML = `
+        <button class="action-btn btn-cancel" onclick="renderProfileData()">İptal</button>
+        <button class="action-btn" onclick="saveProfileData()">💾 Kaydet</button>
+      `;
+    }
+
+    // Değişiklikleri Kaydetme
+    function saveProfileData() {
+      const newUsername = document.getElementById('edit_username').value.trim();
+      const newName = document.getElementById('edit_name').value.trim();
+      const newEmail = document.getElementById('edit_email').value.trim();
+      const newPhone = document.getElementById('edit_phone').value.trim();
+
+      if (!newUsername || !newName || !newEmail || !newPhone) {
+        alert("Lütfen temel alanları (Kullanıcı Adı, Ad Soyad, E-posta, Telefon) boş bırakmayınız.");
+        return;
+      }
+
+      // Verileri Nesneye Aktarma ve LocalStorage Güncelleme
+      userData.username = newUsername;
+      userData.name = newName;
+      userData.email = newEmail;
+      userData.phone = newPhone;
+      userData.city = document.getElementById('edit_city').value.trim();
+      userData.country = document.getElementById('edit_country').value.trim();
+      userData.birth = document.getElementById('edit_birth').value;
+      userData.secretQuestion = document.getElementById('edit_secretQuestion').value;
+
+      localStorage.setItem('sytraexUser', JSON.stringify(userData));
+      alert("Profil bilgileriniz başarıyla güncellendi!");
+
+      renderProfileData();
+    }
+
+    // Profil Fotoğrafı Yükleme (Base64)
     document.getElementById('photoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
-        if (file.size > 2 * 1024 * 1024) { // 2MB Limit
+        if (file.size > 2 * 1024 * 1024) {
           alert("Lütfen 2MB'tan küçük bir fotoğraf seçiniz.");
           return;
         }
@@ -433,19 +575,16 @@
       }
     });
 
-    // Sekme (Tab) Değiştirme Fonksiyonu
+    // Sekme Değiştirme Fonksiyonu
     function switchTab(sectionId, element) {
-      // Tüm panelleri gizle
       document.querySelectorAll('.content-section').forEach(sec => {
         sec.classList.remove('active');
       });
 
-      // Tüm menü butonlarının aktifliğini kaldır
       document.querySelectorAll('.menu-item').forEach(item => {
         item.classList.remove('active');
       });
 
-      // Seçilen paneli ve menü öğesini aktif yap
       document.getElementById(sectionId).classList.add('active');
       element.classList.add('active');
     }
