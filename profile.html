@@ -440,6 +440,17 @@
     function renderProfileData() {
       document.getElementById('sidebarUsername').innerText = userData.username ? `@${userData.username}` : `@${userData.name.toLowerCase().replace(/\s+/g, '')}`;
 
+      // Cevap metnini maskeleme (Güvenlik için: ilk ve son harf açık, gerisi ***)
+      let maskedAnswer = 'Belirtilmedi';
+      if (userData.secretAnswer) {
+        const ans = userData.secretAnswer.trim();
+        if (ans.length <= 2) {
+          maskedAnswer = '***';
+        } else {
+          maskedAnswer = ans[0] + '*'.repeat(ans.length - 2) + ans[ans.length - 1];
+        }
+      }
+
       document.getElementById('profileData').innerHTML = `
         <div class="info-card">
           <label>Kullanıcı Adı</label>
@@ -472,6 +483,10 @@
         <div class="info-card">
           <label>Gizli Soru</label>
           <span>${secretQuestionMap[userData.secretQuestion] || userData.secretQuestion || 'Belirtilmedi'}</span>
+        </div>
+        <div class="info-card">
+          <label>Gizli Soru Cevabı</label>
+          <span>${maskedAnswer}</span>
         </div>
       `;
 
@@ -520,6 +535,10 @@
             <option value="car" ${userData.secretQuestion === 'car' ? 'selected' : ''}>İlk sahip olduğunuz arabanın markası nedir?</option>
           </select>
         </div>
+        <div class="info-card">
+          <label>Gizli Soru Cevabı</label>
+          <input type="text" id="edit_secretAnswer" value="${userData.secretAnswer || ''}">
+        </div>
       `;
 
       document.getElementById('buttonGroup').innerHTML = `
@@ -534,6 +553,7 @@
       const newName = document.getElementById('edit_name').value.trim();
       const newEmail = document.getElementById('edit_email').value.trim();
       const newPhone = document.getElementById('edit_phone').value.trim();
+      const newSecretAnswer = document.getElementById('edit_secretAnswer').value.trim();
 
       if (!newUsername || !newName || !newEmail || !newPhone) {
         alert("Lütfen temel alanları (Kullanıcı Adı, Ad Soyad, E-posta, Telefon) boş bırakmayınız.");
@@ -549,6 +569,7 @@
       userData.country = document.getElementById('edit_country').value.trim();
       userData.birth = document.getElementById('edit_birth').value;
       userData.secretQuestion = document.getElementById('edit_secretQuestion').value;
+      userData.secretAnswer = newSecretAnswer;
 
       localStorage.setItem('sytraexUser', JSON.stringify(userData));
       alert("Profil bilgileriniz başarıyla güncellendi!");
