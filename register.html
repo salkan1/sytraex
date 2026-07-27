@@ -1,113 +1,378 @@
 <!DOCTYPE html>
 <html lang="tr">
-<header>
-  <a href="index.html" class="home-link">Ana Sayfa</a>
-</header>
-
-  <head>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kayıt Ol | Feniks Solution</title>
   <title>Kayıt Ol | Sytraex</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="logo.png">
+  
   <style>
+    /* Register Sayfası Özel Stilleri */
     body {
-@@ -18,16 +14,33 @@
       margin: 0;
-      padding: 40px;
+      padding: 0;
+      background-color: #0f172a; /* style.css yoksa varsayılan koyu tema */
+      color: #ffffff;
+      font-family: Arial, sans-serif;
     }
+
+    /* Index ile uyumlu Header Stilleri */
     header {
-      background: rgba(255,255,255,0.05);
-      padding: 10px 0;
-      text-align: left;
-      padding-left: 20px;
-      position: fixed;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
       top: 0;
-      width: 100%;
-      z-index: 100;
+      z-index: 1000;
     }
-    .home-link {
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 45px;
+      height: 45px;
+    }
+
+    .logo-text h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #ffcc00;
+      text-transform: lowercase;
+    }
+
+    .logo-text p {
+      margin: 0;
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ffcc00;
+    }
+
+    .lang-switch a {
       color: #ffcc00;
       text-decoration: none;
-      font-weight: bold;
+      font-size: 14px;
     }
-    .home-link:hover { color: #fff; }
+
+    /* Form Konteyner Stili */
+    .register-container {
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
     form {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid #333;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 15px;
-      padding: 30px;
-      max-width: 450px;
-      margin: auto;
-      margin: 100px auto;
-      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+      padding: 35px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      backdrop-filter: blur(8px);
     }
+
+    form h2 {
+      color: #ffcc00;
+      margin-top: 0;
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 26px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+      color: #ccc;
+    }
+
     input, select {
-    input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-@@ -44,42 +57,46 @@
-      cursor: pointer;
-      transition: 0.3s;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      box-sizing: border-box;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s;
     }
-    button:hover {
+
+    input:focus, select:focus {
+      border-color: #ffcc00;
+    }
+
+    select option {
+      background-color: #1e293b;
+      color: #fff;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
       background: #ffcc00;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.1s;
+      margin-top: 10px;
     }
-    button:hover { background: #ffcc00; }
-    h2 { color: #ffcc00; }
+
+    button:hover {
+      background: #e6b800;
+    }
+
+    button:active {
+      transform: scale(0.99);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #ffcc00;
+      color: #ffcc00;
+      margin-bottom: 15px;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 204, 0, 0.1);
+    }
+
+    /* İnsan Doğrulama Alanı */
+    .captcha-box {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px dashed rgba(255, 204, 0, 0.5);
+      margin-top: 20px;
+      margin-bottom: 15px;
+    }
+
+    .captcha-box label {
+      color: #ffcc00;
+      font-weight: bold;
+    }
+
+    .no-select {
+      user-select: none;
+      -webkit-user-select: none;
+    }
   </style>
 </head>
 <body>
 
+  <!-- Ana Sayfadaki ile Birebir Header -->
   <header>
-    <a href="index.html" class="home-link">🏠 Ana Sayfa</a>
+    <div class="logo">
+      <img src="logo.png" alt="Sytraex Logo" class="logo-img">
+      <div class="logo-text">
+        <h1>sytraex</h1>
+        <p>Share Your Travel Experience</p>
+      </div>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="register.html" style="color: #ffcc00;">Kayıt Ol</a></li>
+        <li><a href="login.html">Giriş Yap</a></li>
+        <li><a href="whitepaper.html">White Paper (Stake SYTX)</a></li>
+      </ul>
+      <div class="lang-switch">
+        <a href="index.html">TR</a> / <a href="#">EN</a>
+      </div>
+    </nav>
   </header>
 
-  <h2>Kayıt Ol</h2>
-  <form id="registerForm">
-    <input type="text" id="name" placeholder="Ad Soyad" required>
-    <input type="email" id="email" placeholder="E-posta Adresi" required>
-    <input type="tel" id="phone" placeholder="Telefon Numarası" required>
-    <input type="password" id="password" placeholder="Şifre" required>
-    <input type="text" id="city" placeholder="İl" required>
-    <input type="text" id="country" placeholder="Ülke" required>
-    <input type="date" id="birth" placeholder="Doğum Tarihi" required>
+  <!-- Kayıt Formu Bölümü -->
+  <div class="register-container">
+    <form id="registerForm">
+      <h2>Kayıt Ol</h2>
 
-    <button type="button" onclick="sendVerification()">Onay Kodu Gönder</button>
-    
-    <div id="verifySection" style="display:none; margin-top:20px;">
-      <input type="text" id="emailCode" placeholder="E-posta Onay Kodu">
-      <input type="text" id="smsCode" placeholder="SMS Onay Kodu">
-      <button type="submit">Kaydı Tamamla</button>
-    </div>
-    <button type="submit">Kayıt Ol</button>
-  </form>
+      <div class="form-group">
+        <input type="text" id="name" placeholder="Ad Soyad" required>
+      </div>
+
+      <div class="form-group">
+        <input type="email" id="email" placeholder="E-posta Adresi" required>
+      </div>
+
+      <div class="form-group">
+        <input type="tel" id="phone" placeholder="Telefon Numarası" required>
+      </div>
+
+      <!-- Şifre ve Şifre Onayla (Yapıştırma Engelli) -->
+      <div class="form-group">
+        <input type="password" id="password" placeholder="Şifre" required autocomplete="new-password">
+      </div>
+
+      <div class="form-group">
+        <input 
+          type="password" 
+          id="confirmPassword" 
+          placeholder="Şifreyi Onayla (Lütfen elle yazınız)" 
+          required 
+          onpaste="return false;" 
+          oncopy="return false;" 
+          oncut="return false;"
+          autocomplete="off"
+        >
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="city" placeholder="İl" required>
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="country" placeholder="Ülke" required>
+      </div>
+
+      <div class="form-group">
+        <label for="birth">Doğum Tarihi:</label>
+        <input type="date" id="birth" required>
+      </div>
+
+      <!-- Gizli Soru Kısmı -->
+      <div class="form-group">
+        <label for="secretQuestion">Gizli Soru Seçiniz:</label>
+        <select id="secretQuestion" required>
+          <option value="" disabled selected>Bir gizli soru seçin...</option>
+          <option value="pet">İlk evcil hayvanınızın adı nedir?</option>
+          <option value="school">İlkokul öğretmeninizin adı nedir?</option>
+          <option value="city">Annenizin doğduğu şehir neresidir?</option>
+          <option value="car">İlk sahip olduğunuz arabanın markası nedir?</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="secretAnswer" placeholder="Gizli Soru Cevabı" required>
+      </div>
+
+      <!-- E-posta ve SMS Doğrulama Butonu -->
+      <button type="button" class="btn-secondary" onclick="sendVerification()">Onay Kodu Gönder</button>
+
+      <div id="verifySection" style="display:none; margin-bottom: 15px;">
+        <div class="form-group">
+          <input type="text" id="emailCode" placeholder="E-posta Onay Kodu">
+        </div>
+        <div class="form-group">
+          <input type="text" id="smsCode" placeholder="SMS Onay Kodu">
+        </div>
+      </div>
+
+      <!-- İnsan Kontrolü (Captcha Testi) -->
+      <div class="captcha-box">
+        <label class="no-select">Güvenlik Doğrulaması:</label>
+        <p class="no-select" style="margin: 5px 0 10px 0; font-size: 14px;">
+          Lütfen işlemi onaylamak için sonucu giriniz: <span id="captchaQuestion" style="font-weight: bold; color: #ffcc00;"></span>
+        </p>
+        <input type="number" id="captchaAnswer" placeholder="Sonuç" required>
+      </div>
+
+      <button type="submit">Kayıt Ol</button>
+    </form>
+  </div>
 
   <script>
+    // 1. İnsan Kontrolü (Math Captcha) Oluşturma
+    let num1 = Math.floor(Math.random() * 10) + 1;
+    let num2 = Math.floor(Math.random() * 10) + 1;
+    let captchaResult = num1 + num2;
+    document.getElementById('captchaQuestion').innerText = `${num1} + ${num2} = ?`;
+
+    // 2. Doğrulama Kodu Gönderme Fonksiyonu
     function sendVerification() {
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+
+      if (!email || !phone) {
+        alert("Lütfen önce E-posta ve Telefon alanlarını doldurunuz.");
+        return;
+      }
+
       alert("E-posta ve SMS onay kodu gönderildi!");
       document.getElementById('verifySection').style.display = 'block';
     }
 
+    // 3. Form Gönderim Kontrolleri
     document.getElementById('registerForm').addEventListener('submit', (e) => {
       e.preventDefault();
 
+      const pass = document.getElementById('password').value;
+      const confirmPass = document.getElementById('confirmPassword').value;
+      const userCaptcha = parseInt(document.getElementById('captchaAnswer').value, 10);
+
+      // Şifre eşleşme kontrolü
+      if (pass !== confirmPass) {
+        alert("Girdiğiniz şifreler birbiriyle eşleşmiyor! Lütfen tekrar kontrol edin.");
+        return;
+      }
+
+      // İnsan doğrulama testi kontrolü
+      if (userCaptcha !== captchaResult) {
+        alert("Güvenlik doğrulaması cevabı hatalı! Lütfen tekrar deneyin.");
+        return;
+      }
+
+      // Verileri Nesneye Aktarma
       const user = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
         phone: document.getElementById('phone').value,
-        password: document.getElementById('password').value,
+        password: pass,
         city: document.getElementById('city').value,
         country: document.getElementById('country').value,
-        birth: document.getElementById('birth').value
+        birth: document.getElementById('birth').value,
+        secretQuestion: document.getElementById('secretQuestion').value,
+        secretAnswer: document.getElementById('secretAnswer').value
       };
 
+      // Yerel hafızaya kaydetme ve yönlendirme
       localStorage.setItem('sytraexUser', JSON.stringify(user));
       alert("Kayıt başarıyla tamamlandı!");
-      // burada veriler backend'e gönderilebilir
       window.location.href = "login.html";
     });
   </script>
+
+</body>
+</html>
