@@ -133,7 +133,7 @@
       background: rgba(255, 204, 0, 0.1);
     }
 
-    /* Arama Filtre Paneli */
+    /* Arama Filtre Paneli (3 Sütunlu Tek Lokasyon Yapısı) */
     .search-section {
       max-width: 1100px;
       margin: -20px auto 50px;
@@ -308,12 +308,12 @@
     </div>
   </section>
 
-  <!-- Gelişmiş Arama Filtre Paneli -->
+  <!-- Gelişmiş Arama Filtre Paneli (TEK KUTULU LOKASYON) -->
   <section class="search-section">
     <div class="search-card">
       <form id="searchForm" class="search-grid" autocomplete="off">
         
-        <!-- TEK LOKASYON KUTUSU (İl, İlçe, Ülke Canlı API) -->
+        <!-- TEK ARAMA KUTUSU -->
         <div class="search-group">
           <label for="locationInput">Nereye Gitmek İstiyorsun?</label>
           <input 
@@ -398,7 +398,6 @@
 
       clearTimeout(debounceTimer);
 
-      // Yazma bittikten 300ms sonra canlı Dünya Veritabanına sorgu atıyoruz
       debounceTimer = setTimeout(() => {
         const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=8`;
 
@@ -432,7 +431,7 @@
       }, 300);
     });
 
-    // Sayfa dışına basılınca listeyi kapat
+    // Sayfa dışına basılınca kapat
     document.addEventListener("click", (e) => {
       if (e.target !== locationInput) {
         cityList.style.display = "none";
