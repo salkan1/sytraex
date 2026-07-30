@@ -143,6 +143,11 @@
       color: #fff;
     }
 
+    select:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     button {
       width: 100%;
       padding: 12px;
@@ -293,10 +298,6 @@
         <div id="emailStatus"></div>
       </div>
 
-      <div class="form-group">
-        <input type="tel" id="phone" placeholder="Telefon Numarası" required>
-      </div>
-
       <!-- Şifre ve Kurallar -->
       <div class="form-group">
         <input type="password" id="password" placeholder="Şifre" required autocomplete="new-password">
@@ -324,12 +325,29 @@
         >
       </div>
 
+      <!-- Ülke Seçimi (Önce) -->
       <div class="form-group">
-        <input type="text" id="city" placeholder="İl" required>
+        <label for="country">Ülke Seçiniz:</label>
+        <select id="country" required>
+          <option value="" disabled selected>Ülke seçin...</option>
+          <option value="Türkiye">Türkiye</option>
+          <option value="Almanya">Almanya</option>
+          <option value="ABD">Amerika Birleşik Devletleri</option>
+          <option value="İngiltere">İngiltere</option>
+          <option value="Fransa">Fransa</option>
+          <option value="İtalya">İtalya</option>
+          <option value="Hollanda">Hollanda</option>
+          <option value="Azerbaycan">Azerbaycan</option>
+          <option value="Diğer">Diğer</option>
+        </select>
       </div>
 
+      <!-- İl Seçimi (Sonra - Dinamik Açılır Liste) -->
       <div class="form-group">
-        <input type="text" id="country" placeholder="Ülke" required>
+        <label for="city">İl Seçiniz:</label>
+        <select id="city" required disabled>
+          <option value="" disabled selected>Önce ülke seçiniz...</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -384,6 +402,49 @@
 
     let isUsernameAvailable = false;
     let isEmailValidAndAvailable = false;
+
+    // Ülke - İl Dinamik Veri Haritası
+    const citiesData = {
+      "Türkiye": [
+        "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir",
+        "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
+        "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari",
+        "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir",
+        "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir",
+        "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat",
+        "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman",
+        "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"
+      ],
+      "Almanya": ["Berlin", "Münih", "Frankfurt", "Hamburg", "Köln", "Stuttgart", "Düsseldorf"],
+      "ABD": ["New York", "Los Angeles", "Chicago", "Houston", "Miami", "San Francisco", "Washington D.C."],
+      "İngiltere": ["Londra", "Manchester", "Birmingham", "Liverpool", "Leeds", "Glasgow"],
+      "Fransa": ["Paris", "Lyon", "Marsilya", "Nice", "Bordo", "Toulouse"],
+      "İtalya": ["Roma", "Milano", "Venedik", "Floransa", "Napoli", "Torino"],
+      "Hollanda": ["Amsterdam", "Rotterdam", "Lahey", "Utrecht", "Eindhoven"],
+      "Azerbaycan": ["Bakü", "Gence", "Sumgayıt", "Mingeçevir", "Şeki"],
+      "Diğer": ["Merkez / Diğer Şehir"]
+    };
+
+    // Ülke değişince İl listesini doldurma mantığı
+    const countrySelect = document.getElementById('country');
+    const citySelect = document.getElementById('city');
+
+    countrySelect.addEventListener('change', () => {
+      const selectedCountry = countrySelect.value;
+      citySelect.innerHTML = '<option value="" disabled selected>İl seçiniz...</option>';
+
+      if (selectedCountry && citiesData[selectedCountry]) {
+        citiesData[selectedCountry].forEach(cityName => {
+          const opt = document.createElement('option');
+          opt.value = cityName;
+          opt.textContent = cityName;
+          citySelect.appendChild(opt);
+        });
+        citySelect.disabled = false;
+      } else {
+        citySelect.disabled = true;
+      }
+    });
 
     // 1. Kullanıcı Adı Kontrolü (Firebase)
     const usernameInput = document.getElementById('username');
@@ -532,7 +593,6 @@
       const confirmPass = document.getElementById('confirmPassword').value;
       const userCaptcha = parseInt(document.getElementById('captchaAnswer').value, 10);
 
-      // Şifre karmaşıklık doğrulaması
       const isPasswordValid = pass.length >= 8 &&
                               /[A-Z]/.test(pass) &&
                               /[a-z]/.test(pass) &&
@@ -562,20 +622,17 @@
           name: document.getElementById('name').value.trim(),
           username: username,
           email: document.getElementById('email').value.trim(),
-          phone: document.getElementById('phone').value.trim(),
           password: pass,
-          city: document.getElementById('city').value.trim(),
-          country: document.getElementById('country').value.trim(),
+          country: countrySelect.value,
+          city: citySelect.value,
           birth: document.getElementById('birth').value,
           secretQuestion: document.getElementById('secretQuestion').value,
           secretAnswer: document.getElementById('secretAnswer').value.trim(),
           createdAt: new Date().toISOString()
         };
 
-        // Firebase Firestore 'users' koleksiyonuna doğrudan yazıyoruz
         await setDoc(doc(db, "users", username), userData);
 
-        // Yerel oturum güncellemesi
         localStorage.setItem('sytraexUser', JSON.stringify(userData));
         localStorage.setItem('loggedIn', 'true');
 
