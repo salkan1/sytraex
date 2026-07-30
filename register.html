@@ -151,8 +151,8 @@
 
     .search-grid {
       display: grid;
-      grid-template-columns: 2fr 1.2fr 1.5fr 1fr;
-      gap: 15px;
+      grid-template-columns: 1.2fr 1.5fr 1.2fr 1.5fr 1fr;
+      gap: 12px;
       align-items: end;
     }
 
@@ -194,7 +194,7 @@
       background: #1e293b;
     }
 
-    /* Akıllı Arama Açılır Listesi (Autocomplete Menu) */
+    /* Canlı Şehir Autocomplete Listesi */
     .autocomplete-items {
       position: absolute;
       border: 1px solid rgba(255, 204, 0, 0.4);
@@ -205,7 +205,7 @@
       right: 0;
       background-color: #1e293b;
       border-radius: 0 0 8px 8px;
-      max-height: 220px;
+      max-height: 200px;
       overflow-y: auto;
       box-shadow: 0 8px 20px rgba(0,0,0,0.6);
       display: none;
@@ -217,26 +217,11 @@
       font-size: 13px;
       border-bottom: 1px solid rgba(255,255,255,0.05);
       color: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
     .autocomplete-items div:hover {
       background-color: #ffcc00;
       color: #000;
-    }
-
-    .autocomplete-items div .type-badge {
-      font-size: 10px;
-      opacity: 0.7;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background: rgba(255,255,255,0.1);
-    }
-
-    .autocomplete-items div:hover .type-badge {
-      background: rgba(0,0,0,0.2);
     }
 
     .search-btn {
@@ -256,7 +241,7 @@
       background: #e6b800;
     }
 
-    /* Vitrin Bölümü (Öne Çıkanlar) */
+    /* Vitrin Bölümü */
     .featured-section {
       max-width: 1100px;
       margin: 0 auto 60px;
@@ -279,11 +264,6 @@
       padding: 40px 20px;
       text-align: center;
       color: #aaa;
-    }
-
-    .empty-state p {
-      margin: 8px 0 0 0;
-      font-size: 14px;
     }
 
     footer {
@@ -333,21 +313,44 @@
     <div class="search-card">
       <form id="searchForm" class="search-grid" autocomplete="off">
         
-        <!-- 1. Akıllı Lokasyon Arama Kutusu (Şehir, Eyalet, Ülke Hepsi Bir Arada) -->
+        <!-- 1. Ülke Seçimi (ISO Kodları İle) -->
         <div class="search-group">
-          <label for="locationInput">Nereye Gitmek İstiyorsun?</label>
-          <input 
-            type="text" 
-            id="locationInput" 
-            placeholder="Şehir, il, eyalet veya ülke yazın..." 
-            required
-          >
-          <div id="autocompleteList" class="autocomplete-items"></div>
+          <label for="countrySelect">1. Ülke Seçiniz:</label>
+          <select id="countrySelect" required>
+            <option value="" disabled selected>Ülke Seçin...</option>
+            <option value="TR">Türkiye 🇹🇷</option>
+            <option value="DE">Almanya 🇩🇪</option>
+            <option value="US">Amerika Birleşik Devletleri 🇺🇸</option>
+            <option value="GB">İngiltere 🇬🇧</option>
+            <option value="FR">Fransa 🇫🇷</option>
+            <option value="IT">İtalya 🇮🇹</option>
+            <option value="ES">İspanya 🇪🇸</option>
+            <option value="NL">Hollanda 🇳🇱</option>
+            <option value="AZ">Azerbaycan 🇦🇿</option>
+            <option value="GR">Yunanistan 🇬🇷</option>
+            <option value="AE">B.A.E. (Dubai) 🇦🇪</option>
+            <option value="JP">Japonya 🇯🇵</option>
+            <option value="RU">Rusya 🇷🇺</option>
+            <option value="OTHER">Diğer Ülkeler</option>
+          </select>
         </div>
 
-        <!-- 2. Süre / Zaman Dilimi Seçimi -->
+        <!-- 2. Şehir / İl / Eyalet Arama (Canlı API Bağlantılı) -->
         <div class="search-group">
-          <label for="searchDuration">Süre / Zaman Dilimi:</label>
+          <label for="cityInput">2. Şehir / İl / Eyalet:</label>
+          <input 
+            type="text" 
+            id="cityInput" 
+            placeholder="Önce ülke seçiniz..." 
+            disabled 
+            required
+          >
+          <div id="cityAutocompleteList" class="autocomplete-items"></div>
+        </div>
+
+        <!-- 3. Süre Seçimi -->
+        <div class="search-group">
+          <label for="searchDuration">3. Süre / Zaman:</label>
           <select id="searchDuration">
             <option value="all">Tüm Süreler</option>
             <option value="3saat">3 Saatlik Hızlı Tur</option>
@@ -358,9 +361,9 @@
           </select>
         </div>
 
-        <!-- 3. Seyahat Tipi / Modlar -->
+        <!-- 4. Seyahat Modu / Konsept -->
         <div class="search-group">
-          <label for="searchMode">Seyahat Modu / Konsept:</label>
+          <label for="searchMode">4. Seyahat Modu:</label>
           <select id="searchMode">
             <option value="all">Tüm Konseptler</option>
             <option value="gece">🌙 Gece Hayatı & Eğlence</option>
@@ -382,7 +385,7 @@
     </div>
   </section>
 
-  <!-- En Çok Oy Alan Seyahat Deneyimleri -->
+  <!-- Öne Çıkanlar (Gerçek Kullanıcı İçerikleri Alanı) -->
   <section class="featured-section">
     <div class="section-title">
       <span>⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları</span>
@@ -400,131 +403,93 @@
   </footer>
 
   <script>
-    // 🌍 Profesyonel Dünya Destinasyon Veritabanı (İller, Eyaletler ve Ülkeler)
-    const locations = [
-      // Türkiye İlleri
-      { name: "İstanbul, Türkiye", type: "Şehir / İl" },
-      { name: "Ankara, Türkiye", type: "Şehir / İl" },
-      { name: "İzmir, Türkiye", type: "Şehir / İl" },
-      { name: "Antalya, Türkiye", type: "Şehir / İl" },
-      { name: "Bursa, Türkiye", type: "Şehir / İl" },
-      { name: "Muğla (Bodrum / Fethiye), Türkiye", type: "İl / Bölge" },
-      { name: "Nevşehir (Kapadokya), Türkiye", type: "İl / Bölge" },
-      { name: "Trabzon, Türkiye", type: "Şehir / İl" },
-      { name: "Gaziantep, Türkiye", type: "Şehir / İl" },
-      { name: "Adana, Türkiye", type: "Şehir / İl" },
-      { name: "Eskişehir, Türkiye", type: "Şehir / İl" },
-      { name: "Çanakkale, Türkiye", type: "Şehir / İl" },
-      { name: "Rize, Türkiye", type: "Şehir / İl" },
-      { name: "Mardin, Türkiye", type: "Şehir / İl" },
-      { name: "Şanlıurfa, Türkiye", type: "Şehir / İl" },
-      { name: "Türkiye (Tümü)", type: "Ülke" },
+    const countrySelect = document.getElementById("countrySelect");
+    const cityInput = document.getElementById("cityInput");
+    const cityList = document.getElementById("cityAutocompleteList");
 
-      // Avrupa Şehirleri ve Ülkeleri
-      { name: "Paris, Fransa", type: "Şehir" },
-      { name: "Fransa (Tümü)", type: "Ülke" },
-      { name: "Roma, İtalya", type: "Şehir" },
-      { name: "Milano, İtalya", type: "Şehir" },
-      { name: "Venedik, İtalya", type: "Şehir" },
-      { name: "Floransa, İtalya", type: "Şehir" },
-      { name: "İtalya (Tümü)", type: "Ülke" },
-      { name: "Londra, İngiltere", type: "Şehir" },
-      { name: "İngiltere / Birleşik Krallık", type: "Ülke" },
-      { name: "Berlin, Almanya", type: "Şehir" },
-      { name: "Münih, Almanya", type: "Şehir" },
-      { name: "Frankfurt, Almanya", type: "Şehir" },
-      { name: "Almanya (Tümü)", type: "Ülke" },
-      { name: "Amsterdam, Hollanda", type: "Şehir" },
-      { name: "Hollanda (Tümü)", type: "Ülke" },
-      { name: "Barselona, İspanya", type: "Şehir" },
-      { name: "Madrid, İspanya", type: "Şehir" },
-      { name: "İspanya (Tümü)", type: "Ülke" },
-      { name: "Viyana, Avusturya", type: "Şehir" },
-      { name: "Prag, Çekya", type: "Şehir" },
-      { name: "Budapeşte, Macaristan", type: "Şehir" },
-      { name: "Atina, Yunanistan", type: "Şehir" },
-      { name: "Santorini, Yunanistan", type: "Ada / Bölge" },
-      { name: "Zürih, İsviçre", type: "Şehir" },
+    // 1. Ülke Seçilince Şehir Arama Kutusu Aktifleşir
+    countrySelect.addEventListener("change", () => {
+      cityInput.disabled = false;
+      cityInput.value = "";
+      cityInput.placeholder = "Şehir adı yazmaya başlayın...";
+      cityInput.focus();
+    });
 
-      // Amerika & Dünya Destinasyonları
-      { name: "New York, ABD", type: "Eyalet / Şehir" },
-      { name: "Los Angeles (Kaliforniya), ABD", type: "Eyalet / Şehir" },
-      { name: "Miami (Florida), ABD", type: "Eyalet / Şehir" },
-      { name: "Las Vegas, ABD", type: "Şehir" },
-      { name: "Amerika Birleşik Devletleri (Tümü)", type: "Ülke" },
-      { name: "Tokyo, Japonya", type: "Şehir" },
-      { name: "Kyoto, Japonya", type: "Şehir" },
-      { name: "Japonya (Tümü)", type: "Ülke" },
-      { name: "Dubai, BAE", type: "Şehir / Emirlik" },
-      { name: "Bakü, Azerbaycan", type: "Şehir" },
-      { name: "Azerbaycan (Tümü)", type: "Ülke" },
-      { name: "Bangkok, Tayland", type: "Şehir" },
-      { name: "Phuket, Tayland", type: "Ada / Bölge" },
-      { name: "Kopenhag, Danimarka", type: "Şehir" },
-      { name: "Oslo, Norveç", type: "Şehir" },
-      { name: "Stokholm, İsveç", type: "Şehir" }
-    ];
+    // 2. Canlı Şehir Arama API Integrasyonu (OpenStreetMap Nominatim API)
+    let debounceTimer;
 
-    // Akıllı Arama Kodu (Autocomplete)
-    const input = document.getElementById("locationInput");
-    const list = document.getElementById("autocompleteList");
+    cityInput.addEventListener("input", function() {
+      const query = this.value.trim();
+      const countryCode = countrySelect.value;
 
-    input.addEventListener("input", function() {
-      const val = this.value.trim().toLowerCase();
-      list.innerHTML = "";
-      
-      if (!val) {
-        list.style.display = "none";
+      cityList.innerHTML = "";
+
+      if (query.length < 2) {
+        cityList.style.display = "none";
         return;
       }
 
-      const matches = locations.filter(loc => loc.name.toLowerCase().includes(val));
+      clearTimeout(debounceTimer);
 
-      if (matches.length > 0) {
-        matches.forEach(item => {
-          const div = document.createElement("div");
-          
-          // Eşleşen harfleri sarı vurgulayalım
-          const regex = new RegExp(`(${val})`, "gi");
-          const highlightedName = item.name.replace(regex, `<span style="color:#ffcc00; font-weight:bold;">$1</span>`);
+      // Kullanıcı yazmayı bitirdikten 300ms sonra canlı API sorgusu atıyoruz
+      debounceTimer = setTimeout(() => {
+        let apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=8`;
+        
+        if (countryCode && countryCode !== "OTHER") {
+          apiUrl += `&countrycodes=${countryCode.toLowerCase()}`;
+        }
 
-          div.innerHTML = `
-            <span>📍 ${highlightedName}</span>
-            <span class="type-badge">${item.type}</span>
-          `;
+        fetch(apiUrl)
+          .then(res => res.json())
+          .then(data => {
+            cityList.innerHTML = "";
 
-          div.addEventListener("click", function() {
-            input.value = item.name;
-            list.style.display = "none";
-          });
+            if (data && data.length > 0) {
+              data.forEach(item => {
+                const div = document.createElement("div");
+                
+                // Şehir / İl / Eyalet adını temiz şekilde alalım
+                const cityName = item.address.city || item.address.town || item.address.state || item.address.village || item.display_name.split(',')[0];
+                const stateOrCountry = item.address.state || item.address.country || '';
 
-          list.appendChild(div);
-        });
-        list.style.display = "block";
-      } else {
-        list.style.display = "none";
+                div.innerHTML = `📍 <strong>${cityName}</strong> <span style="font-size:11px; color:#aaa;">(${stateOrCountry})</span>`;
+
+                div.addEventListener("click", () => {
+                  cityInput.value = cityName;
+                  cityList.style.display = "none";
+                });
+
+                cityList.appendChild(div);
+              });
+              cityList.style.display = "block";
+            } else {
+              cityList.style.display = "none";
+            }
+          })
+          .catch(err => console.error("Şehir API Hatası:", err));
+      }, 300);
+    });
+
+    // Sayfa dışına basılınca kapat
+    document.addEventListener("click", (e) => {
+      if (e.target !== cityInput) {
+        cityList.style.display = "none";
       }
     });
 
-    // Sayfa dışına tıklandığında açılır listeyi kapat
-    document.addEventListener("click", function(e) {
-      if (e.target !== input) {
-        list.style.display = "none";
-      }
-    });
-
-    // Arama Yönlendirme Mantığı
+    // Arama Yönlendirmesi
     document.getElementById('searchForm').addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const location = input.value.trim();
+      const country = countrySelect.options[countrySelect.selectedIndex].text;
+      const city = cityInput.value.trim();
       const duration = document.getElementById('searchDuration').value;
       const mode = document.getElementById('searchMode').value;
 
-      window.location.href = `search-results.html?location=${encodeURIComponent(location)}&duration=${encodeURIComponent(duration)}&mode=${encodeURIComponent(mode)}`;
+      window.location.href = `search-results.html?country=${encodeURIComponent(country)}&city=${encodeURIComponent(city)}&duration=${encodeURIComponent(duration)}&mode=${encodeURIComponent(mode)}`;
     });
 
-    // Oturum Durumu Kontrolü
+    // Oturum Kontrolü
     const loggedIn = localStorage.getItem('loggedIn');
     const registerLink = document.querySelector('a[href="register.html"]');
     const loginLink = document.querySelector('a[href="login.html"]');
