@@ -151,7 +151,7 @@
 
     .search-grid {
       display: grid;
-      grid-template-columns: 1.2fr 1.5fr 1.2fr 1.5fr 1fr;
+      grid-template-columns: 2fr 1.3fr 1.5fr 1fr;
       gap: 12px;
       align-items: end;
     }
@@ -205,7 +205,7 @@
       right: 0;
       background-color: #1e293b;
       border-radius: 0 0 8px 8px;
-      max-height: 200px;
+      max-height: 220px;
       overflow-y: auto;
       box-shadow: 0 8px 20px rgba(0,0,0,0.6);
       display: none;
@@ -313,44 +313,21 @@
     <div class="search-card">
       <form id="searchForm" class="search-grid" autocomplete="off">
         
-        <!-- 1. Ülke Seçimi (ISO Kodları İle) -->
+        <!-- TEK LOKASYON KUTUSU (İl, İlçe, Ülke Canlı API) -->
         <div class="search-group">
-          <label for="countrySelect">1. Ülke Seçiniz:</label>
-          <select id="countrySelect" required>
-            <option value="" disabled selected>Ülke Seçin...</option>
-            <option value="TR">Türkiye 🇹🇷</option>
-            <option value="DE">Almanya 🇩🇪</option>
-            <option value="US">Amerika Birleşik Devletleri 🇺🇸</option>
-            <option value="GB">İngiltere 🇬🇧</option>
-            <option value="FR">Fransa 🇫🇷</option>
-            <option value="IT">İtalya 🇮🇹</option>
-            <option value="ES">İspanya 🇪🇸</option>
-            <option value="NL">Hollanda 🇳🇱</option>
-            <option value="AZ">Azerbaycan 🇦🇿</option>
-            <option value="GR">Yunanistan 🇬🇷</option>
-            <option value="AE">B.A.E. (Dubai) 🇦🇪</option>
-            <option value="JP">Japonya 🇯🇵</option>
-            <option value="RU">Rusya 🇷🇺</option>
-            <option value="OTHER">Diğer Ülkeler</option>
-          </select>
-        </div>
-
-        <!-- 2. Şehir / İl / Eyalet Arama (Canlı API Bağlantılı) -->
-        <div class="search-group">
-          <label for="cityInput">2. Şehir / İl / Eyalet:</label>
+          <label for="locationInput">Nereye Gitmek İstiyorsun?</label>
           <input 
             type="text" 
-            id="cityInput" 
-            placeholder="Önce ülke seçiniz..." 
-            disabled 
+            id="locationInput" 
+            placeholder="İl, eyalet veya ülke adı yazın..." 
             required
           >
           <div id="cityAutocompleteList" class="autocomplete-items"></div>
         </div>
 
-        <!-- 3. Süre Seçimi -->
+        <!-- Süre Seçimi -->
         <div class="search-group">
-          <label for="searchDuration">3. Süre / Zaman:</label>
+          <label for="searchDuration">Süre / Zaman:</label>
           <select id="searchDuration">
             <option value="all">Tüm Süreler</option>
             <option value="3saat">3 Saatlik Hızlı Tur</option>
@@ -361,9 +338,9 @@
           </select>
         </div>
 
-        <!-- 4. Seyahat Modu / Konsept -->
+        <!-- Seyahat Modu / Konsept -->
         <div class="search-group">
-          <label for="searchMode">4. Seyahat Modu:</label>
+          <label for="searchMode">Seyahat Modu:</label>
           <select id="searchMode">
             <option value="all">Tüm Konseptler</option>
             <option value="gece">🌙 Gece Hayatı & Eğlence</option>
@@ -403,24 +380,14 @@
   </footer>
 
   <script>
-    const countrySelect = document.getElementById("countrySelect");
-    const cityInput = document.getElementById("cityInput");
+    const locationInput = document.getElementById("locationInput");
     const cityList = document.getElementById("cityAutocompleteList");
 
-    // 1. Ülke Seçilince Şehir Arama Kutusu Aktifleşir
-    countrySelect.addEventListener("change", () => {
-      cityInput.disabled = false;
-      cityInput.value = "";
-      cityInput.placeholder = "Şehir adı yazmaya başlayın...";
-      cityInput.focus();
-    });
-
-    // 2. Canlı Şehir Arama API Integrasyonu (OpenStreetMap Nominatim API)
+    // Canlı Arama API Entegrasyonu (OpenStreetMap Nominatim)
     let debounceTimer;
 
-    cityInput.addEventListener("input", function() {
+    locationInput.addEventListener("input", function() {
       const query = this.value.trim();
-      const countryCode = countrySelect.value;
 
       cityList.innerHTML = "";
 
@@ -431,13 +398,9 @@
 
       clearTimeout(debounceTimer);
 
-      // Kullanıcı yazmayı bitirdikten 300ms sonra canlı API sorgusu atıyoruz
+      // Yazma bittikten 300ms sonra canlı Dünya Veritabanına sorgu atıyoruz
       debounceTimer = setTimeout(() => {
-        let apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=8`;
-        
-        if (countryCode && countryCode !== "OTHER") {
-          apiUrl += `&countrycodes=${countryCode.toLowerCase()}`;
-        }
+        const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=8`;
 
         fetch(apiUrl)
           .then(res => res.json())
@@ -448,14 +411,13 @@
               data.forEach(item => {
                 const div = document.createElement("div");
                 
-                // Şehir / İl / Eyalet adını temiz şekilde alalım
-                const cityName = item.address.city || item.address.town || item.address.state || item.address.village || item.display_name.split(',')[0];
-                const stateOrCountry = item.address.state || item.address.country || '';
+                const mainName = item.address.city || item.address.town || item.address.state || item.address.country || item.display_name.split(',')[0];
+                const country = item.address.country || '';
 
-                div.innerHTML = `📍 <strong>${cityName}</strong> <span style="font-size:11px; color:#aaa;">(${stateOrCountry})</span>`;
+                div.innerHTML = `📍 <strong>${mainName}</strong> ${country ? `<span style="font-size:11px; color:#aaa;">(${country})</span>` : ''}`;
 
                 div.addEventListener("click", () => {
-                  cityInput.value = cityName;
+                  locationInput.value = country ? `${mainName}, ${country}` : mainName;
                   cityList.style.display = "none";
                 });
 
@@ -466,13 +428,13 @@
               cityList.style.display = "none";
             }
           })
-          .catch(err => console.error("Şehir API Hatası:", err));
+          .catch(err => console.error("Lokasyon API Hatası:", err));
       }, 300);
     });
 
-    // Sayfa dışına basılınca kapat
+    // Sayfa dışına basılınca listeyi kapat
     document.addEventListener("click", (e) => {
-      if (e.target !== cityInput) {
+      if (e.target !== locationInput) {
         cityList.style.display = "none";
       }
     });
@@ -481,12 +443,11 @@
     document.getElementById('searchForm').addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const country = countrySelect.options[countrySelect.selectedIndex].text;
-      const city = cityInput.value.trim();
+      const location = locationInput.value.trim();
       const duration = document.getElementById('searchDuration').value;
       const mode = document.getElementById('searchMode').value;
 
-      window.location.href = `search-results.html?country=${encodeURIComponent(country)}&city=${encodeURIComponent(city)}&duration=${encodeURIComponent(duration)}&mode=${encodeURIComponent(mode)}`;
+      window.location.href = `search-results.html?location=${encodeURIComponent(location)}&duration=${encodeURIComponent(duration)}&mode=${encodeURIComponent(mode)}`;
     });
 
     // Oturum Kontrolü
