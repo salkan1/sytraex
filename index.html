@@ -7,75 +7,535 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="logo.png">
 
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0f172a;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 45px;
+      height: 45px;
+    }
+
+    .logo-text h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #ffcc00;
+      text-transform: lowercase;
+    }
+
+    .logo-text p {
+      margin: 0;
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ffcc00;
+    }
+
+    .lang-switch a {
+      color: #ffcc00;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    /* Hero Bölümü */
+    .hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+      background: radial-gradient(circle, rgba(255,204,0,0.1) 0%, rgba(15,23,42,1) 70%);
+    }
+
+    .hero h2 {
+      font-size: 36px;
+      color: #ffcc00;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: #ccc;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 10px 24px;
+      background: #ffcc00;
+      color: #000;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #e6b800;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      border: 1px solid #ffcc00;
+      color: #ffcc00;
+    }
+
+    .btn.secondary:hover {
+      background: rgba(255, 204, 0, 0.1);
+    }
+
+    /* Arama Filtre Paneli */
+    .search-section {
+      max-width: 1100px;
+      margin: -20px auto 50px;
+      padding: 0 20px;
+    }
+
+    .search-card {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      border-radius: 16px;
+      padding: 25px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .search-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      align-items: end;
+    }
+
+    .search-group label {
+      display: block;
+      font-size: 12px;
+      color: #ffcc00;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    .search-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: #0f172a;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-group select option {
+      background: #1e293b;
+    }
+
+    .search-btn {
+      grid-column: span 1;
+      width: 100%;
+      padding: 12px;
+      background: #ffcc00;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .search-btn:hover {
+      background: #e6b800;
+    }
+
+    /* Vitrin / Öne Çıkan Gönderiler (Slider) */
+    .featured-section {
+      max-width: 1100px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      color: #ffcc00;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cards-wrapper {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 15px;
+      scroll-behavior: smooth;
+    }
+
+    .cards-wrapper::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .cards-wrapper::-webkit-scrollbar-thumb {
+      background: rgba(255, 204, 0, 0.3);
+      border-radius: 4px;
+    }
+
+    .travel-card {
+      min-width: 280px;
+      max-width: 280px;
+      background: #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .travel-card:hover {
+      transform: translateY(-5px);
+      border-color: #ffcc00;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: #334155;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-tag {
+      font-size: 11px;
+      background: rgba(255, 204, 0, 0.2);
+      color: #ffcc00;
+      padding: 3px 8px;
+      border-radius: 10px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      margin: 0 0 8px 0;
+      color: #fff;
+    }
+
+    .card-info {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 12px;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 10px;
+      font-size: 12px;
+    }
+
+    .rating {
+      color: #ffcc00;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #888;
+      font-size: 13px;
+    }
+  </style>
 </head>
 <body>
 
   <header>
-  <div class="logo">
-    <img src="logo.png" alt="Sytraex Logo" class="logo-img">
-    <div class="logo-text">
-      <h1>sytraex</h1>
-      <p>Share Your Travel Experience</p>
+    <div class="logo">
+      <img src="logo.png" alt="Sytraex Logo" class="logo-img">
+      <div class="logo-text">
+        <h1>sytraex</h1>
+        <p>Share Your Travel Experience</p>
+      </div>
     </div>
-  </div>
 
-  <nav>
-    <ul>
-      <li><a href="index.html">Ana Sayfa</a></li>
-      <li><a href="register.html">Kayıt Ol</a></li>
-      <li><a href="login.html">Giriş Yap</a></li>
-      <li><a href="whitepaper.html">White Paper (Stake SYTX) </a></li>
-    </ul>
-    <div class="lang-switch">
-      <a href="index.html">TR</a> / <a href="#">EN</a>
-    </div>
-  </nav>
-</header>
-
+    <nav>
+      <ul>
+        <li><a href="index.html" style="color: #ffcc00;">Ana Sayfa</a></li>
+        <li><a href="register.html">Kayıt Ol</a></li>
+        <li><a href="login.html">Giriş Yap</a></li>
+        <li><a href="whitepaper.html">White Paper (Stake SYTX)</a></li>
+      </ul>
+      <div class="lang-switch">
+        <a href="index.html">TR</a> / <a href="#">EN</a>
+      </div>
+    </nav>
+  </header>
 
   <section class="hero">
     <h2>Dünyayı Keşfet. Anılarını Paylaş.</h2>
     <p>Sytraex, seyahat deneyimlerini paylaşabileceğin ve ilham alabileceğin sosyal topluluk.</p>
-    <div class="buttons">
+    <div class="buttons" id="heroButtons">
       <a href="register.html" class="btn">Kayıt Ol</a>
       <a href="login.html" class="btn secondary">Giriş Yap</a>
     </div>
   </section>
 
+  <!-- Gelişmiş Arama Filtre Paneli -->
+  <section class="search-section">
+    <div class="search-card">
+      <form id="searchForm" class="search-grid">
+        
+        <!-- 1. Ülke Seçimi -->
+        <div class="search-group">
+          <label for="searchCountry">Nereye? (Ülke):</label>
+          <select id="searchCountry" required>
+            <option value="" disabled selected>Ülke Seçin...</option>
+            <option value="Türkiye">Türkiye</option>
+            <option value="Almanya">Almanya</option>
+            <option value="ABD">Amerika Birleşik Devletleri</option>
+            <option value="İngiltere">İngiltere</option>
+            <option value="Fransa">Fransa</option>
+            <option value="İtalya">İtalya</option>
+            <option value="Hollanda">Hollanda</option>
+            <option value="Azerbaycan">Azerbaycan</option>
+          </select>
+        </div>
+
+        <!-- 2. İl / Eyalet Seçimi -->
+        <div class="search-group">
+          <label for="searchCity">Şehir / İl:</label>
+          <select id="searchCity" disabled>
+            <option value="" disabled selected>Önce Ülke Seçin...</option>
+          </select>
+        </div>
+
+        <!-- 3. Süre Seçimi (Saat / Gün) -->
+        <div class="search-group">
+          <label for="searchDuration">Süre / Zaman Dilimi:</label>
+          <select id="searchDuration">
+            <option value="all">Tüm Süreler</option>
+            <option value="3saat">3 Saatlik Hızlı Tur</option>
+            <option value="6saat">Günübirlik (6-12 Saat)</option>
+            <option value="1gun">Tam 1 Gün</option>
+            <option value="3gun">Hafta Sonu (2-3 Gün)</option>
+            <option value="1hafta">1 Hafta veya Daha Uzun</option>
+          </select>
+        </div>
+
+        <!-- 4. Seyahat Tipi / Modlar -->
+        <div class="search-group">
+          <label for="searchMode">Seyahat Modu / Konsept:</label>
+          <select id="searchMode">
+            <option value="all">Tüm Konseptler</option>
+            <option value="gece">🌙 Gece Hayatı & Eğlence</option>
+            <option value="gunduz">☀️ Gündüz Gezi & Şehir</option>
+            <option value="tarih">🏛️ Tarihsel & Kültür</option>
+            <option value="sakinlik">🌿 Doğa & Sakinlik</option>
+            <option value="gastronomi">🍕 Yemek & Gastronomi</option>
+            <option value="macera">🏄 Macera & Spor</option>
+            <option value="butce">💰 Bütçe Dostu / Sırt Çantalı</option>
+          </select>
+        </div>
+
+        <!-- Arama Butonu -->
+        <div class="search-group">
+          <button type="submit" class="search-btn">🔍 Deneyimleri Ara</button>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- En Çok Oy Alan Seyahat Deneyimleri (Yana Kaydırmalı Vitrin) -->
+  <section class="featured-section">
+    <div class="section-title">
+      <span>⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları</span>
+    </div>
+
+    <div class="cards-wrapper">
+
+      <!-- Örnek Kart 1 -->
+      <div class="travel-card">
+        <img src="https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=500" alt="Kapadokya" class="card-img">
+        <div class="card-body">
+          <span class="card-tag">☀️ Gündüz Gezi</span>
+          <h3 class="card-title">Kapadokya Balon & Vadi Turu</h3>
+          <div class="card-info">📍 Nevşehir, Türkiye • ⏱️ 1 Gün</div>
+          <div class="card-footer">
+            <span>Yazar: <strong>@ahmet_sytx</strong></span>
+            <span class="rating">★ 4.9 (128 Oy)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Örnek Kart 2 -->
+      <div class="travel-card">
+        <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=500" alt="Londra" class="card-img">
+        <div class="card-body">
+          <span class="card-tag">🏛️ Tarih & Kültür</span>
+          <h3 class="card-title">Londra Müze ve Gece Yürüyüşü</h3>
+          <div class="card-info">📍 Londra, İngiltere • ⏱️ 3 Gün</div>
+          <div class="card-footer">
+            <span>Yazar: <strong>@elena_travel</strong></span>
+            <span class="rating">★ 4.8 (95 Oy)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Örnek Kart 3 -->
+      <div class="travel-card">
+        <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?w=500" alt="Santorini" class="card-img">
+        <div class="card-body">
+          <span class="card-tag">🌿 Doğa & Sakinlik</span>
+          <h3 class="card-title">Santorini Gün Batımı ve Ege Rotası</h3>
+          <div class="card-info">📍 Santorini, Yunanistan • ⏱️ 2 Gün</div>
+          <div class="card-footer">
+            <span>Yazar: <strong>@can_sytx</strong></span>
+            <span class="rating">★ 4.9 (210 Oy)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Örnek Kart 4 -->
+      <div class="travel-card">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500" alt="Roma" class="card-img">
+        <div class="card-body">
+          <span class="card-tag">🍕 Yemek & Gastronomi</span>
+          <h3 class="card-title">Roma Sokak Lezzetleri & Makarna Turu</h3>
+          <div class="card-info">📍 Roma, İtalya • ⏱️ 6 Saat</div>
+          <div class="card-footer">
+            <span>Yazar: <strong>@marco_food</strong></span>
+            <span class="rating">★ 4.7 (84 Oy)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <footer>
-    <p>© 2025 Sytraex | Share Your Travel Experience</p>
+    <p>© 2026 Sytraex | Share Your Travel Experience</p>
   </footer>
 
-<script>
-  // Kullanıcı giriş yapmış mı kontrol et
-  const loggedIn = localStorage.getItem('loggedIn');
+  <script>
+    // 1. Dinamik Ülke-İl Veri Yapısı
+    const citiesData = {
+      "Türkiye": ["Adana", "Ankara", "Antalya", "Bursa", "Gaziantep", "İstanbul", "İzmir", "Muğla", "Nevşehir", "Trabzon"],
+      "Almanya": ["Berlin", "Münih", "Frankfurt", "Hamburg", "Köln"],
+      "ABD": ["New York", "Los Angeles", "Chicago", "Miami", "San Francisco"],
+      "İngiltere": ["Londra", "Manchester", "Liverpool", "Edinburgh"],
+      "Fransa": ["Paris", "Lyon", "Marsilya", "Nice"],
+      "İtalya": ["Roma", "Milano", "Venedik", "Floransa"],
+      "Hollanda": ["Amsterdam", "Rotterdam", "Utrecht"],
+      "Azerbaycan": ["Bakü", "Gence", "Şeki"]
+    };
 
-  // Menüdeki ilgili linkleri seçelim
-  const registerLink = document.querySelector('a[href="register.html"], a[href="https://sytraex.com/register.html"]');
-  const loginLink = document.querySelector('a[href="login.html"], a[href="https://sytraex.com/login.html"]');
+    const countrySelect = document.getElementById('searchCountry');
+    const citySelect = document.getElementById('searchCity');
 
-  // Profil linki oluştur
-  const profileLink = document.createElement('a');
-  profileLink.href = "profile.html";
-  profileLink.textContent = "Profilim";
-  profileLink.style.color = "#ffcc00";
-  profileLink.style.fontWeight = "bold";
-  profileLink.style.marginLeft = "15px";
+    countrySelect.addEventListener('change', () => {
+      const selected = countrySelect.value;
+      citySelect.innerHTML = '<option value="" disabled selected>İl Seçin...</option>';
 
-  if (loggedIn === "true") {
-    // Giriş yapılmışsa: kayıt ol / giriş linklerini gizle, profil linkini ekle
-    if (registerLink) registerLink.style.display = "none";
-    if (loginLink) {
-      loginLink.style.display = "none";
-      loginLink.parentNode.insertBefore(profileLink, loginLink.nextSibling);
+      if (selected && citiesData[selected]) {
+        citiesData[selected].forEach(city => {
+          const opt = document.createElement('option');
+          opt.value = city;
+          opt.textContent = city;
+          citySelect.appendChild(opt);
+        });
+        citySelect.disabled = false;
+      } else {
+        citySelect.disabled = true;
+      }
+    });
+
+    // 2. Arama Yönlendirme Mantığı
+    document.getElementById('searchForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const country = countrySelect.value;
+      const city = citySelect.value || '';
+      const duration = document.getElementById('searchDuration').value;
+      const mode = document.getElementById('searchMode').value;
+
+      // Sonuç sayfasına URL parametreleri ile yönlendirme
+      window.location.href = `search-results.html?country=${encodeURIComponent(country)}&city=${encodeURIComponent(city)}&duration=${encodeURIComponent(duration)}&mode=${encodeURIComponent(mode)}`;
+    });
+
+    // 3. Kullanıcı Oturum Durumu Kontrolü
+    const loggedIn = localStorage.getItem('loggedIn');
+    const registerLink = document.querySelector('a[href="register.html"]');
+    const loginLink = document.querySelector('a[href="login.html"]');
+    const heroButtons = document.getElementById('heroButtons');
+
+    if (loggedIn === "true") {
+      if (registerLink) registerLink.style.display = "none";
+      if (loginLink) {
+        loginLink.textContent = "Profilim";
+        loginLink.href = "profile.html";
+        loginLink.style.color = "#ffcc00";
+        loginLink.style.fontWeight = "bold";
+      }
+      if (heroButtons) {
+        heroButtons.innerHTML = `<a href="profile.html" class="btn">Profilime Git</a>`;
+      }
     }
-  } else {
-    // Giriş yapılmamışsa: her şey normal kalsın
-    if (registerLink) registerLink.style.display = "inline";
-    if (loginLink) loginLink.style.display = "inline";
-  }
-</script>
+  </script>
 
-  
 </body>
 </html>
