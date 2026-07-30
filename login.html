@@ -5,98 +5,416 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Giriş Yap | Sytraex</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="logo.png">
+  
   <style>
     body {
-      background: #0a0a0a;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
       margin: 0;
-      padding: 40px;
+      padding: 0;
+      background-color: #0f172a;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
     }
+
     header {
-      background: rgba(255,255,255,0.05);
-      padding: 10px 0;
-      text-align: left;
-      padding-left: 20px;
-      position: fixed;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
       top: 0;
-      width: 100%;
-      z-index: 100;
+      z-index: 1000;
     }
-    .home-link {
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 45px;
+      height: 45px;
+    }
+
+    .logo-text h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #ffcc00;
+      text-transform: lowercase;
+    }
+
+    .logo-text p {
+      margin: 0;
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ffcc00;
+    }
+
+    .lang-switch a {
       color: #ffcc00;
       text-decoration: none;
-      font-weight: bold;
+      font-size: 14px;
     }
-    .home-link:hover { color: #fff; }
+
+    .login-container {
+      padding: 60px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
     form {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid #333;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 15px;
-      padding: 30px;
-      max-width: 450px;
-      margin: 100px auto;
-      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+      padding: 35px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      backdrop-filter: blur(8px);
     }
+
+    form h2 {
+      color: #ffcc00;
+      margin-top: 0;
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 26px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
     input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 8px;
-      border: none;
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      box-sizing: border-box;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s;
     }
+
+    input:focus {
+      border-color: #ffcc00;
+    }
+
     button {
-      background: #ff9900;
+      width: 100%;
+      padding: 12px;
+      background: #ffcc00;
       color: #000;
-      padding: 12px 25px;
       border: none;
-      border-radius: 25px;
+      border-radius: 8px;
       font-weight: bold;
+      font-size: 15px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: background 0.3s, transform 0.1s;
     }
-    button:hover { background: #ffcc00; }
-    h2 { color: #ffcc00; }
+
+    button:hover {
+      background: #e6b800;
+    }
+
+    .form-footer {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    .form-footer a {
+      color: #ffcc00;
+      text-decoration: none;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Modal / Pop-Up Stilleri (Şifremi Unuttum) */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #1e293b;
+      border: 1px solid #ffcc00;
+      border-radius: 12px;
+      padding: 25px;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
 
+  <!-- Header (Register ile Tam Birebir) -->
   <header>
-    <a href="index.html" class="home-link">🏠 Ana Sayfa</a>
+    <div class="logo">
+      <img src="logo.png" alt="Sytraex Logo" class="logo-img">
+      <div class="logo-text">
+        <h1>sytraex</h1>
+        <p>Share Your Travel Experience</p>
+      </div>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="register.html">Kayıt Ol</a></li>
+        <li><a href="login.html" style="color: #ffcc00;">Giriş Yap</a></li>
+        <li><a href="whitepaper.html">White Paper (Stake SYTX)</a></li>
+      </ul>
+      <div class="lang-switch">
+        <a href="index.html">TR</a> / <a href="#">EN</a>
+      </div>
+    </nav>
   </header>
 
-  <h2>Giriş Yap</h2>
-  <form id="loginForm">
-    <input type="email" id="email" placeholder="E-posta Adresi" required>
-    <input type="password" id="password" placeholder="Şifre" required>
-    <button type="submit">Giriş Yap</button>
-  </form>
+  <!-- Giriş Formu -->
+  <div class="login-container">
+    <form id="loginForm">
+      <h2>Giriş Yap</h2>
 
-  <p>Hesabınız yok mu? <a href="register.html" style="color:#ffcc00;">Kayıt Ol</a></p>
+      <div class="form-group">
+        <input type="text" id="loginIdentifier" placeholder="E-posta veya Kullanıcı Adı" required>
+      </div>
 
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      <div class="form-group">
+        <input type="password" id="password" placeholder="Şifre" required>
+      </div>
+
+      <button type="submit" id="submitBtn">Giriş Yap</button>
+
+      <div class="form-footer">
+        <a href="#" id="forgotPasswordBtn">Şifremi Unuttum?</a>
+        <span>Hesabınız yok mu? <a href="register.html">Kayıt Ol</a></span>
+      </div>
+    </form>
+  </div>
+
+  <!-- Şifremi Unuttum Modal (Pop-Up) -->
+  <div class="modal" id="forgotModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <h3 style="color: #ffcc00; margin-top:0;">Şifre Kurtarma</h3>
+      
+      <!-- Adım 1: E-posta Girme -->
+      <div id="forgotStep1">
+        <p style="font-size: 13px; color: #ccc;">Sistemdeki E-posta adresinizi veya Kullanıcı Adınızı giriniz:</p>
+        <input type="text" id="forgotEmail" placeholder="E-posta / Kullanıcı Adı" style="margin-bottom: 15px;">
+        <button type="button" id="findAccountBtn">Hesabı Bul</button>
+      </div>
+
+      <!-- Adım 2: Gizli Soru Yanıtlama -->
+      <div id="forgotStep2" style="display: none;">
+        <p style="font-size: 13px; color: #ffcc00; font-weight: bold;" id="questionText"></p>
+        <input type="text" id="forgotAnswer" placeholder="Gizli Soru Cevabınız" style="margin-bottom: 15px;">
+        <button type="button" id="verifyAnswerBtn">Şifreyi Göster</button>
+      </div>
+
+      <!-- Adım 3: Şifre Sonucu -->
+      <div id="forgotStep3" style="display: none; text-align: center;">
+        <p style="font-size: 13px; color: #2ecc71;">Hesap Doğrulandı!</p>
+        <div id="recoveredPassword" style="font-size: 18px; font-weight: bold; color: #ffcc00; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; border: 1px dashed #ffcc00;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
+      authDomain: "sytraex-462b0.firebaseapp.com",
+      projectId: "sytraex-462b0",
+      storageBucket: "sytraex-462b0.firebasestorage.app",
+      messagingSenderId: "379245018695",
+      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62",
+      measurementId: "G-60667BRD3S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 1. Giriş Yapma Mantığı
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const userData = JSON.parse(localStorage.getItem('sytraexUser'));
+      const identifier = document.getElementById('loginIdentifier').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+      const submitBtn = document.getElementById('submitBtn');
 
-      if (!userData) {
-        alert("Kayıt bulunamadı. Lütfen önce kayıt olun.");
+      submitBtn.innerText = "Kontrol Ediliyor...";
+      submitBtn.disabled = true;
+
+      try {
+        let foundUser = null;
+
+        // Önce kullanıcı adına göre arayalım
+        const userDocRef = doc(db, "users", identifier);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          foundUser = userDocSnap.data();
+        } else {
+          // Bulunamazsa e-postaya göre sorgulayalım
+          const q = query(collection(db, "users"), where("email", "==", identifier));
+          const querySnap = await getDocs(q);
+          if (!querySnap.empty) {
+            foundUser = querySnap.docs[0].data();
+          }
+        }
+
+        if (!foundUser) {
+          alert("Kullanıcı bulunamadı! Lütfen e-posta veya kullanıcı adınızı kontrol edin.");
+          return;
+        }
+
+        if (foundUser.password === password) {
+          alert("Giriş başarılı! Hoş geldin, " + (foundUser.name || foundUser.username));
+          localStorage.setItem('sytraexUser', JSON.stringify(foundUser));
+          localStorage.setItem('loggedIn', 'true');
+          window.location.href = "profile.html";
+        } else {
+          alert("Hatalı şifre girdiniz!");
+        }
+
+      } catch (err) {
+        console.error("Giriş hatası:", err);
+        alert("Bağlantı hatası oluştu.");
+      } finally {
+        submitBtn.innerText = "Giriş Yap";
+        submitBtn.disabled = false;
+      }
+    });
+
+    // 2. Şifremi Unuttum Modalı ve Gizli Soru Kontrolü
+    const modal = document.getElementById('forgotModal');
+    const forgotBtn = document.getElementById('forgotPasswordBtn');
+    const closeModal = document.getElementById('closeModal');
+
+    let recoveredUser = null;
+
+    const questionMap = {
+      "pet": "İlk evcil hayvanınızın adı nedir?",
+      "school": "İlkokul öğretmeninizin adı nedir?",
+      "city": "Annenizin doğduğu şehir neresidir?",
+      "car": "İlk sahip olduğunuz arabanın markası nedir?"
+    };
+
+    forgotBtn.onclick = () => { modal.style.display = 'flex'; };
+    closeModal.onclick = () => { modal.style.display = 'none'; resetForgotForm(); };
+
+    document.getElementById('findAccountBtn').addEventListener('click', async () => {
+      const inputVal = document.getElementById('forgotEmail').value.trim().toLowerCase();
+      if (!inputVal) {
+        alert("Lütfen e-posta veya kullanıcı adı giriniz.");
         return;
       }
 
-      if (userData.email === email && userData.password === password) {
-        alert("Giriş başarılı! Hoş geldin " + userData.name + " 🌟");
-        localStorage.setItem('loggedIn', 'true');
-        window.location.href = "profile.html";
-      } else {
-        alert("E-posta veya şifre hatalı!");
+      try {
+        const userDocRef = doc(db, "users", inputVal);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          recoveredUser = userDocSnap.data();
+        } else {
+          const q = query(collection(db, "users"), where("email", "==", inputVal));
+          const querySnap = await getDocs(q);
+          if (!querySnap.empty) {
+            recoveredUser = querySnap.docs[0].data();
+          }
+        }
+
+        if (recoveredUser) {
+          document.getElementById('forgotStep1').style.display = 'none';
+          document.getElementById('forgotStep2').style.display = 'block';
+          
+          const qText = questionMap[recoveredUser.secretQuestion] || "Gizli sorunuz:";
+          document.getElementById('questionText').innerText = "Gizli Soru: " + qText;
+        } else {
+          alert("Bu bilgilerle eşleşen bir hesap bulunamadı.");
+        }
+      } catch (err) {
+        console.error("Hesap arama hatası:", err);
       }
     });
+
+    document.getElementById('verifyAnswerBtn').addEventListener('click', () => {
+      const answerInput = document.getElementById('forgotAnswer').value.trim().toLowerCase();
+
+      if (recoveredUser && recoveredUser.secretAnswer.toLowerCase() === answerInput) {
+        document.getElementById('forgotStep2').style.display = 'none';
+        document.getElementById('forgotStep3').style.display = 'block';
+        document.getElementById('recoveredPassword').innerText = "Şifreniz: " + recoveredUser.password;
+      } else {
+        alert("Gizli soru cevabı hatalı!");
+      }
+    });
+
+    function resetForgotForm() {
+      document.getElementById('forgotStep1').style.display = 'block';
+      document.getElementById('forgotStep2').style.display = 'none';
+      document.getElementById('forgotStep3').style.display = 'none';
+      document.getElementById('forgotEmail').value = '';
+      document.getElementById('forgotAnswer').value = '';
+      recoveredUser = null;
+    }
   </script>
 
 </body>
