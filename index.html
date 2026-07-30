@@ -164,7 +164,7 @@
       font-weight: bold;
     }
 
-    .search-group select {
+    .search-group input, .search-group select {
       width: 100%;
       padding: 12px;
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -173,6 +173,11 @@
       color: #fff;
       font-size: 14px;
       outline: none;
+      box-sizing: border-box;
+    }
+
+    .search-group input:focus, .search-group select:focus {
+      border-color: #ffcc00;
     }
 
     .search-group select option {
@@ -180,7 +185,6 @@
     }
 
     .search-btn {
-      grid-column: span 1;
       width: 100%;
       padding: 12px;
       background: #ffcc00;
@@ -197,7 +201,7 @@
       background: #e6b800;
     }
 
-    /* Vitrin / Öne Çıkan Gönderiler (Slider) */
+    /* Vitrin Bölümü (Öne Çıkanlar) */
     .featured-section {
       max-width: 1100px;
       margin: 0 auto 60px;
@@ -205,7 +209,7 @@
     }
 
     .section-title {
-      font-size: 22px;
+      font-size: 20px;
       color: #ffcc00;
       margin-bottom: 20px;
       display: flex;
@@ -213,83 +217,18 @@
       gap: 10px;
     }
 
-    .cards-wrapper {
-      display: flex;
-      gap: 20px;
-      overflow-x: auto;
-      padding-bottom: 15px;
-      scroll-behavior: smooth;
-    }
-
-    .cards-wrapper::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    .cards-wrapper::-webkit-scrollbar-thumb {
-      background: rgba(255, 204, 0, 0.3);
-      border-radius: 4px;
-    }
-
-    .travel-card {
-      min-width: 280px;
-      max-width: 280px;
-      background: #1e293b;
+    .empty-state {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
       border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: transform 0.3s;
-    }
-
-    .travel-card:hover {
-      transform: translateY(-5px);
-      border-color: #ffcc00;
-    }
-
-    .card-img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      background: #334155;
-    }
-
-    .card-body {
-      padding: 15px;
-    }
-
-    .card-tag {
-      font-size: 11px;
-      background: rgba(255, 204, 0, 0.2);
-      color: #ffcc00;
-      padding: 3px 8px;
-      border-radius: 10px;
-      display: inline-block;
-      margin-bottom: 8px;
-    }
-
-    .card-title {
-      font-size: 16px;
-      margin: 0 0 8px 0;
-      color: #fff;
-    }
-
-    .card-info {
-      font-size: 12px;
+      padding: 40px 20px;
+      text-align: center;
       color: #aaa;
-      margin-bottom: 12px;
     }
 
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 10px;
-      font-size: 12px;
-    }
-
-    .rating {
-      color: #ffcc00;
-      font-weight: bold;
+    .empty-state p {
+      margin: 8px 0 0 0;
+      font-size: 14px;
     }
 
     footer {
@@ -339,28 +278,73 @@
     <div class="search-card">
       <form id="searchForm" class="search-grid">
         
-        <!-- 1. Ülke Seçimi -->
+        <!-- 1. Ülke Seçimi (Yazdıkça Süzülen Input) -->
         <div class="search-group">
           <label for="searchCountry">Nereye? (Ülke):</label>
-          <select id="searchCountry" required>
-            <option value="" disabled selected>Ülke Seçin...</option>
-            <option value="Türkiye">Türkiye</option>
-            <option value="Almanya">Almanya</option>
-            <option value="ABD">Amerika Birleşik Devletleri</option>
-            <option value="İngiltere">İngiltere</option>
-            <option value="Fransa">Fransa</option>
-            <option value="İtalya">İtalya</option>
-            <option value="Hollanda">Hollanda</option>
-            <option value="Azerbaycan">Azerbaycan</option>
-          </select>
+          <input 
+            type="text" 
+            id="searchCountry" 
+            list="countryList" 
+            placeholder="Ülke adı yazın..." 
+            autocomplete="off" 
+            required
+          >
+          <datalist id="countryList">
+            <option value="Türkiye">
+            <option value="Almanya">
+            <option value="Amerika Birleşik Devletleri">
+            <option value="Arjantin">
+            <option value="Arnavutluk">
+            <option value="Avustralya">
+            <option value="Avusturya">
+            <option value="Azerbaycan">
+            <option value="Belçika">
+            <option value="Birleşik Arap Emirlikleri">
+            <option value="Brezilya">
+            <option value="Bulgaristan">
+            <option value="Çekya">
+            <option value="Çin">
+            <option value="Danimarka">
+            <option value="Endonezya">
+            <option value="Fas">
+            <option value="Finlandiya">
+            <option value="Fransa">
+            <option value="Güney Afrika">
+            <option value="Güney Kore">
+            <option value="Gürcistan">
+            <option value="Hindistan">
+            <option value="Hollanda">
+            <option value="İngiltere">
+            <option value="İran">
+            <option value="İspanya">
+            <option value="İsveç">
+            <option value="İsviçre">
+            <option value="İtalya">
+            <option value="Japonya">
+            <option value="Karadağ">
+            <option value="Katar">
+            <option value="Kazakistan">
+            <option value="Kıbrıs">
+            <option value="Meksika">
+            <option value="Mısır">
+            <option value="Norveç">
+            <option value="Özbekistan">
+            <option value="Polonya">
+            <option value="Portekiz">
+            <option value="Romanya">
+            <option value="Rusya">
+            <option value="Sırbistan">
+            <option value="Suudi Arabistan">
+            <option value="Tayland">
+            <option value="Ukrayna">
+            <option value="Yunanistan">
+          </datalist>
         </div>
 
-        <!-- 2. İl / Eyalet Seçimi -->
+        <!-- 2. İl / Şehir Seçimi -->
         <div class="search-group">
-          <label for="searchCity">Şehir / İl:</label>
-          <select id="searchCity" disabled>
-            <option value="" disabled selected>Önce Ülke Seçin...</option>
-          </select>
+          <label for="searchCity">Şehir / İl (Opsiyonel):</label>
+          <input type="text" id="searchCity" placeholder="Örn: İstanbul, Roma..." autocomplete="off">
         </div>
 
         <!-- 3. Süre Seçimi (Saat / Gün) -->
@@ -400,70 +384,17 @@
     </div>
   </section>
 
-  <!-- En Çok Oy Alan Seyahat Deneyimleri (Yana Kaydırmalı Vitrin) -->
+  <!-- En Çok Oy Alan Seyahat Deneyimleri (Gerçek Kullanıcı Paylaşımları Alanı) -->
   <section class="featured-section">
     <div class="section-title">
       <span>⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları</span>
     </div>
 
-    <div class="cards-wrapper">
-
-      <!-- Örnek Kart 1 -->
-      <div class="travel-card">
-        <img src="https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=500" alt="Kapadokya" class="card-img">
-        <div class="card-body">
-          <span class="card-tag">☀️ Gündüz Gezi</span>
-          <h3 class="card-title">Kapadokya Balon & Vadi Turu</h3>
-          <div class="card-info">📍 Nevşehir, Türkiye • ⏱️ 1 Gün</div>
-          <div class="card-footer">
-            <span>Yazar: <strong>@ahmet_sytx</strong></span>
-            <span class="rating">★ 4.9 (128 Oy)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Örnek Kart 2 -->
-      <div class="travel-card">
-        <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=500" alt="Londra" class="card-img">
-        <div class="card-body">
-          <span class="card-tag">🏛️ Tarih & Kültür</span>
-          <h3 class="card-title">Londra Müze ve Gece Yürüyüşü</h3>
-          <div class="card-info">📍 Londra, İngiltere • ⏱️ 3 Gün</div>
-          <div class="card-footer">
-            <span>Yazar: <strong>@elena_travel</strong></span>
-            <span class="rating">★ 4.8 (95 Oy)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Örnek Kart 3 -->
-      <div class="travel-card">
-        <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?w=500" alt="Santorini" class="card-img">
-        <div class="card-body">
-          <span class="card-tag">🌿 Doğa & Sakinlik</span>
-          <h3 class="card-title">Santorini Gün Batımı ve Ege Rotası</h3>
-          <div class="card-info">📍 Santorini, Yunanistan • ⏱️ 2 Gün</div>
-          <div class="card-footer">
-            <span>Yazar: <strong>@can_sytx</strong></span>
-            <span class="rating">★ 4.9 (210 Oy)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Örnek Kart 4 -->
-      <div class="travel-card">
-        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500" alt="Roma" class="card-img">
-        <div class="card-body">
-          <span class="card-tag">🍕 Yemek & Gastronomi</span>
-          <h3 class="card-title">Roma Sokak Lezzetleri & Makarna Turu</h3>
-          <div class="card-info">📍 Roma, İtalya • ⏱️ 6 Saat</div>
-          <div class="card-footer">
-            <span>Yazar: <strong>@marco_food</strong></span>
-            <span class="rating">★ 4.7 (84 Oy)</span>
-          </div>
-        </div>
-      </div>
-
+    <!-- Puanlanan Paylaşımlar Geldikçe Buraya Düşecek -->
+    <div id="topRatedContainer" class="empty-state">
+      <div style="font-size: 28px; margin-bottom: 8px;">🗺️</div>
+      <strong style="color: #ffcc00;">Henüz Öne Çıkan Bir Seyahat Rotası Yok</strong>
+      <p>Kullanıcılar deneyimlerini paylaşıp oyladıkça en popüler rotalar burada listelenecektir.</p>
     </div>
   </section>
 
@@ -472,44 +403,12 @@
   </footer>
 
   <script>
-    // 1. Dinamik Ülke-İl Veri Yapısı
-    const citiesData = {
-      "Türkiye": ["Adana", "Ankara", "Antalya", "Bursa", "Gaziantep", "İstanbul", "İzmir", "Muğla", "Nevşehir", "Trabzon"],
-      "Almanya": ["Berlin", "Münih", "Frankfurt", "Hamburg", "Köln"],
-      "ABD": ["New York", "Los Angeles", "Chicago", "Miami", "San Francisco"],
-      "İngiltere": ["Londra", "Manchester", "Liverpool", "Edinburgh"],
-      "Fransa": ["Paris", "Lyon", "Marsilya", "Nice"],
-      "İtalya": ["Roma", "Milano", "Venedik", "Floransa"],
-      "Hollanda": ["Amsterdam", "Rotterdam", "Utrecht"],
-      "Azerbaycan": ["Bakü", "Gence", "Şeki"]
-    };
-
-    const countrySelect = document.getElementById('searchCountry');
-    const citySelect = document.getElementById('searchCity');
-
-    countrySelect.addEventListener('change', () => {
-      const selected = countrySelect.value;
-      citySelect.innerHTML = '<option value="" disabled selected>İl Seçin...</option>';
-
-      if (selected && citiesData[selected]) {
-        citiesData[selected].forEach(city => {
-          const opt = document.createElement('option');
-          opt.value = city;
-          opt.textContent = city;
-          citySelect.appendChild(opt);
-        });
-        citySelect.disabled = false;
-      } else {
-        citySelect.disabled = true;
-      }
-    });
-
-    // 2. Arama Yönlendirme Mantığı
+    // 1. Arama Yönlendirme Mantığı
     document.getElementById('searchForm').addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const country = countrySelect.value;
-      const city = citySelect.value || '';
+      const country = document.getElementById('searchCountry').value.trim();
+      const city = document.getElementById('searchCity').value.trim();
       const duration = document.getElementById('searchDuration').value;
       const mode = document.getElementById('searchMode').value;
 
@@ -517,7 +416,7 @@
       window.location.href = `search-results.html?country=${encodeURIComponent(country)}&city=${encodeURIComponent(city)}&duration=${encodeURIComponent(duration)}&mode=${encodeURIComponent(mode)}`;
     });
 
-    // 3. Kullanıcı Oturum Durumu Kontrolü
+    // 2. Kullanıcı Oturum Durumu Kontrolü
     const loggedIn = localStorage.getItem('loggedIn');
     const registerLink = document.querySelector('a[href="register.html"]');
     const loginLink = document.querySelector('a[href="login.html"]');
