@@ -6,7 +6,7 @@
   <title>Kayıt Ol | Sytraex</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="logo.png">
-  
+
   <style>
     body {
       margin: 0;
@@ -28,129 +28,91 @@
       z-index: 1000;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-img { width: 45px; height: 45px; }
+    .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
+    .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
 
-    .logo-img {
-      width: 45px;
-      height: 45px;
-    }
-
-    .logo-text h1 {
-      margin: 0;
-      font-size: 22px;
-      color: #ffcc00;
-      text-transform: lowercase;
-    }
-
-    .logo-text p {
-      margin: 0;
-      font-size: 11px;
-      color: #aaa;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      gap: 20px;
-    }
-
-    nav ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    nav ul li a:hover {
-      color: #ffcc00;
-    }
-
-    .lang-switch a {
-      color: #ffcc00;
-      text-decoration: none;
-      font-size: 14px;
-    }
+    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; }
+    nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
+    nav ul li a:hover { color: #ffcc00; }
 
     .register-container {
-      padding: 40px 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 0 20px;
     }
 
-    form {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 15px;
-      padding: 35px;
-      width: 100%;
-      max-width: 480px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-      backdrop-filter: blur(8px);
+    .register-card {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    form h2 {
+    .register-card h2 {
       color: #ffcc00;
       margin-top: 0;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
+      font-size: 24px;
       text-align: center;
-      font-size: 26px;
     }
 
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 18px;
       position: relative;
     }
 
     .form-group label {
       display: block;
-      margin-bottom: 5px;
-      font-size: 13px;
-      color: #ccc;
+      font-size: 12px;
+      color: #ffcc00;
+      margin-bottom: 6px;
+      font-weight: bold;
     }
 
-    input, select {
+    .form-group input, .form-group select {
       width: 100%;
-      padding: 12px;
+      padding: 11px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 8px;
-      background: rgba(0, 0, 0, 0.4);
+      background: #0f172a;
       color: #fff;
-      box-sizing: border-box;
-      font-size: 14px;
+      font-size: 13px;
       outline: none;
-      transition: border-color 0.3s;
+      box-sizing: border-box;
     }
 
-    input:focus, select:focus {
-      border-color: #ffcc00;
-    }
-
-    select option {
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #ffcc00;
+      border-top: none;
+      z-index: 9999;
+      top: 100%;
+      left: 0; right: 0;
       background-color: #1e293b;
-      color: #fff;
+      border-radius: 0 0 8px 8px;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
     }
 
-    select:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    .autocomplete-items div {
+      padding: 10px 12px;
+      cursor: pointer;
+      font-size: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
-    button {
+    .autocomplete-items div:hover {
+      background-color: #ffcc00;
+      color: #000;
+    }
+
+    .submit-btn {
       width: 100%;
-      padding: 12px;
+      padding: 13px;
       background: #ffcc00;
       color: #000;
       border: none;
@@ -158,100 +120,13 @@
       font-weight: bold;
       font-size: 15px;
       cursor: pointer;
-      transition: background 0.3s, transform 0.1s;
+      transition: 0.3s;
       margin-top: 10px;
     }
 
-    button:hover {
-      background: #e6b800;
-    }
+    .submit-btn:hover { background: #e6b800; }
 
-    button:active {
-      transform: scale(0.99);
-    }
-
-    .status-msg {
-      font-size: 12px;
-      margin-top: 5px;
-    }
-
-    .status-msg.error {
-      color: #ff4d4d;
-    }
-
-    .status-msg.success {
-      color: #2ecc71;
-    }
-
-    .suggestions {
-      display: flex;
-      gap: 6px;
-      margin-top: 6px;
-      flex-wrap: wrap;
-    }
-
-    .suggestion-chip {
-      background: rgba(255, 204, 0, 0.2);
-      color: #ffcc00;
-      border: 1px solid #ffcc00;
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 11px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .suggestion-chip:hover {
-      background: #ffcc00;
-      color: #000;
-    }
-
-    .password-rules {
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-top: 5px;
-      font-size: 12px;
-    }
-
-    .password-rules p {
-      margin: 0 0 5px 0;
-      color: #aaa;
-      font-weight: bold;
-    }
-
-    .rule-item {
-      color: #ff4d4d;
-      margin: 3px 0;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: color 0.3s;
-    }
-
-    .rule-item.valid {
-      color: #2ecc71;
-    }
-
-    .captcha-box {
-      background: rgba(0, 0, 0, 0.3);
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px dashed rgba(255, 204, 0, 0.5);
-      margin-top: 20px;
-      margin-bottom: 15px;
-    }
-
-    .captcha-box label {
-      color: #ffcc00;
-      font-weight: bold;
-    }
-
-    .no-select {
-      user-select: none;
-      -webkit-user-select: none;
-    }
+    footer { text-align: center; padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #888; font-size: 13px; margin-top: 40px; }
   </style>
 </head>
 <body>
@@ -268,124 +143,75 @@
     <nav>
       <ul>
         <li><a href="index.html">Ana Sayfa</a></li>
-        <li><a href="register.html" style="color: #ffcc00;">Kayıt Ol</a></li>
         <li><a href="login.html">Giriş Yap</a></li>
-        <li><a href="whitepaper.html">White Paper (Stake SYTX)</a></li>
       </ul>
-      <div class="lang-switch">
-        <a href="index.html">TR</a> / <a href="#">EN</a>
-      </div>
     </nav>
   </header>
 
   <div class="register-container">
-    <form id="registerForm">
-      <h2>Kayıt Ol</h2>
+    <div class="register-card">
+      <h2>📝 Sytraex'e Kayıt Ol</h2>
 
-      <div class="form-group">
-        <input type="text" id="name" placeholder="Ad Soyad" required>
-      </div>
-
-      <!-- Kullanıcı Adı Kontrolü -->
-      <div class="form-group">
-        <input type="text" id="username" placeholder="Kullanıcı Adı" required autocomplete="off">
-        <div id="usernameStatus"></div>
-      </div>
-
-      <!-- E-posta Kontrolü -->
-      <div class="form-group">
-        <input type="email" id="email" placeholder="E-posta Adresi" required autocomplete="off">
-        <div id="emailStatus"></div>
-      </div>
-
-      <!-- Şifre ve Kurallar -->
-      <div class="form-group">
-        <input type="password" id="password" placeholder="Şifre" required autocomplete="new-password">
-        
-        <div class="password-rules">
-          <p>Şifre Kriterleri:</p>
-          <div class="rule-item" id="ruleLength">✖ En az 8 karakter</div>
-          <div class="rule-item" id="ruleUpper">✖ En az 1 Büyük Harf (A-Z)</div>
-          <div class="rule-item" id="ruleLower">✖ En az 1 Küçük Harf (a-z)</div>
-          <div class="rule-item" id="ruleNumber">✖ En az 1 Rakam (0-9)</div>
-          <div class="rule-item" id="ruleSpecial">✖ En az 1 Özel Karakter (!@#$%^&*)</div>
+      <form id="registerForm" autocomplete="off">
+        <div class="form-group">
+          <label for="regUsername">Kullanıcı Adı:</label>
+          <input type="text" id="regUsername" placeholder="Örn: selcukalkan" required>
         </div>
-      </div>
 
-      <div class="form-group">
-        <input 
-          type="password" 
-          id="confirmPassword" 
-          placeholder="Şifreyi Onayla (Elle yazınız)" 
-          required 
-          onpaste="return false;" 
-          oncopy="return false;" 
-          oncut="return false;"
-          autocomplete="off"
-        >
-      </div>
+        <div class="form-group">
+          <label for="regName">Ad Soyad:</label>
+          <input type="text" id="regName" placeholder="Örn: Selçuk Alkan" required>
+        </div>
 
-      <!-- Ülke Seçimi (Önce) -->
-      <div class="form-group">
-        <label for="country">Ülke Seçiniz:</label>
-        <select id="country" required>
-          <option value="" disabled selected>Ülke seçin...</option>
-          <option value="Türkiye">Türkiye</option>
-          <option value="Almanya">Almanya</option>
-          <option value="ABD">Amerika Birleşik Devletleri</option>
-          <option value="İngiltere">İngiltere</option>
-          <option value="Fransa">Fransa</option>
-          <option value="İtalya">İtalya</option>
-          <option value="Hollanda">Hollanda</option>
-          <option value="Azerbaycan">Azerbaycan</option>
-          <option value="Diğer">Diğer</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label for="regEmail">E-Posta Adresi:</label>
+          <input type="email" id="regEmail" placeholder="ornek@gmail.com" required>
+        </div>
 
-      <!-- İl Seçimi (Sonra) -->
-      <div class="form-group">
-        <label for="city">İl Seçiniz:</label>
-        <select id="city" required disabled>
-          <option value="" disabled selected>Önce ülke seçiniz...</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label for="regPassword">Şifre:</label>
+          <input type="password" id="regPassword" placeholder="••••••••" required>
+        </div>
 
-      <div class="form-group">
-        <label for="birth">Doğum Tarihi:</label>
-        <input type="date" id="birth" required>
-      </div>
+        <!-- Tek Kutu: Şehir ve Ülke -->
+        <div class="form-group">
+          <label for="regLocation">Yaşadığınız Şehir ve Ülke:</label>
+          <input type="text" id="regLocation" placeholder="Şehir adı yazın (Örn: Tekirdağ, Türkiye)..." required>
+          <div id="locationAutocompleteList" class="autocomplete-items"></div>
+        </div>
 
-      <div class="form-group">
-        <label for="secretQuestion">Gizli Soru Seçiniz:</label>
-        <select id="secretQuestion" required>
-          <option value="" disabled selected>Bir gizli soru seçin...</option>
-          <option value="pet">İlk evcil hayvanınızın adı nedir?</option>
-          <option value="school">İlkokul öğretmeninizin adı nedir?</option>
-          <option value="city">Annenizin doğduğu şehir neresidir?</option>
-          <option value="car">İlk sahip olduğunuz arabanın markası nedir?</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label for="regBirth">Doğum Tarihi:</label>
+          <input type="date" id="regBirth" required>
+        </div>
 
-      <div class="form-group">
-        <input type="text" id="secretAnswer" placeholder="Gizli Soru Cevabı" required>
-      </div>
+        <div class="form-group">
+          <label for="regSecretQuestion">Gizli Soru (Şifre Kurtarma İçin):</label>
+          <select id="regSecretQuestion" required>
+            <option value="pet">İlk evcil hayvanınızın adı nedir?</option>
+            <option value="school">İlkokul öğretmeninizin adı nedir?</option>
+            <option value="city">Annenizin doğduğu şehir neresidir?</option>
+            <option value="car">İlk sahip olduğunuz arabanın markası nedir?</option>
+          </select>
+        </div>
 
-      <!-- Captcha Testi -->
-      <div class="captcha-box">
-        <label class="no-select">Güvenlik Doğrulaması:</label>
-        <p class="no-select" style="margin: 5px 0 10px 0; font-size: 14px;">
-          Lütfen işlemi onaylamak için sonucu giriniz: <span id="captchaQuestion" style="font-weight: bold; color: #ffcc00;"></span>
-        </p>
-        <input type="number" id="captchaAnswer" placeholder="Sonuç" required>
-      </div>
+        <div class="form-group">
+          <label for="regSecretAnswer">Gizli Soru Cevabı:</label>
+          <input type="text" id="regSecretAnswer" placeholder="Cevabınız..." required>
+        </div>
 
-      <button type="submit" id="submitBtn">Kayıt Ol</button>
-    </form>
+        <button type="submit" id="regBtn" class="submit-btn">Kayıt Ol ve Katıl</button>
+      </form>
+    </div>
   </div>
+
+  <footer>
+    <p>© 2026 Sytraex | Share Your Travel Experience</p>
+  </footer>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, setDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
@@ -393,256 +219,105 @@
       projectId: "sytraex-462b0",
       storageBucket: "sytraex-462b0.firebasestorage.app",
       messagingSenderId: "379245018695",
-      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62",
-      measurementId: "G-60667BRD3S"
+      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    let isUsernameAvailable = false;
-    let isEmailValidAndAvailable = false;
+    // Canlı Lokasyon Arama
+    const regLocation = document.getElementById("regLocation");
+    const locList = document.getElementById("locationAutocompleteList");
+    let debounceTimer;
 
-    // Ülke - İl Dinamik Veri Haritası
-    const citiesData = {
-      "Türkiye": [
-        "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir",
-        "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
-        "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari",
-        "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir",
-        "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir",
-        "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat",
-        "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman",
-        "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"
-      ],
-      "Almanya": ["Berlin", "Münih", "Frankfurt", "Hamburg", "Köln", "Stuttgart", "Düsseldorf"],
-      "ABD": ["New York", "Los Angeles", "Chicago", "Houston", "Miami", "San Francisco", "Washington D.C."],
-      "İngiltere": ["Londra", "Manchester", "Birmingham", "Liverpool", "Leeds", "Glasgow"],
-      "Fransa": ["Paris", "Lyon", "Marsilya", "Nice", "Bordo", "Toulouse"],
-      "İtalya": ["Roma", "Milano", "Venedik", "Floransa", "Napoli", "Torino"],
-      "Hollanda": ["Amsterdam", "Rotterdam", "Lahey", "Utrecht", "Eindhoven"],
-      "Azerbaycan": ["Bakü", "Gence", "Sumgayıt", "Mingeçevir", "Şeki"],
-      "Diğer": ["Merkez / Diğer Şehir"]
-    };
+    regLocation.addEventListener("input", function() {
+      const query = this.value.trim();
+      locList.innerHTML = "";
+      if (query.length < 2) { locList.style.display = "none"; return; }
 
-    const countrySelect = document.getElementById('country');
-    const citySelect = document.getElementById('city');
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=6`)
+          .then(res => res.json())
+          .then(data => {
+            locList.innerHTML = "";
+            if (data && data.length > 0) {
+              data.forEach(item => {
+                const div = document.createElement("div");
+                const city = item.address.city || item.address.town || item.address.province || item.display_name.split(',')[0];
+                const country = item.address.country || '';
+                const locText = `${city}${country ? ', ' + country : ''}`;
 
-    countrySelect.addEventListener('change', () => {
-      const selectedCountry = countrySelect.value;
-      citySelect.innerHTML = '<option value="" disabled selected>İl seçiniz...</option>';
-
-      if (selectedCountry && citiesData[selectedCountry]) {
-        citiesData[selectedCountry].forEach(cityName => {
-          const opt = document.createElement('option');
-          opt.value = cityName;
-          opt.textContent = cityName;
-          citySelect.appendChild(opt);
-        });
-        citySelect.disabled = false;
-      } else {
-        citySelect.disabled = true;
-      }
+                div.innerHTML = `📍 <strong>${city}</strong> <small style="color:#aaa;">(${country})</small>`;
+                div.addEventListener("click", () => {
+                  regLocation.value = locText;
+                  locList.style.display = "none";
+                });
+                locList.appendChild(div);
+              });
+              locList.style.display = "block";
+            }
+          });
+      }, 250);
     });
 
-    // Kullanıcı Adı Kontrolü
-    const usernameInput = document.getElementById('username');
-    const usernameStatus = document.getElementById('usernameStatus');
-
-    usernameInput.addEventListener('blur', checkUsernameFirebase);
-
-    async function checkUsernameFirebase() {
-      const val = usernameInput.value.trim().toLowerCase();
-      if (!val) {
-        usernameStatus.innerHTML = '';
-        isUsernameAvailable = false;
-        return;
-      }
-
-      try {
-        const q = query(collection(db, "users"), where("username", "==", val));
-        const querySnapshot = await getDocs(q);
-
-        if (!querySnapshot.empty) {
-          const sug1 = `${val}_sytx`;
-          const sug2 = `${val}${Math.floor(Math.random() * 899 + 100)}`;
-          const sug3 = `${val}_2026`;
-
-          usernameStatus.innerHTML = `
-            <div class="status-msg error">❌ Bu kullanıcı adı zaten alınmış! Öneriler:</div>
-            <div class="suggestions">
-              <span class="suggestion-chip" id="sug1">${sug1}</span>
-              <span class="suggestion-chip" id="sug2">${sug2}</span>
-              <span class="suggestion-chip" id="sug3">${sug3}</span>
-            </div>
-          `;
-
-          document.getElementById('sug1').onclick = () => applySuggestion(sug1);
-          document.getElementById('sug2').onclick = () => applySuggestion(sug2);
-          document.getElementById('sug3').onclick = () => applySuggestion(sug3);
-          isUsernameAvailable = false;
-        } else {
-          usernameStatus.innerHTML = `<div class="status-msg success">✔ Bu kullanıcı adı kullanılabilir.</div>`;
-          isUsernameAvailable = true;
-        }
-      } catch (err) {
-        console.error("Kullanıcı adı kontrol hatası:", err);
-      }
-    }
-
-    function applySuggestion(sug) {
-      usernameInput.value = sug;
-      checkUsernameFirebase();
-    }
-
-    // E-Posta Kontrolü
-    const emailInput = document.getElementById('email');
-    const emailStatus = document.getElementById('emailStatus');
-
-    emailInput.addEventListener('blur', checkEmailFirebase);
-
-    async function checkEmailFirebase() {
-      const val = emailInput.value.trim().toLowerCase();
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      if (!val) {
-        emailStatus.innerHTML = '';
-        isEmailValidAndAvailable = false;
-        return;
-      }
-
-      if (!emailRegex.test(val)) {
-        emailStatus.innerHTML = `<div class="status-msg error">❌ Geçerli bir e-posta adresi yazınız!</div>`;
-        isEmailValidAndAvailable = false;
-        return;
-      }
-
-      try {
-        const q = query(collection(db, "users"), where("email", "==", val));
-        const querySnapshot = await getDocs(q);
-
-        if (!querySnapshot.empty) {
-          emailStatus.innerHTML = `<div class="status-msg error">❌ Bu e-posta adresi zaten kayıtlı! <a href="login.html" style="color: #ffcc00;">Giriş Yap</a></div>`;
-          isEmailValidAndAvailable = false;
-        } else {
-          emailStatus.innerHTML = `<div class="status-msg success">✔ Bu e-posta adresi kullanılabilir.</div>`;
-          isEmailValidAndAvailable = true;
-        }
-      } catch (err) {
-        console.error("E-posta kontrol hatası:", err);
-      }
-    }
-
-    // Şifre Karmaşıklık Kontrolü
-    const passwordInput = document.getElementById('password');
-
-    passwordInput.addEventListener('input', () => {
-      const val = passwordInput.value;
-
-      const isLength = val.length >= 8;
-      const isUpper = /[A-Z]/.test(val);
-      const isLower = /[a-z]/.test(val);
-      const isNumber = /[0-9]/.test(val);
-      const isSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val);
-
-      updateRuleStatus('ruleLength', isLength, "En az 8 karakter");
-      updateRuleStatus('ruleUpper', isUpper, "En az 1 Büyük Harf (A-Z)");
-      updateRuleStatus('ruleLower', isLower, "En az 1 Küçük Harf (a-z)");
-      updateRuleStatus('ruleNumber', isNumber, "En az 1 Rakam (0-9)");
-      updateRuleStatus('ruleSpecial', isSpecial, "En az 1 Özel Karakter (!@#$%^&*)");
+    document.addEventListener("click", (e) => {
+      if (e.target !== regLocation) locList.style.display = "none";
     });
 
-    function updateRuleStatus(elementId, isValid, text) {
-      const el = document.getElementById(elementId);
-      if (isValid) {
-        el.classList.add('valid');
-        el.innerText = `✔ ${text}`;
-      } else {
-        el.classList.remove('valid');
-        el.innerText = `✖ ${text}`;
-      }
-    }
-
-    // Captcha Kontrolü
-    let num1 = Math.floor(Math.random() * 10) + 1;
-    let num2 = Math.floor(Math.random() * 10) + 1;
-    let captchaResult = num1 + num2;
-    document.getElementById('captchaQuestion').innerText = `${num1} + ${num2} = ?`;
-
-    // Kayıt Formu Gönderimi
+    // Kayıt Formu
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      const btn = document.getElementById('regBtn');
+      btn.innerText = "Kaydediliyor...";
+      btn.disabled = true;
 
-      const submitBtn = document.getElementById('submitBtn');
-
-      if (!isUsernameAvailable) {
-        alert("Lütfen kullanılabilir bir kullanıcı adı seçiniz!");
-        usernameInput.focus();
-        return;
-      }
-
-      if (!isEmailValidAndAvailable) {
-        alert("Lütfen kullanılabilir ve geçerli bir e-posta adresi giriniz!");
-        emailInput.focus();
-        return;
-      }
-
-      const username = usernameInput.value.trim().toLowerCase();
-      const pass = passwordInput.value;
-      const confirmPass = document.getElementById('confirmPassword').value;
-      const userCaptcha = parseInt(document.getElementById('captchaAnswer').value, 10);
-
-      const isPasswordValid = pass.length >= 8 &&
-                              /[A-Z]/.test(pass) &&
-                              /[a-z]/.test(pass) &&
-                              /[0-9]/.test(pass) &&
-                              /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pass);
-
-      if (!isPasswordValid) {
-        alert("Şifreniz tüm güvenlik kriterlerini karşılamalıdır!");
-        return;
-      }
-
-      if (pass !== confirmPass) {
-        alert("Girdiğiniz şifreler eşleşmiyor!");
-        return;
-      }
-
-      if (userCaptcha !== captchaResult) {
-        alert("Güvenlik doğrulaması cevabı hatalı!");
-        return;
-      }
-
-      submitBtn.innerText = "Veritabanına Kaydediliyor...";
-      submitBtn.disabled = true;
+      const username = document.getElementById('regUsername').value.trim().toLowerCase();
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
+      const locationVal = regLocation.value.trim();
+      const birth = document.getElementById('regBirth').value;
+      const secretQuestion = document.getElementById('regSecretQuestion').value;
+      const secretAnswer = document.getElementById('regSecretAnswer').value.trim();
 
       try {
-        const userData = {
-          name: document.getElementById('name').value.trim(),
+        const userRef = doc(db, "users", username);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+          alert("Bu kullanıcı adı zaten alınmış. Lütfen başka bir kullanıcı adı seçin.");
+          btn.innerText = "Kayıt Ol ve Katıl";
+          btn.disabled = false;
+          return;
+        }
+
+        const newUser = {
           username: username,
-          email: document.getElementById('email').value.trim(),
-          password: pass,
-          country: countrySelect.value,
-          city: citySelect.value,
-          birth: document.getElementById('birth').value,
-          secretQuestion: document.getElementById('secretQuestion').value,
-          secretAnswer: document.getElementById('secretAnswer').value.trim(),
+          name: name,
+          email: email,
+          password: password,
+          city: locationVal,
+          country: locationVal.includes(',') ? locationVal.split(',')[1].trim() : '',
+          birth: birth,
+          secretQuestion: secretQuestion,
+          secretAnswer: secretAnswer,
+          avatarUrl: '',
           createdAt: new Date().toISOString()
         };
 
-        await setDoc(doc(db, "users", username), userData);
+        await setDoc(userRef, newUser);
 
-        localStorage.setItem('sytraexUser', JSON.stringify(userData));
         localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem('sytraexUser', JSON.stringify(newUser));
 
-        alert("Kayıt işleminiz başarıyla tamamlandı!");
+        alert("Kayıt işlemi başarılı! Profile yönlendiriliyorsunuz.");
         window.location.href = "profile.html";
 
-      } catch (error) {
-        console.error("Veritabanı kayıt hatası:", error);
-        alert("Kayıt sırasında bir hata oluştu: " + error.message);
-        submitBtn.innerText = "Kayıt Ol";
-        submitBtn.disabled = false;
+      } catch (err) {
+        alert("Kayıt hatası: " + err.message);
+        btn.innerText = "Kayıt Ol ve Katıl";
+        btn.disabled = false;
       }
     });
   </script>
