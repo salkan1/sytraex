@@ -458,7 +458,7 @@
       window.location.href = `search-results.html?location=${encodeURIComponent(location)}&duration=${encodeURIComponent(duration)}&mode=${encodeURIComponent(mode)}`;
     });
 
-    // Oturum Kontrolü ve Dinamik Yönlendirme Mantığı
+    // Oturum Kontrolü ve Bağımsız Paylaşım Sayfası Yönlendirmesi
     const loggedIn = localStorage.getItem('loggedIn');
     const registerNav = document.getElementById('registerNav');
     const loginNav = document.getElementById('loginNav');
@@ -466,7 +466,7 @@
 
     function handleShareClick() {
       if (localStorage.getItem('loggedIn') === "true") {
-        window.location.href = "profile.html#share";
+        window.location.href = "share-experience.html";
       } else {
         alert("Seyahat deneyiminizi paylaşabilmek için lütfen önce giriş yapınız.");
         window.location.href = "login.html";
