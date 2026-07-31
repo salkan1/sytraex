@@ -8,7 +8,6 @@
   <link rel="icon" type="image/png" href="logo.png">
 
   <style>
-    /* Genel Stil Ayarları */
     body {
       margin: 0;
       padding: 0;
@@ -17,7 +16,6 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Index ile Birebir Uyumlu Header */
     header {
       background: rgba(15, 23, 42, 0.95);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -30,93 +28,42 @@
       z-index: 1000;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-img { width: 45px; height: 45px; }
+    .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
+    .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
 
-    .logo-img {
-      width: 45px;
-      height: 45px;
-    }
+    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; }
+    nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
+    nav ul li a:hover { color: #ffcc00; }
 
-    .logo-text h1 {
-      margin: 0;
-      font-size: 22px;
-      color: #ffcc00;
-      text-transform: lowercase;
-    }
-
-    .logo-text p {
-      margin: 0;
-      font-size: 11px;
-      color: #aaa;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      gap: 20px;
-    }
-
-    nav ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    nav ul li a:hover {
-      color: #ffcc00;
-    }
-
-    .lang-switch a {
-      color: #ffcc00;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    /* Profil Ana Düzeni */
     .profile-layout {
-      display: flex;
       max-width: 1100px;
       margin: 40px auto;
       padding: 0 20px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
       gap: 30px;
     }
 
-    /* Sol Yan Menü (Sidebar) */
-    .sidebar {
-      width: 280px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 15px;
-      padding: 25px 15px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-      backdrop-filter: blur(8px);
-      height: fit-content;
+    @media (max-width: 800px) {
+      .profile-layout { grid-template-columns: 1fr; }
     }
 
-    /* Profil Fotoğrafı Alanı */
-    .avatar-container {
+    /* Sol Menü */
+    .sidebar-card {
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       text-align: center;
-      margin-bottom: 25px;
     }
 
     .avatar-wrapper {
       position: relative;
       width: 110px;
       height: 110px;
-      margin: 0 auto 12px auto;
+      margin: 0 auto 15px;
     }
 
     .avatar-img {
@@ -125,206 +72,108 @@
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid #ffcc00;
-      background: #1e293b;
     }
 
-    .upload-btn {
-      display: inline-block;
-      font-size: 12px;
-      color: #ffcc00;
-      background: rgba(255, 204, 0, 0.1);
-      border: 1px solid #ffcc00;
-      padding: 5px 10px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+    .username-tag { color: #aaa; font-size: 14px; margin-bottom: 25px; }
 
-    .upload-btn:hover {
-      background: #ffcc00;
-      color: #000;
-    }
-
-    #photoInput {
-      display: none;
-    }
-
-    .user-tag {
-      margin-top: 8px;
-      font-size: 14px;
-      color: #aaa;
-    }
-
-    /* Sol Menü Navigasyon Butonları */
-    .menu-list {
-      list-style: none;
-      padding: 0;
-      margin: 20px 0 0 0;
-    }
-
-    .menu-item {
-      padding: 12px 15px;
-      margin-bottom: 8px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 500;
-      color: #ccc;
-      transition: 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .menu-item:hover, .menu-item.active {
-      background: rgba(255, 204, 0, 0.15);
-      color: #ffcc00;
-      border-left: 4px solid #ffcc00;
-    }
-
-    .logout-btn {
+    .menu-btn {
       width: 100%;
-      padding: 10px;
+      padding: 12px 15px;
       background: transparent;
-      border: 1px solid #ff4d4d;
-      color: #ff4d4d;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 25px;
-      transition: 0.3s;
-    }
-
-    .logout-btn:hover {
-      background: #ff4d4d;
+      border: 1px solid rgba(255,255,255,0.1);
       color: #fff;
-    }
-
-    /* Sağ İçerik Alanı */
-    .content-panel {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 15px;
-      padding: 30px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-      backdrop-filter: blur(8px);
+      border-radius: 8px;
       text-align: left;
-    }
-
-    .content-section {
-      display: none;
-    }
-
-    .content-section.active {
-      display: block;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding-bottom: 12px;
-      margin-bottom: 25px;
-    }
-
-    .section-header h2 {
-      color: #ffcc00;
-      margin: 0;
-      font-size: 22px;
-    }
-
-    /* Düzenle / Kaydet Butonları */
-    .action-btn {
-      background: rgba(255, 204, 0, 0.15);
-      color: #ffcc00;
-      border: 1px solid #ffcc00;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-weight: bold;
+      font-size: 14px;
       cursor: pointer;
-      font-size: 13px;
+      margin-bottom: 10px;
       transition: 0.3s;
     }
 
-    .action-btn:hover {
-      background: #ffcc00;
-      color: #000;
+    .menu-btn.active, .menu-btn:hover {
+      background: rgba(255, 204, 0, 0.15);
+      border-color: #ffcc00;
+      color: #ffcc00;
+      font-weight: bold;
     }
 
-    .btn-cancel {
-      background: transparent;
-      color: #aaa;
-      border: 1px solid #666;
-      margin-right: 8px;
+    .btn-logout {
+      width: 100%;
+      padding: 12px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.3s;
     }
 
-    .btn-cancel:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+    .btn-logout:hover { background: #ef4444; color: #fff; }
+
+    /* Sağ İçerik */
+    .content-card {
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* Sola Dayalı Grid Yapısı */
+    .content-card h2 { color: #ffcc00; margin-top: 0; margin-bottom: 25px; font-size: 22px; }
+
     .info-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
     }
 
-    .info-card {
-      background: rgba(0, 0, 0, 0.3);
-      padding: 14px 18px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .info-card label {
-      display: block;
-      font-size: 12px;
-      color: #aaa;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .info-card span {
-      font-size: 15px;
-      color: #fff;
-      font-weight: 500;
-    }
-
-    /* Düzenleme Modundaki Input Stilleri */
-    .info-card input, .info-card select {
-      width: 100%;
-      padding: 8px 10px;
-      border: 1px solid #ffcc00;
-      border-radius: 6px;
+    .info-box {
       background: #0f172a;
-      color: #fff;
-      font-size: 14px;
-      box-sizing: border-box;
-      outline: none;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.05);
     }
 
-    .empty-msg {
+    .info-box label { display: block; font-size: 11px; color: #aaa; text-transform: uppercase; margin-bottom: 4px; }
+    .info-box span { font-size: 14px; font-weight: bold; color: #fff; }
+
+    /* Gönderi Kartları Mimarisi */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .post-card {
+      background: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .post-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+
+    .post-card-body { padding: 15px; }
+    .post-card-tag { font-size: 10px; background: rgba(255,204,0,0.2); color: #ffcc00; padding: 2px 6px; border-radius: 4px; }
+    .post-card-title { font-size: 15px; font-weight: bold; margin: 8px 0 4px 0; color: #fff; }
+    .post-card-loc { font-size: 12px; color: #aaa; margin-bottom: 10px; }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       color: #888;
-      font-style: italic;
-    }
-
-    @media (max-width: 768px) {
-      .profile-layout {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        box-sizing: border-box;
-      }
+      font-size: 13px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Ana Sayfadaki ile Birebir Header -->
   <header>
     <div class="logo">
       <img src="logo.png" alt="Sytraex Logo" class="logo-img">
@@ -337,285 +186,175 @@
     <nav>
       <ul>
         <li><a href="index.html">Ana Sayfa</a></li>
-        <li><a href="profile.html" style="color: #ffcc00;">Profilim</a></li>
+        <li><a href="profile.html" style="color:#ffcc00; font-weight:bold;">Profilim</a></li>
         <li><a href="whitepaper.html">White Paper (Stake SYTX)</a></li>
       </ul>
-      <div class="lang-switch">
-        <a href="index.html">TR</a> / <a href="#">EN</a>
-      </div>
     </nav>
   </header>
 
-  <!-- Profil Sayfası Ana Gövdesi -->
   <div class="profile-layout">
-
-    <!-- Sol Yan Menü -->
-    <div class="sidebar">
-      <div class="avatar-container">
-        <div class="avatar-wrapper">
-          <img id="avatarImage" src="https://via.placeholder.com/150/1e293b/ffcc00?text=Sytraex" alt="Profil Fotoğrafı" class="avatar-img">
-        </div>
-        <label for="photoInput" class="upload-btn">📷 Fotoğraf Değiştir</label>
-        <input type="file" id="photoInput" accept="image/*">
-        <div class="user-tag" id="sidebarUsername">@kullanici</div>
+    
+    <!-- Sol Profil Menüsü -->
+    <div class="sidebar-card">
+      <div class="avatar-wrapper">
+        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200" alt="Profil Fotoğrafı" class="avatar-img" id="userAvatar">
       </div>
+      <h3 id="sidebarName" style="margin:0; color:#fff;">Yükleniyor...</h3>
+      <div class="username-tag" id="sidebarUsername">@...</div>
 
-      <ul class="menu-list">
-        <li class="menu-item active" onclick="switchTab('profileSec', this)">
-          👤 Profil Bilgileri
-        </li>
-        <li class="menu-item" onclick="switchTab('postsSec', this)">
-          📝 Gönderilerim
-        </li>
-        <li class="menu-item" onclick="switchTab('messagesSec', this)">
-          💬 Mesajlar
-        </li>
-      </ul>
+      <button class="menu-btn active" id="btnInfo" onclick="switchTab('info')">👤 Profil Bilgileri</button>
+      <button class="menu-btn" id="btnPosts" onclick="switchTab('posts')">📝 Gönderilerim</button>
 
-      <button class="logout-btn" id="logoutBtn">Çıkış Yap</button>
+      <a href="share-experience.html" style="text-decoration:none;">
+        <button class="menu-btn" style="border-color:#ffcc00; color:#ffcc00; margin-top:10px;">➕ Yeni Deneyim Paylaş</button>
+      </a>
+
+      <button class="btn-logout" onclick="logout()">Çıkış Yap</button>
     </div>
 
-    <!-- Sağ İçerik Paneli -->
-    <div class="content-panel">
-
-      <!-- 1. Profil Bilgileri Sekmesi -->
-      <div id="profileSec" class="content-section active">
-        <div class="section-header">
-          <h2>Profil Bilgilerim</h2>
-          <div id="buttonGroup">
-            <button class="action-btn" id="editBtn" onclick="enableEditMode()">✏️ Bilgileri Düzenle</button>
-          </div>
-        </div>
-
-        <div class="info-grid" id="profileData">
-          <!-- JS ile Dinamik Doldurulur -->
+    <!-- Sağ Dinamik İçerik Alanı -->
+    <div class="content-card">
+      
+      <!-- TAB 1: Profil Bilgileri -->
+      <div id="tabInfo">
+        <h2>Profil Bilgilerim</h2>
+        <div class="info-grid">
+          <div class="info-box"><label>Kullanıcı Adı</label><span id="infoUsername">-</span></div>
+          <div class="info-box"><label>Ad Soyad</label><span id="infoName">-</span></div>
+          <div class="info-box"><label>E-Posta Adresi</label><span id="infoEmail">-</span></div>
+          <div class="info-box"><label>Ülke</label><span id="infoCountry">-</span></div>
+          <div class="info-box"><label>İl / Şehir</label><span id="infoCity">-</span></div>
+          <div class="info-box"><label>Doğum Tarihi</label><span id="infoBirth">-</span></div>
         </div>
       </div>
 
-      <!-- 2. Gönderilerim Sekmesi -->
-      <div id="postsSec" class="content-section">
-        <div class="section-header">
-          <h2>Gönderilerim</h2>
+      <!-- TAB 2: Kullanıcının Paylaştığı Gönderiler -->
+      <div id="tabPosts" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <h2 style="margin:0;">Paylaştığım Seyahat Deneyimleri</h2>
+          <a href="share-experience.html" style="text-decoration:none;"><button style="padding:8px 16px; background:#ffcc00; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">+ Yeni Ekle</button></a>
         </div>
-        <p class="empty-msg">Henüz paylaşılmış bir seyahat deneyiminiz bulunmuyor.</p>
-      </div>
 
-      <!-- 3. Mesajlar Sekmesi -->
-      <div id="messagesSec" class="content-section">
-        <div class="section-header">
-          <h2>Mesajlar</h2>
+        <div id="userPostsContainer" class="posts-grid">
+          <p style="color:#aaa;">Gönderileriniz yükleniyor...</p>
         </div>
-        <p class="empty-msg">Gelen veya giden mesajınız bulunmamaktadır.</p>
       </div>
 
     </div>
 
   </div>
 
-  <script>
-    // Kullanıcı Oturum Kontrolü
-    const loggedIn = localStorage.getItem('loggedIn');
-    let userData = JSON.parse(localStorage.getItem('sytraexUser'));
+  <footer>
+    <p>© 2026 Sytraex | Share Your Travel Experience</p>
+  </footer>
 
-    const secretQuestionMap = {
-      'pet': 'İlk evcil hayvanınızın adı?',
-      'school': 'İlkokul öğretmeninizin adı?',
-      'city': 'Annenizin doğduğu şehir?',
-      'car': 'İlk arabanızın markası?'
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
+      authDomain: "sytraex-462b0.firebaseapp.com",
+      projectId: "sytraex-462b0",
+      storageBucket: "sytraex-462b0.firebasestorage.app",
+      messagingSenderId: "379245018695",
+      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62"
     };
 
-    if (!loggedIn || !userData) {
-      alert("Lütfen önce giriş yapın.");
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Oturum Kontrolü
+    const userData = JSON.parse(localStorage.getItem('sytraexUser'));
+    if (!userData) {
       window.location.href = "login.html";
-    } else {
-      renderProfileData();
+    }
 
-      // Önceden Yüklenmiş Profil Fotoğrafı Kontrolü
-      if (localStorage.getItem('sytraexAvatar')) {
-        document.getElementById('avatarImage').src = localStorage.getItem('sytraexAvatar');
+    // Profil Bilgilerini Ekrana Yazma
+    document.getElementById('sidebarName').innerText = userData.name || userData.username;
+    document.getElementById('sidebarUsername').innerText = `@${userData.username}`;
+    document.getElementById('infoUsername').innerText = userData.username;
+    document.getElementById('infoName').innerText = userData.name || '-';
+    document.getElementById('infoEmail').innerText = userData.email;
+    document.getElementById('infoCountry').innerText = userData.country || '-';
+    document.getElementById('infoCity').innerText = userData.city || '-';
+    document.getElementById('infoBirth').innerText = userData.birth || '-';
+
+    // Tab Geçiş Mantığı
+    window.switchTab = function(tabName) {
+      const tabInfo = document.getElementById('tabInfo');
+      const tabPosts = document.getElementById('tabPosts');
+      const btnInfo = document.getElementById('btnInfo');
+      const btnPosts = document.getElementById('btnPosts');
+
+      if (tabName === 'posts') {
+        tabInfo.style.display = 'none';
+        tabPosts.style.display = 'block';
+        btnInfo.classList.remove('active');
+        btnPosts.classList.add('active');
+        loadUserPosts();
+      } else {
+        tabInfo.style.display = 'block';
+        tabPosts.style.display = 'none';
+        btnInfo.classList.add('active');
+        btnPosts.classList.remove('active');
       }
+    };
+
+    // URL'den tab parametresi gelmişse otomatik yönlendir
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('tab') === 'posts') {
+      window.switchTab('posts');
     }
 
-    // Profil Bilgilerini Ekrana Okuma Modunda Bastırma
-    function renderProfileData() {
-      document.getElementById('sidebarUsername').innerText = userData.username ? `@${userData.username}` : `@${userData.name.toLowerCase().replace(/\s+/g, '')}`;
+    // Kullanıcının Gönderilerini Firestore'dan Çekme
+    async function loadUserPosts() {
+      const container = document.getElementById('userPostsContainer');
+      container.innerHTML = '<p style="color:#aaa;">Gönderileriniz yükleniyor...</p>';
 
-      // Cevap metnini maskeleme (Güvenlik için: ilk ve son harf açık, gerisi ***)
-      let maskedAnswer = 'Belirtilmedi';
-      if (userData.secretAnswer) {
-        const ans = userData.secretAnswer.trim();
-        if (ans.length <= 2) {
-          maskedAnswer = '***';
-        } else {
-          maskedAnswer = ans[0] + '*'.repeat(ans.length - 2) + ans[ans.length - 1];
-        }
-      }
+      try {
+        const q = query(collection(db, "posts"), where("username", "==", userData.username));
+        const querySnapshot = await getDocs(q);
 
-      document.getElementById('profileData').innerHTML = `
-        <div class="info-card">
-          <label>Kullanıcı Adı</label>
-          <span>${userData.username || 'Belirtilmedi'}</span>
-        </div>
-        <div class="info-card">
-          <label>Ad Soyad</label>
-          <span>${userData.name || 'Belirtilmedi'}</span>
-        </div>
-        <div class="info-card">
-          <label>E-posta Adresi</label>
-          <span>${userData.email || 'Belirtilmedi'}</span>
-        </div>
-        <div class="info-card">
-          <label>Telefon Numarası</label>
-          <span>${userData.phone || 'Belirtilmedi'}</span>
-        </div>
-        <div class="info-card">
-          <label>İl / Şehir</label>
-          <span>${userData.city || 'Belirtilmedi'}</span>
-        </div>
-        <div class="info-card">
-          <label>Ülke</label>
-          <span>${userData.country || 'Belirtilmedi'}</span>
-        </div>
-        <div class="info-card">
-          <label>Doğum Tarihi</label>
-          <span>${userData.birth || 'Belirtilmedi'}</span>
-        </div>
-        <div class="info-card">
-          <label>Gizli Soru</label>
-          <span>${secretQuestionMap[userData.secretQuestion] || userData.secretQuestion || 'Belirtilmedi'}</span>
-        </div>
-        <div class="info-card">
-          <label>Gizli Soru Cevabı</label>
-          <span>${maskedAnswer}</span>
-        </div>
-      `;
-
-      document.getElementById('buttonGroup').innerHTML = `
-        <button class="action-btn" onclick="enableEditMode()">✏️ Bilgileri Düzenle</button>
-      `;
-    }
-
-    // Bilgileri Düzenleme Modunu Açma
-    function enableEditMode() {
-      document.getElementById('profileData').innerHTML = `
-        <div class="info-card">
-          <label>Kullanıcı Adı</label>
-          <input type="text" id="edit_username" value="${userData.username || ''}">
-        </div>
-        <div class="info-card">
-          <label>Ad Soyad</label>
-          <input type="text" id="edit_name" value="${userData.name || ''}">
-        </div>
-        <div class="info-card">
-          <label>E-posta Adresi</label>
-          <input type="email" id="edit_email" value="${userData.email || ''}">
-        </div>
-        <div class="info-card">
-          <label>Telefon Numarası</label>
-          <input type="tel" id="edit_phone" value="${userData.phone || ''}">
-        </div>
-        <div class="info-card">
-          <label>İl / Şehir</label>
-          <input type="text" id="edit_city" value="${userData.city || ''}">
-        </div>
-        <div class="info-card">
-          <label>Ülke</label>
-          <input type="text" id="edit_country" value="${userData.country || ''}">
-        </div>
-        <div class="info-card">
-          <label>Doğum Tarihi</label>
-          <input type="date" id="edit_birth" value="${userData.birth || ''}">
-        </div>
-        <div class="info-card">
-          <label>Gizli Soru</label>
-          <select id="edit_secretQuestion">
-            <option value="pet" ${userData.secretQuestion === 'pet' ? 'selected' : ''}>İlk evcil hayvanınızın adı nedir?</option>
-            <option value="school" ${userData.secretQuestion === 'school' ? 'selected' : ''}>İlkokul öğretmeninizin adı nedir?</option>
-            <option value="city" ${userData.secretQuestion === 'city' ? 'selected' : ''}>Annenizin doğduğu şehir neresidir?</option>
-            <option value="car" ${userData.secretQuestion === 'car' ? 'selected' : ''}>İlk sahip olduğunuz arabanın markası nedir?</option>
-          </select>
-        </div>
-        <div class="info-card">
-          <label>Gizli Soru Cevabı</label>
-          <input type="text" id="edit_secretAnswer" value="${userData.secretAnswer || ''}">
-        </div>
-      `;
-
-      document.getElementById('buttonGroup').innerHTML = `
-        <button class="action-btn btn-cancel" onclick="renderProfileData()">İptal</button>
-        <button class="action-btn" onclick="saveProfileData()">💾 Kaydet</button>
-      `;
-    }
-
-    // Değişiklikleri Kaydetme
-    function saveProfileData() {
-      const newUsername = document.getElementById('edit_username').value.trim();
-      const newName = document.getElementById('edit_name').value.trim();
-      const newEmail = document.getElementById('edit_email').value.trim();
-      const newPhone = document.getElementById('edit_phone').value.trim();
-      const newSecretAnswer = document.getElementById('edit_secretAnswer').value.trim();
-
-      if (!newUsername || !newName || !newEmail || !newPhone) {
-        alert("Lütfen temel alanları (Kullanıcı Adı, Ad Soyad, E-posta, Telefon) boş bırakmayınız.");
-        return;
-      }
-
-      // Verileri Nesneye Aktarma ve LocalStorage Güncelleme
-      userData.username = newUsername;
-      userData.name = newName;
-      userData.email = newEmail;
-      userData.phone = newPhone;
-      userData.city = document.getElementById('edit_city').value.trim();
-      userData.country = document.getElementById('edit_country').value.trim();
-      userData.birth = document.getElementById('edit_birth').value;
-      userData.secretQuestion = document.getElementById('edit_secretQuestion').value;
-      userData.secretAnswer = newSecretAnswer;
-
-      localStorage.setItem('sytraexUser', JSON.stringify(userData));
-      alert("Profil bilgileriniz başarıyla güncellendi!");
-
-      renderProfileData();
-    }
-
-    // Profil Fotoğrafı Yükleme (Base64)
-    document.getElementById('photoInput').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        if (file.size > 2 * 1024 * 1024) {
-          alert("Lütfen 2MB'tan küçük bir fotoğraf seçiniz.");
+        if (querySnapshot.empty) {
+          container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align:center; padding:30px; background:#0f172a; border-radius:12px; border:1px dashed rgba(255,255,255,0.1);">
+              <p style="color:#aaa; margin-bottom:15px;">Henüz paylaştığınız bir seyahat deneyimi bulunmuyor.</p>
+              <a href="share-experience.html" style="text-decoration:none;"><button style="padding:10px 20px; background:#ffcc00; color:#000; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">➕ İlk Deneyimi Paylaş</button></a>
+            </div>
+          `;
           return;
         }
 
-        const reader = new FileReader();
-        reader.onload = function(event) {
-          const base64Image = event.target.result;
-          document.getElementById('avatarImage').src = base64Image;
-          localStorage.setItem('sytraexAvatar', base64Image);
-        };
-        reader.readAsDataURL(file);
+        container.innerHTML = '';
+        querySnapshot.forEach((doc) => {
+          const post = doc.data();
+          const card = document.createElement('div');
+          card.className = 'post-card';
+
+          card.innerHTML = `
+            <img src="${post.imageUrl}" alt="${post.title}" onerror="this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=500'">
+            <div class="post-card-body">
+              <span class="post-card-tag">${post.mode || 'Seyahat'}</span>
+              <div class="post-card-title">${post.title}</div>
+              <div class="post-card-loc">📍 ${post.location} • ⏱️ ${post.duration}</div>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+      } catch (err) {
+        console.error("Gönderiler yüklenirken hata:", err);
+        container.innerHTML = '<p style="color:#ff4d4d;">Gönderiler çekilirken bir hata oluştu.</p>';
       }
-    });
-
-    // Sekme Değiştirme Fonksiyonu
-    function switchTab(sectionId, element) {
-      document.querySelectorAll('.content-section').forEach(sec => {
-        sec.classList.remove('active');
-      });
-
-      document.querySelectorAll('.menu-item').forEach(item => {
-        item.classList.remove('active');
-      });
-
-      document.getElementById(sectionId).classList.add('active');
-      element.classList.add('active');
     }
 
-    // Çıkış İşlemi
-    document.getElementById('logoutBtn').addEventListener('click', () => {
+    // Çıkış Yap
+    window.logout = function() {
       localStorage.removeItem('loggedIn');
-      alert("Çıkış yapıldı.");
+      localStorage.removeItem('sytraexUser');
       window.location.href = "login.html";
-    });
+    };
   </script>
 
 </body>
