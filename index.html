@@ -133,7 +133,7 @@
       background: rgba(255, 204, 0, 0.1);
     }
 
-    /* Arama Filtre Paneli */
+    /* Arama Filtre Paneli (3 Sütunlu Tek Lokasyon Yapısı) */
     .search-section {
       max-width: 1100px;
       margin: -20px auto 50px;
@@ -141,7 +141,7 @@
     }
 
     .search-card {
-      background: rgba(30, 41, 59, 0.8);
+      background: rgba(30, 41, 59, 0.85);
       border: 1px solid rgba(255, 204, 0, 0.3);
       border-radius: 16px;
       padding: 25px;
@@ -151,9 +151,19 @@
 
     .search-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
+      grid-template-columns: 2fr 1.3fr 1.5fr 1fr;
+      gap: 12px;
       align-items: end;
+    }
+
+    @media (max-width: 900px) {
+      .search-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .search-group {
+      position: relative;
     }
 
     .search-group label {
@@ -184,6 +194,36 @@
       background: #1e293b;
     }
 
+    /* Canlı Şehir Autocomplete Listesi */
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid rgba(255, 204, 0, 0.4);
+      border-top: none;
+      z-index: 999;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: #1e293b;
+      border-radius: 0 0 8px 8px;
+      max-height: 220px;
+      overflow-y: auto;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      display: none;
+    }
+
+    .autocomplete-items div {
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: #fff;
+    }
+
+    .autocomplete-items div:hover {
+      background-color: #ffcc00;
+      color: #000;
+    }
+
     .search-btn {
       width: 100%;
       padding: 12px;
@@ -201,7 +241,7 @@
       background: #e6b800;
     }
 
-    /* Vitrin Bölümü (Öne Çıkanlar) */
+    /* Vitrin Bölümü */
     .featured-section {
       max-width: 1100px;
       margin: 0 auto 60px;
@@ -224,11 +264,6 @@
       padding: 40px 20px;
       text-align: center;
       color: #aaa;
-    }
-
-    .empty-state p {
-      margin: 8px 0 0 0;
-      font-size: 14px;
     }
 
     footer {
@@ -273,83 +308,26 @@
     </div>
   </section>
 
-  <!-- Gelişmiş Arama Filtre Paneli -->
+  <!-- Gelişmiş Arama Filtre Paneli (TEK KUTULU LOKASYON) -->
   <section class="search-section">
     <div class="search-card">
-      <form id="searchForm" class="search-grid">
+      <form id="searchForm" class="search-grid" autocomplete="off">
         
-        <!-- 1. Ülke Seçimi (Yazdıkça Süzülen Input) -->
+        <!-- TEK ARAMA KUTUSU -->
         <div class="search-group">
-          <label for="searchCountry">Nereye? (Ülke):</label>
+          <label for="locationInput">Nereye Gitmek İstiyorsun?</label>
           <input 
             type="text" 
-            id="searchCountry" 
-            list="countryList" 
-            placeholder="Ülke adı yazın..." 
-            autocomplete="off" 
+            id="locationInput" 
+            placeholder="İl, eyalet veya ülke adı yazın..." 
             required
           >
-          <datalist id="countryList">
-            <option value="Türkiye">
-            <option value="Almanya">
-            <option value="Amerika Birleşik Devletleri">
-            <option value="Arjantin">
-            <option value="Arnavutluk">
-            <option value="Avustralya">
-            <option value="Avusturya">
-            <option value="Azerbaycan">
-            <option value="Belçika">
-            <option value="Birleşik Arap Emirlikleri">
-            <option value="Brezilya">
-            <option value="Bulgaristan">
-            <option value="Çekya">
-            <option value="Çin">
-            <option value="Danimarka">
-            <option value="Endonezya">
-            <option value="Fas">
-            <option value="Finlandiya">
-            <option value="Fransa">
-            <option value="Güney Afrika">
-            <option value="Güney Kore">
-            <option value="Gürcistan">
-            <option value="Hindistan">
-            <option value="Hollanda">
-            <option value="İngiltere">
-            <option value="İran">
-            <option value="İspanya">
-            <option value="İsveç">
-            <option value="İsviçre">
-            <option value="İtalya">
-            <option value="Japonya">
-            <option value="Karadağ">
-            <option value="Katar">
-            <option value="Kazakistan">
-            <option value="Kıbrıs">
-            <option value="Meksika">
-            <option value="Mısır">
-            <option value="Norveç">
-            <option value="Özbekistan">
-            <option value="Polonya">
-            <option value="Portekiz">
-            <option value="Romanya">
-            <option value="Rusya">
-            <option value="Sırbistan">
-            <option value="Suudi Arabistan">
-            <option value="Tayland">
-            <option value="Ukrayna">
-            <option value="Yunanistan">
-          </datalist>
+          <div id="cityAutocompleteList" class="autocomplete-items"></div>
         </div>
 
-        <!-- 2. İl / Şehir Seçimi -->
+        <!-- Süre Seçimi -->
         <div class="search-group">
-          <label for="searchCity">Şehir / İl (Opsiyonel):</label>
-          <input type="text" id="searchCity" placeholder="Örn: İstanbul, Roma..." autocomplete="off">
-        </div>
-
-        <!-- 3. Süre Seçimi (Saat / Gün) -->
-        <div class="search-group">
-          <label for="searchDuration">Süre / Zaman Dilimi:</label>
+          <label for="searchDuration">Süre / Zaman:</label>
           <select id="searchDuration">
             <option value="all">Tüm Süreler</option>
             <option value="3saat">3 Saatlik Hızlı Tur</option>
@@ -360,9 +338,9 @@
           </select>
         </div>
 
-        <!-- 4. Seyahat Tipi / Modlar -->
+        <!-- Seyahat Modu / Konsept -->
         <div class="search-group">
-          <label for="searchMode">Seyahat Modu / Konsept:</label>
+          <label for="searchMode">Seyahat Modu:</label>
           <select id="searchMode">
             <option value="all">Tüm Konseptler</option>
             <option value="gece">🌙 Gece Hayatı & Eğlence</option>
@@ -384,13 +362,12 @@
     </div>
   </section>
 
-  <!-- En Çok Oy Alan Seyahat Deneyimleri (Gerçek Kullanıcı Paylaşımları Alanı) -->
+  <!-- Öne Çıkanlar (Gerçek Kullanıcı İçerikleri Alanı) -->
   <section class="featured-section">
     <div class="section-title">
       <span>⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları</span>
     </div>
 
-    <!-- Puanlanan Paylaşımlar Geldikçe Buraya Düşecek -->
     <div id="topRatedContainer" class="empty-state">
       <div style="font-size: 28px; margin-bottom: 8px;">🗺️</div>
       <strong style="color: #ffcc00;">Henüz Öne Çıkan Bir Seyahat Rotası Yok</strong>
@@ -403,20 +380,76 @@
   </footer>
 
   <script>
-    // 1. Arama Yönlendirme Mantığı
+    const locationInput = document.getElementById("locationInput");
+    const cityList = document.getElementById("cityAutocompleteList");
+
+    // Canlı Arama API Entegrasyonu (OpenStreetMap Nominatim)
+    let debounceTimer;
+
+    locationInput.addEventListener("input", function() {
+      const query = this.value.trim();
+
+      cityList.innerHTML = "";
+
+      if (query.length < 2) {
+        cityList.style.display = "none";
+        return;
+      }
+
+      clearTimeout(debounceTimer);
+
+      debounceTimer = setTimeout(() => {
+        const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=8`;
+
+        fetch(apiUrl)
+          .then(res => res.json())
+          .then(data => {
+            cityList.innerHTML = "";
+
+            if (data && data.length > 0) {
+              data.forEach(item => {
+                const div = document.createElement("div");
+                
+                const mainName = item.address.city || item.address.town || item.address.state || item.address.country || item.display_name.split(',')[0];
+                const country = item.address.country || '';
+
+                div.innerHTML = `📍 <strong>${mainName}</strong> ${country ? `<span style="font-size:11px; color:#aaa;">(${country})</span>` : ''}`;
+
+                div.addEventListener("click", () => {
+                  locationInput.value = country ? `${mainName}, ${country}` : mainName;
+                  cityList.style.display = "none";
+                });
+
+                cityList.appendChild(div);
+              });
+              cityList.style.display = "block";
+            } else {
+              cityList.style.display = "none";
+            }
+          })
+          .catch(err => console.error("Lokasyon API Hatası:", err));
+      }, 300);
+    });
+
+    // Sayfa dışına basılınca kapat
+    document.addEventListener("click", (e) => {
+      if (e.target !== locationInput) {
+        cityList.style.display = "none";
+      }
+    });
+
+    // Arama Yönlendirmesi
     document.getElementById('searchForm').addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const country = document.getElementById('searchCountry').value.trim();
-      const city = document.getElementById('searchCity').value.trim();
+      const location = locationInput.value.trim();
       const duration = document.getElementById('searchDuration').value;
       const mode = document.getElementById('searchMode').value;
 
-      // Sonuç sayfasına URL parametreleri ile yönlendirme
-      window.location.href = `search-results.html?country=${encodeURIComponent(country)}&city=${encodeURIComponent(city)}&duration=${encodeURIComponent(duration)}&mode=${encodeURIComponent(mode)}`;
+      window.location.href = `search-results.html?location=${encodeURIComponent(location)}&duration=${encodeURIComponent(duration)}&mode=${encodeURIComponent(mode)}`;
     });
 
-    // 2. Kullanıcı Oturum Durumu Kontrolü
+    // Oturum Kontrolü
     const loggedIn = localStorage.getItem('loggedIn');
     const registerLink = document.querySelector('a[href="register.html"]');
     const loginLink = document.querySelector('a[href="login.html"]');
