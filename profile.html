@@ -77,9 +77,7 @@
       transition: filter 0.3s;
     }
 
-    .avatar-wrapper:hover .avatar-img {
-      filter: brightness(0.7);
-    }
+    .avatar-wrapper:hover .avatar-img { filter: brightness(0.7); }
 
     .avatar-overlay {
       position: absolute;
@@ -94,9 +92,7 @@
       transition: opacity 0.3s;
     }
 
-    .avatar-wrapper:hover .avatar-overlay {
-      opacity: 1;
-    }
+    .avatar-wrapper:hover .avatar-overlay { opacity: 1; }
 
     .change-photo-btn {
       background: rgba(255, 204, 0, 0.15);
@@ -111,10 +107,7 @@
       transition: 0.3s;
     }
 
-    .change-photo-btn:hover {
-      background: #ffcc00;
-      color: #000;
-    }
+    .change-photo-btn:hover { background: #ffcc00; color: #000; }
 
     .username-tag { color: #aaa; font-size: 14px; margin-bottom: 25px; }
 
@@ -130,6 +123,9 @@
       cursor: pointer;
       margin-bottom: 10px;
       transition: 0.3s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .menu-btn.active, .menu-btn:hover {
@@ -137,6 +133,14 @@
       border-color: #ffcc00;
       color: #ffcc00;
       font-weight: bold;
+    }
+
+    .badge-count {
+      background: #ef4444;
+      color: #fff;
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 10px;
     }
 
     .btn-logout {
@@ -212,7 +216,11 @@
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s;
     }
+
+    .post-card:hover { transform: translateY(-3px); }
 
     .post-card img { width: 100%; height: 140px; object-fit: cover; }
     .post-card-body { padding: 15px; }
@@ -220,6 +228,130 @@
     .post-card-title { font-size: 15px; font-weight: bold; margin: 8px 0 4px 0; color: #fff; }
     .post-card-loc { font-size: 12px; color: #aaa; margin-bottom: 10px; }
 
+    /* Mesajlar Paneli Stilleri */
+    .messages-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 15px;
+      min-height: 400px;
+    }
+
+    @media (max-width: 650px) {
+      .messages-layout { grid-template-columns: 1fr; }
+    }
+
+    .chat-users-list {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .chat-user-item {
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      transition: background 0.2s;
+      margin-bottom: 5px;
+    }
+
+    .chat-user-item:hover, .chat-user-item.active {
+      background: rgba(255, 204, 0, 0.15);
+      color: #ffcc00;
+    }
+
+    .chat-box {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      max-height: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-right: 5px;
+    }
+
+    .msg-bubble {
+      max-width: 75%;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .msg-bubble.sent {
+      align-self: flex-end;
+      background: #ffcc00;
+      color: #000;
+    }
+
+    .msg-bubble.received {
+      align-self: flex-start;
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .chat-input-area {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .chat-input-area input {
+      flex: 1;
+      padding: 10px;
+      background: #1e293b;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      color: #fff;
+      outline: none;
+    }
+
+    .chat-input-area button {
+      padding: 10px 18px;
+      background: #ffcc00;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Mesaj İstek Kartı */
+    .req-card {
+      background: #0f172a;
+      border: 1px solid rgba(255,204,0,0.3);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .req-user { display: flex; align-items: center; gap: 10px; }
+    .req-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    .req-actions { display: flex; gap: 8px; }
+
+    .btn-acc { background: #22c55e; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    .btn-rej { background: #ef4444; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+
+    /* Modal Stilleri */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -290,7 +422,6 @@
   <div class="profile-layout">
     <div class="sidebar-card">
       
-      <!-- Profil Fotoğrafı (Tıklanınca Yükleme Açılır) -->
       <div class="avatar-wrapper" onclick="triggerPhotoUpload()">
         <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200" alt="Profil Fotoğrafı" class="avatar-img" id="userAvatar">
         <div class="avatar-overlay">📷</div>
@@ -302,8 +433,18 @@
       <h3 id="sidebarName" style="margin:0; color:#fff;">Yükleniyor...</h3>
       <div class="username-tag" id="sidebarUsername">@...</div>
 
-      <button class="menu-btn active" id="btnInfo" onclick="switchTab('info')">👤 Profil Bilgileri</button>
-      <button class="menu-btn" id="btnPosts" onclick="switchTab('posts')">📝 Gönderilerim</button>
+      <button class="menu-btn active" id="btnInfo" onclick="switchTab('info')">
+        <span>👤 Profil Bilgileri</span>
+      </button>
+
+      <button class="menu-btn" id="btnPosts" onclick="switchTab('posts')">
+        <span>📝 Gönderilerim</span>
+      </button>
+
+      <button class="menu-btn" id="btnMessages" onclick="switchTab('messages')">
+        <span>💬 Mesajlar / İstekler</span>
+        <span class="badge-count" id="pendingBadge" style="display:none;">0</span>
+      </button>
 
       <a href="share-experience.html" style="text-decoration:none;">
         <button class="menu-btn" style="border-color:#ffcc00; color:#ffcc00; margin-top:10px;">➕ Yeni Deneyim Paylaş</button>
@@ -313,6 +454,8 @@
     </div>
 
     <div class="content-card">
+      
+      <!-- TAB 1: Profil Bilgileri -->
       <div id="tabInfo">
         <div class="header-title-flex">
           <h2>Profil Bilgilerim</h2>
@@ -332,6 +475,7 @@
         </div>
       </div>
 
+      <!-- TAB 2: Paylaşılan Gönderiler -->
       <div id="tabPosts" style="display:none;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
           <h2 style="margin:0;">Paylaştığım Seyahat Deneyimleri</h2>
@@ -342,10 +486,43 @@
           <p style="color:#aaa;">Gönderileriniz yükleniyor...</p>
         </div>
       </div>
+
+      <!-- TAB 3: Mesajlar & Gelen İstekler -->
+      <div id="tabMessages" style="display:none;">
+        <h2>💬 Mesajlar ve Bağlantı İstekleri</h2>
+
+        <!-- Gelen Bekleyen İstekler -->
+        <div style="margin-bottom: 25px;">
+          <h4 style="color:#ffcc00; margin-bottom:12px;">📩 Gelen İstekler</h4>
+          <div id="requestsListContainer">
+            <p style="color:#aaa; font-size:13px;">Gelen mesaj isteği bulunmuyor.</p>
+          </div>
+        </div>
+
+        <!-- Sohbet Alanı -->
+        <h4 style="color:#ffcc00; margin-bottom:12px;">💬 Aktif Sohbetler</h4>
+        <div class="messages-layout">
+          <div class="chat-users-list" id="activeChatUsersList">
+            <p style="color:#aaa; font-size:12px;">Sohbet edilebilir kullanıcı yok.</p>
+          </div>
+
+          <div class="chat-box" id="chatBoxArea" style="display:none;">
+            <div style="font-weight:bold; color:#ffcc00; margin-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px;" id="chatTargetHeader">Sohbet</div>
+            <div class="chat-messages" id="chatMessagesContainer"></div>
+
+            <div class="chat-input-area">
+              <input type="text" id="msgInputText" placeholder="Mesajınızı yazınız...">
+              <button onclick="sendChatMessage()">Gönder</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </div>
 
-  <!-- Profil Bilgileri Düzenleme Modalı -->
+  <!-- Düzenleme Modalı -->
   <div class="modal-overlay" id="editModal">
     <div class="modal-card">
       <h3>✏️ Profil Bilgilerini Düzenle</h3>
@@ -405,7 +582,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, updateDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, updateDoc, collection, query, where, getDocs, addDoc, onSnapshot, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
@@ -423,6 +600,8 @@
     if (!userData) {
       window.location.href = "login.html";
     }
+
+    let activeChatUser = null;
 
     const secretQuestionTextMap = {
       "pet": "İlk evcil hayvanınızın adı nedir?",
@@ -457,8 +636,9 @@
     }
 
     renderUserInfo();
+    checkPendingRequests();
 
-    // Doğrudan Profil Fotoğrafı Yükleme
+    // Fotoğraf Değiştirme
     window.triggerPhotoUpload = function() {
       document.getElementById('avatarFileInput').click();
     };
@@ -467,7 +647,6 @@
       const file = e.target.files[0];
       if (!file) return;
 
-      // Resim boyutunu tarayıcıda küçültüp Base64 formatına çevirme (Hızlı & İzin Gerektirmeyen Çözüm)
       const reader = new FileReader();
       reader.onload = function(event) {
         const img = new Image();
@@ -484,7 +663,6 @@
           const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
 
           try {
-            // Firestore güncelleme
             const userRef = doc(db, "users", userData.username);
             await updateDoc(userRef, { avatarUrl: compressedBase64 });
 
@@ -506,27 +684,201 @@
     window.switchTab = function(tabName) {
       const tabInfo = document.getElementById('tabInfo');
       const tabPosts = document.getElementById('tabPosts');
+      const tabMessages = document.getElementById('tabMessages');
+      
       const btnInfo = document.getElementById('btnInfo');
       const btnPosts = document.getElementById('btnPosts');
+      const btnMessages = document.getElementById('btnMessages');
+
+      tabInfo.style.display = 'none';
+      tabPosts.style.display = 'none';
+      tabMessages.style.display = 'none';
+
+      btnInfo.classList.remove('active');
+      btnPosts.classList.remove('active');
+      btnMessages.classList.remove('active');
 
       if (tabName === 'posts') {
-        tabInfo.style.display = 'none';
         tabPosts.style.display = 'block';
-        btnInfo.classList.remove('active');
         btnPosts.classList.add('active');
         loadUserPosts();
+      } else if (tabName === 'messages') {
+        tabMessages.style.display = 'block';
+        btnMessages.classList.add('active');
+        loadIncomingRequests();
+        loadActiveChats();
       } else {
         tabInfo.style.display = 'block';
-        tabPosts.style.display = 'none';
         btnInfo.classList.add('active');
-        btnPosts.classList.remove('active');
       }
     };
 
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('tab') === 'posts') {
-      window.switchTab('posts');
+    if (urlParams.get('tab') === 'posts') switchTab('posts');
+    if (urlParams.get('tab') === 'messages') switchTab('messages');
+
+    // Bekleyen İstek Rozet Kontrolü
+    async function checkPendingRequests() {
+      try {
+        const q = query(
+          collection(db, "message_requests"),
+          where("receiver", "==", userData.username),
+          where("status", "==", "pending")
+        );
+        const querySnapshot = await getDocs(q);
+        const count = querySnapshot.size;
+
+        const badge = document.getElementById('pendingBadge');
+        if (count > 0) {
+          badge.innerText = count;
+          badge.style.display = 'inline-block';
+        } else {
+          badge.style.display = 'none';
+        }
+      } catch (e) {}
     }
+
+    // Gelen Mesaj İsteklerini Listeleme
+    async function loadIncomingRequests() {
+      const container = document.getElementById('requestsListContainer');
+      try {
+        const q = query(
+          collection(db, "message_requests"),
+          where("receiver", "==", userData.username),
+          where("status", "==", "pending")
+        );
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+          container.innerHTML = '<p style="color:#aaa; font-size:13px;">Gelen mesaj isteği bulunmuyor.</p>';
+          return;
+        }
+
+        container.innerHTML = '';
+        querySnapshot.forEach(docSnap => {
+          const req = docSnap.data();
+          const reqId = docSnap.id;
+
+          const card = document.createElement('div');
+          card.className = 'req-card';
+          card.innerHTML = `
+            <div class="req-user">
+              <img src="${req.senderAvatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200'}" class="req-avatar">
+              <div>
+                <strong style="color:#fff;">${req.senderName}</strong> <small style="color:#aaa;">(@${req.sender})</small>
+                <div style="font-size:12px; color:#ccc; margin-top:2px;">"${req.note || 'Mesajlaşmak istiyor.'}"</div>
+              </div>
+            </div>
+            <div class="req-actions">
+              <button class="btn-acc" onclick="handleRequestAction('${reqId}', 'accepted')">✅ Kabul Et</button>
+              <button class="btn-rej" onclick="handleRequestAction('${reqId}', 'rejected')">❌ Reddet</button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+      } catch (e) {
+        console.error("İstek yükleme hatası:", e);
+      }
+    }
+
+    window.handleRequestAction = async function(reqId, action) {
+      try {
+        const reqRef = doc(db, "message_requests", reqId);
+        await updateDoc(reqRef, { status: action });
+
+        alert(action === 'accepted' ? "İstek kabul edildi!" : "İstek reddedildi.");
+        checkPendingRequests();
+        loadIncomingRequests();
+        loadActiveChats();
+      } catch (e) {
+        alert("İşlem yapılırken hata oluştu: " + e.message);
+      }
+    };
+
+    // Aktif Sohbetleri Listeleme
+    async function loadActiveChats() {
+      const container = document.getElementById('activeChatUsersList');
+      try {
+        const q1 = query(collection(db, "message_requests"), where("sender", "==", userData.username), where("status", "==", "accepted"));
+        const q2 = query(collection(db, "message_requests"), where("receiver", "==", userData.username), where("status", "==", "accepted"));
+
+        const [snap1, snap2] = await Promise.all([getDocs(q1), getDocs(q2)]);
+
+        const partners = new Set();
+        snap1.forEach(d => partners.add(d.data().receiver));
+        snap2.forEach(d => partners.add(d.data().sender));
+
+        if (partners.size === 0) {
+          container.innerHTML = '<p style="color:#aaa; font-size:12px;">Sohbet edilebilir onaylı bağlantınız yok.</p>';
+          return;
+        }
+
+        container.innerHTML = '';
+        partners.forEach(partnerUser => {
+          const div = document.createElement('div');
+          div.className = 'chat-user-item';
+          div.innerText = `@${partnerUser}`;
+          div.onclick = () => openChatWith(partnerUser, div);
+          container.appendChild(div);
+        });
+
+      } catch (e) {
+        console.error("Aktif sohbet yükleme hatası:", e);
+      }
+    }
+
+    let unsubscribeChat = null;
+
+    function openChatWith(partnerUser, element) {
+      activeChatUser = partnerUser;
+      document.querySelectorAll('.chat-user-item').forEach(el => el.classList.remove('active'));
+      if (element) element.classList.add('active');
+
+      document.getElementById('chatBoxArea').style.display = 'flex';
+      document.getElementById('chatTargetHeader').innerText = `@${partnerUser} ile Sohbet`;
+
+      const msgContainer = document.getElementById('chatMessagesContainer');
+      msgContainer.innerHTML = '<p style="color:#aaa; font-size:12px;">Mesajlar yükleniyor...</p>';
+
+      if (unsubscribeChat) unsubscribeChat();
+
+      const chatId = [userData.username, partnerUser].sort().join('_');
+      const q = query(collection(db, "chats", chatId, "messages"), orderBy("createdAt", "asc"));
+
+      unsubscribeChat = onSnapshot(q, (snapshot) => {
+        msgContainer.innerHTML = '';
+        snapshot.forEach((docSnap) => {
+          const m = docSnap.data();
+          const bubble = document.createElement('div');
+          const isMe = m.sender === userData.username;
+          bubble.className = `msg-bubble ${isMe ? 'sent' : 'received'}`;
+          bubble.innerText = m.text;
+          msgContainer.appendChild(bubble);
+        });
+        msgContainer.scrollTop = msgContainer.scrollHeight;
+      });
+    }
+
+    window.sendChatMessage = async function() {
+      const input = document.getElementById('msgInputText');
+      const text = input.value.trim();
+      if (!text || !activeChatUser) return;
+
+      const chatId = [userData.username, activeChatUser].sort().join('_');
+      input.value = '';
+
+      try {
+        await addDoc(collection(db, "chats", chatId, "messages"), {
+          sender: userData.username,
+          receiver: activeChatUser,
+          text: text,
+          createdAt: new Date().toISOString()
+        });
+      } catch (e) {
+        console.error("Mesaj gönderilemedi:", e);
+      }
+    };
 
     // Modal İşlemleri
     window.openEditModal = function() {
@@ -610,10 +962,11 @@
         }
 
         container.innerHTML = '';
-        querySnapshot.forEach((doc) => {
-          const post = doc.data();
+        querySnapshot.forEach((docSnap) => {
+          const post = docSnap.data();
           const card = document.createElement('div');
           card.className = 'post-card';
+          card.onclick = () => window.location.href = `post-detail.html?id=${docSnap.id}`;
 
           card.innerHTML = `
             <img src="${post.imageUrl}" alt="${post.title}" onerror="this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=500'">
