@@ -28,12 +28,7 @@
       z-index: 1000;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .logo { display: flex; align-items: center; gap: 12px; }
     .logo-img { width: 45px; height: 45px; }
 
     .logo-text h1 {
@@ -63,7 +58,7 @@
     nav ul li a:hover { color: #ffcc00; }
 
     .share-container {
-      max-width: 700px;
+      max-width: 800px;
       margin: 40px auto;
       padding: 0 20px;
     }
@@ -72,7 +67,7 @@
       background: rgba(30, 41, 59, 0.85);
       border: 1px solid rgba(255, 204, 0, 0.3);
       border-radius: 16px;
-      padding: 30px;
+      padding: 35px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       backdrop-filter: blur(10px);
     }
@@ -80,13 +75,13 @@
     .share-card h2 {
       color: #ffcc00;
       margin-top: 0;
-      margin-bottom: 20px;
-      font-size: 24px;
+      margin-bottom: 25px;
+      font-size: 26px;
       text-align: center;
     }
 
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       position: relative;
     }
 
@@ -112,7 +107,7 @@
 
     .form-group textarea {
       resize: vertical;
-      min-height: 120px;
+      min-height: 90px;
     }
 
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
@@ -125,8 +120,7 @@
       border-top: none;
       z-index: 9999;
       top: 100%;
-      left: 0;
-      right: 0;
+      left: 0; right: 0;
       background-color: #1e293b;
       border-radius: 0 0 8px 8px;
       max-height: 220px;
@@ -150,9 +144,66 @@
       color: #000;
     }
 
+    /* Dinamik Fotoğraf Listesi & Buton */
+    .image-input-item {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .btn-add-img {
+      background: transparent;
+      border: 1px dashed #ffcc00;
+      color: #ffcc00;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: bold;
+      transition: 0.3s;
+      margin-top: 5px;
+    }
+
+    .btn-add-img:hover {
+      background: rgba(255, 204, 0, 0.15);
+    }
+
+    .btn-remove-img {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      border-radius: 6px;
+      padding: 0 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-remove-img:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .section-divider {
+      border-top: 1px dashed rgba(255, 204, 0, 0.3);
+      margin: 30px 0 25px 0;
+      position: relative;
+    }
+
+    .section-divider-title {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      padding: 0 15px;
+      color: #ffcc00;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
     .submit-btn {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       background: #ffcc00;
       color: #000;
       border: none;
@@ -161,6 +212,7 @@
       font-size: 16px;
       cursor: pointer;
       transition: 0.3s;
+      margin-top: 10px;
     }
 
     .submit-btn:hover { background: #e6b800; }
@@ -204,10 +256,10 @@
         <!-- Deneyim Başlığı -->
         <div class="form-group">
           <label for="postTitle">Deneyim / Rota Başlığı:</label>
-          <input type="text" id="postTitle" placeholder="Örn: Bodrum Kalesi ve Tekne Turu Deneyimi" required>
+          <input type="text" id="postTitle" placeholder="Örn: Bodrum Kalesi, Bitez Sahili ve Tekne Turu Deneyimi" required>
         </div>
 
-        <!-- Akıllı İl / İlçe Lokasyon Arama Kutusu -->
+        <!-- Lokasyon Arama Kutusu -->
         <div class="form-group">
           <label for="locationInput">Nereye Seyahat Edildi? (İl, İlçe veya Belde):</label>
           <input type="text" id="locationInput" placeholder="İlçe veya il adı yazın (Örn: Bodrum, Fethiye, Kadıköy)..." required>
@@ -241,16 +293,61 @@
           </div>
         </div>
 
-        <!-- Görsel Bağlantısı -->
-        <div class="form-group">
-          <label for="postImage">Fotoğraf Bağlantısı (Kapak Görseli URL):</label>
-          <input type="url" id="postImage" placeholder="https://images.unsplash.com/..." required>
+        <!-- Medya Bölümü (Fotoğraflar & YouTube Video) -->
+        <div class="section-divider">
+          <span class="section-divider-title">🖼️ Medya Bağlantıları</span>
         </div>
 
-        <!-- Detaylı Notlar -->
+        <!-- Çoklu Görsel Ekleme (10 Tane) -->
         <div class="form-group">
-          <label for="postContent">Deneyim Notlarınız & Önerileriniz:</label>
-          <textarea id="postContent" placeholder="Gezilecek mekanlar, ulaşım tavsiyeleri, dikkat edilmesi gerekenler..." required></textarea>
+          <label>Fotoğraf Bağlantıları (En fazla 10 fotoğraf ekleyebilirsiniz):</label>
+          <div id="imageInputsContainer">
+            <div class="image-input-item">
+              <input type="url" class="post-image-url" placeholder="Görsel 1 (Kapak Görseli URL)" required>
+            </div>
+          </div>
+          <button type="button" class="btn-add-img" id="btnAddImage" onclick="addImageInput()">+ Başka Fotoğraf Ekle</button>
+        </div>
+
+        <!-- YouTube Video Linki -->
+        <div class="form-group">
+          <label for="youtubeUrl">🎥 YouTube Video Bağlantısı (İsteğe Bağlı):</label>
+          <input type="url" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=... veya https://youtu.be/...">
+        </div>
+
+        <!-- Yapılandırılmış Detay Alanları -->
+        <div class="section-divider">
+          <span class="section-divider-title">📝 Seyahat Detayları & Öneriler</span>
+        </div>
+
+        <!-- 1. Kısa Özet -->
+        <div class="form-group">
+          <label for="summaryContent">📌 Genel Özet & İzlenimleriniz:</label>
+          <textarea id="summaryContent" placeholder="Bu rotanın genel atmosferi, kimlere uygun olduğu ve kısa deneyim özetiniz..." required></textarea>
+        </div>
+
+        <!-- 2. Gezilecek Yerler -->
+        <div class="form-group">
+          <label for="sightseeingContent">🏛️ Gezilecek Yerler & Aktivite Rotaları:</label>
+          <textarea id="sightseeingContent" placeholder="Mutlaka görülmesi gereken noktalar, tarihi mekanlar, plajlar veya yürüyüş yolları..."></textarea>
+        </div>
+
+        <!-- 3. Konaklama -->
+        <div class="form-group">
+          <label for="stayContent">🏨 Konaklama & Otel Tavsiyeleri:</label>
+          <textarea id="stayContent" placeholder="Kaldığınız veya önereceğiniz otel, pansiyon, kamp alanı bilgileri..."></textarea>
+        </div>
+
+        <!-- 4. Yeme & İçme -->
+        <div class="form-group">
+          <label for="foodContent">🍕 Yeme & İçme Önerileri (Mekanlar & Lezzetler):</label>
+          <textarea id="foodContent" placeholder="Denenmesi gereken yerel lezzetler, restaurant veya kafe tavsiyeleri..."></textarea>
+        </div>
+
+        <!-- 5. Ulaşım & Tüyolar -->
+        <div class="form-group">
+          <label for="tipsContent">🚌 Ulaşım, Bütçe & Önemli Tüyolar:</label>
+          <textarea id="tipsContent" placeholder="Ulaşım önerileri (araç kiralama, otobüs vs.), ortalama bütçe veya dikkat edilmesi gereken detaylar..."></textarea>
         </div>
 
         <button type="submit" id="submitBtn" class="submit-btn">🚀 Deneyimi Yayınla</button>
@@ -287,7 +384,36 @@
       window.location.href = "login.html";
     }
 
-    // Canlı İlçe/İl API Entegrasyonu (OpenStreetMap)
+    // Dinamik Fotoğraf Kutusu Ekleme (Maks 10)
+    let imageCount = 1;
+    window.addImageInput = function() {
+      if (imageCount >= 10) {
+        alert("En fazla 10 adet fotoğraf ekleyebilirsiniz.");
+        return;
+      }
+      imageCount++;
+
+      const container = document.getElementById("imageInputsContainer");
+      const div = document.createElement("div");
+      div.className = "image-input-item";
+      div.innerHTML = `
+        <input type="url" class="post-image-url" placeholder="Görsel ${imageCount} URL">
+        <button type="button" class="btn-remove-img" onclick="removeImageInput(this)">✕</button>
+      `;
+      container.appendChild(div);
+
+      if (imageCount === 10) {
+        document.getElementById("btnAddImage").style.display = "none";
+      }
+    };
+
+    window.removeImageInput = function(btn) {
+      btn.parentElement.remove();
+      imageCount--;
+      document.getElementById("btnAddImage").style.display = "inline-block";
+    };
+
+    // Canlı Lokasyon API
     const locationInput = document.getElementById("locationInput");
     const cityList = document.getElementById("cityAutocompleteList");
     let debounceTimer;
@@ -306,13 +432,10 @@
             if (data && data.length > 0) {
               data.forEach(item => {
                 const div = document.createElement("div");
-                
-                // İlçe / İl / Ülke Bilgilerini Netleştirme
                 const districtOrCity = item.address.suburb || item.address.district || item.address.town || item.address.city || item.display_name.split(',')[0];
                 const state = item.address.state || item.address.province || '';
                 const country = item.address.country || '';
 
-                // Yan Yana Görünüm: "Bodrum, Muğla, Türkiye"
                 let locationParts = [districtOrCity];
                 if (state && state !== districtOrCity) locationParts.push(state);
                 if (country) locationParts.push(country);
@@ -337,13 +460,21 @@
       if (e.target !== locationInput) cityList.style.display = "none";
     });
 
-    // Gönderiyi Firestore Veritabanına Kaydetme
+    // Gönderiyi Veritabanına Kaydetme
     document.getElementById('shareForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = document.getElementById('submitBtn');
 
-      submitBtn.innerText = "Veritabanına Kaydediliyor...";
+      submitBtn.innerText = "Yayınlanıyor...";
       submitBtn.disabled = true;
+
+      // Tüm Görsel Linklerini Toplama
+      const imageUrls = [];
+      document.querySelectorAll('.post-image-url').forEach(input => {
+        if (input.value.trim() !== "") {
+          imageUrls.push(input.value.trim());
+        }
+      });
 
       try {
         const newPost = {
@@ -353,8 +484,21 @@
           location: locationInput.value.trim(),
           duration: document.getElementById('postDuration').value,
           mode: document.getElementById('postMode').value,
-          imageUrl: document.getElementById('postImage').value.trim(),
-          content: document.getElementById('postContent').value.trim(),
+          
+          // Medya
+          imageUrl: imageUrls[0] || '', // İlk görsel kapak resmi
+          images: imageUrls,             // Tüm 10 görsel dizisi
+          youtubeUrl: document.getElementById('youtubeUrl').value.trim(),
+
+          // Gruplandırılmış İçerik Yapısı
+          details: {
+            summary: document.getElementById('summaryContent').value.trim(),
+            sightseeing: document.getElementById('sightseeingContent').value.trim(),
+            stay: document.getElementById('stayContent').value.trim(),
+            food: document.getElementById('foodContent').value.trim(),
+            tips: document.getElementById('tipsContent').value.trim()
+          },
+
           likes: 0,
           createdAt: new Date().toISOString()
         };
