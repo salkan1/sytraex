@@ -50,7 +50,7 @@
       .profile-layout { grid-template-columns: 1fr; }
     }
 
-    /* Sol Sidebar */
+    /* Sol Profil Paneli */
     .sidebar-card {
       background: #1e293b;
       border-radius: 16px;
@@ -63,7 +63,8 @@
       position: relative;
       width: 120px;
       height: 120px;
-      margin: 0 auto 15px;
+      margin: 0 auto 10px;
+      cursor: pointer;
     }
 
     .avatar-img {
@@ -73,6 +74,46 @@
       object-fit: cover;
       border: 3px solid #ffcc00;
       background-color: #0f172a;
+      transition: filter 0.3s;
+    }
+
+    .avatar-wrapper:hover .avatar-img {
+      filter: brightness(0.7);
+    }
+
+    .avatar-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ffcc00;
+      font-size: 22px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .avatar-wrapper:hover .avatar-overlay {
+      opacity: 1;
+    }
+
+    .change-photo-btn {
+      background: rgba(255, 204, 0, 0.15);
+      border: 1px solid #ffcc00;
+      color: #ffcc00;
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .change-photo-btn:hover {
+      background: #ffcc00;
+      color: #000;
     }
 
     .username-tag { color: #aaa; font-size: 14px; margin-bottom: 25px; }
@@ -142,14 +183,11 @@
       transition: 0.3s;
     }
 
-    .btn-edit:hover {
-      background: #ffcc00;
-      color: #000;
-    }
+    .btn-edit:hover { background: #ffcc00; color: #000; }
 
     .info-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 15px;
     }
 
@@ -163,7 +201,6 @@
     .info-box label { display: block; font-size: 11px; color: #aaa; text-transform: uppercase; margin-bottom: 4px; }
     .info-box span { font-size: 14px; font-weight: bold; color: #fff; word-break: break-all; }
 
-    /* Gönderi Kartları */
     .posts-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -177,22 +214,16 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .post-card img {
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-    }
-
+    .post-card img { width: 100%; height: 140px; object-fit: cover; }
     .post-card-body { padding: 15px; }
     .post-card-tag { font-size: 10px; background: rgba(255,204,0,0.2); color: #ffcc00; padding: 2px 6px; border-radius: 4px; }
     .post-card-title { font-size: 15px; font-weight: bold; margin: 8px 0 4px 0; color: #fff; }
     .post-card-loc { font-size: 12px; color: #aaa; margin-bottom: 10px; }
 
-    /* Modal / Pop-up Stilleri */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(6px);
       display: none;
       justify-content: center;
@@ -207,19 +238,13 @@
       border-radius: 16px;
       padding: 30px;
       width: 100%;
-      max-width: 550px;
-      max-height: 90vh;
+      max-width: 520px;
+      max-height: 85vh;
       overflow-y: auto;
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
 
-    .modal-card h3 {
-      color: #ffcc00;
-      margin-top: 0;
-      margin-bottom: 20px;
-      font-size: 20px;
-      text-align: center;
-    }
+    .modal-card h3 { color: #ffcc00; margin-top: 0; margin-bottom: 20px; font-size: 20px; text-align: center; }
 
     .form-group { margin-bottom: 15px; }
     .form-group label { display: block; font-size: 12px; color: #ffcc00; margin-bottom: 5px; font-weight: bold; }
@@ -234,42 +259,12 @@
       outline: none;
       font-size: 13px;
     }
-    .form-group input:focus, .form-group select:focus { border-color: #ffcc00; }
 
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 25px;
-    }
+    .modal-actions { display: flex; gap: 10px; margin-top: 25px; }
+    .btn-save { flex: 1; padding: 12px; background: #ffcc00; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    .btn-cancel { flex: 1; padding: 12px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ccc; border-radius: 8px; cursor: pointer; }
 
-    .btn-save {
-      flex: 1;
-      padding: 12px;
-      background: #ffcc00;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .btn-cancel {
-      flex: 1;
-      padding: 12px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #ccc;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: #888;
-      font-size: 13px;
-    }
+    footer { text-align: center; padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #888; font-size: 13px; }
   </style>
 </head>
 <body>
@@ -293,12 +288,17 @@
   </header>
 
   <div class="profile-layout">
-    
-    <!-- Sol Profil Menüsü -->
     <div class="sidebar-card">
-      <div class="avatar-wrapper">
+      
+      <!-- Profil Fotoğrafı (Tıklanınca Yükleme Açılır) -->
+      <div class="avatar-wrapper" onclick="triggerPhotoUpload()">
         <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200" alt="Profil Fotoğrafı" class="avatar-img" id="userAvatar">
+        <div class="avatar-overlay">📷</div>
       </div>
+      
+      <div class="change-photo-btn" onclick="triggerPhotoUpload()">📷 Fotoğraf Değiştir</div>
+      <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
+
       <h3 id="sidebarName" style="margin:0; color:#fff;">Yükleniyor...</h3>
       <div class="username-tag" id="sidebarUsername">@...</div>
 
@@ -312,10 +312,7 @@
       <button class="btn-logout" onclick="logout()">Çıkış Yap</button>
     </div>
 
-    <!-- Sağ Dinamik İçerik Alanı -->
     <div class="content-card">
-      
-      <!-- TAB 1: Tüm Profil Bilgileri -->
       <div id="tabInfo">
         <div class="header-title-flex">
           <h2>Profil Bilgilerim</h2>
@@ -335,7 +332,6 @@
         </div>
       </div>
 
-      <!-- TAB 2: Kullanıcının Paylaştığı Gönderiler -->
       <div id="tabPosts" style="display:none;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
           <h2 style="margin:0;">Paylaştığım Seyahat Deneyimleri</h2>
@@ -346,31 +342,22 @@
           <p style="color:#aaa;">Gönderileriniz yükleniyor...</p>
         </div>
       </div>
-
     </div>
-
   </div>
 
-  <!-- Profil Düzenleme Pop-Up Penceresi (Tüm Veriler Dahil) -->
+  <!-- Profil Bilgileri Düzenleme Modalı -->
   <div class="modal-overlay" id="editModal">
     <div class="modal-card">
       <h3>✏️ Profil Bilgilerini Düzenle</h3>
       <form id="editForm">
-
-        <!-- Fotoğraf Yükleme (Firebase Storage) -->
-        <div class="form-group">
-          <label for="editAvatarFile">Profil Fotoğrafı Yükle (Firebase Storage):</label>
-          <input type="file" id="editAvatarFile" accept="image/*">
-        </div>
-
         <div class="form-group">
           <label for="editName">Ad Soyad:</label>
           <input type="text" id="editName" required>
         </div>
 
         <div class="form-group">
-          <label for="editPassword">Yeni Şifre (Değiştirmek istemiyorsanız boş bırakın):</label>
-          <input type="password" id="editPassword" placeholder="Yeni şifrenizi giriniz...">
+          <label for="editPassword">Yeni Şifre (Değiştirmeyecekseniz boş bırakın):</label>
+          <input type="password" id="editPassword" placeholder="Yeni şifrenizi yazınız...">
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -419,7 +406,6 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, doc, updateDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
@@ -432,9 +418,7 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const storage = getStorage(app);
 
-    // Oturum Kontrolü
     let userData = JSON.parse(localStorage.getItem('sytraexUser'));
     if (!userData) {
       window.location.href = "login.html";
@@ -460,7 +444,6 @@
       const qText = secretQuestionTextMap[userData.secretQuestion] || userData.secretQuestion || '-';
       document.getElementById('infoSecretQuestion').innerText = qText;
 
-      // Maskeli gizli soru cevabı (İlk harf açık, gerisi maskeli)
       if (userData.secretAnswer) {
         const ans = userData.secretAnswer;
         document.getElementById('infoSecretAnswer').innerText = ans.charAt(0) + "***" + (ans.length > 3 ? ans.charAt(ans.length - 1) : '');
@@ -475,7 +458,51 @@
 
     renderUserInfo();
 
-    // Tab Geçiş Mantığı
+    // Doğrudan Profil Fotoğrafı Yükleme
+    window.triggerPhotoUpload = function() {
+      document.getElementById('avatarFileInput').click();
+    };
+
+    document.getElementById('avatarFileInput').addEventListener('change', async function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      // Resim boyutunu tarayıcıda küçültüp Base64 formatına çevirme (Hızlı & İzin Gerektirmeyen Çözüm)
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = async function() {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          
+          const maxWidth = 300;
+          const scaleSize = maxWidth / img.width;
+          canvas.width = maxWidth;
+          canvas.height = img.height * scaleSize;
+
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
+
+          try {
+            // Firestore güncelleme
+            const userRef = doc(db, "users", userData.username);
+            await updateDoc(userRef, { avatarUrl: compressedBase64 });
+
+            userData.avatarUrl = compressedBase64;
+            localStorage.setItem('sytraexUser', JSON.stringify(userData));
+
+            document.getElementById('userAvatar').src = compressedBase64;
+            alert("Profil fotoğrafınız başarıyla güncellendi!");
+          } catch (err) {
+            alert("Fotoğraf kaydedilirken hata oluştu: " + err.message);
+          }
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Tab Geçişleri
     window.switchTab = function(tabName) {
       const tabInfo = document.getElementById('tabInfo');
       const tabPosts = document.getElementById('tabPosts');
@@ -501,7 +528,7 @@
       window.switchTab('posts');
     }
 
-    // Modal Aç / Kapat
+    // Modal İşlemleri
     window.openEditModal = function() {
       document.getElementById('editName').value = userData.name || '';
       document.getElementById('editCountry').value = userData.country || '';
@@ -517,11 +544,10 @@
       document.getElementById('editModal').style.display = 'none';
     };
 
-    // Profil Düzenleme Formu Gönderimi (Firebase Storage + Firestore)
     document.getElementById('editForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btnSave = document.getElementById('btnSaveEdit');
-      btnSave.innerText = "Firebase'e Yükleniyor...";
+      btnSave.innerText = "Kaydediliyor...";
       btnSave.disabled = true;
 
       const updatedName = document.getElementById('editName').value.trim();
@@ -532,55 +558,39 @@
       const updatedSecretAnswer = document.getElementById('editSecretAnswer').value.trim();
       const newPassword = document.getElementById('editPassword').value.trim();
 
-      const avatarFile = document.getElementById('editAvatarFile').files[0];
-
       try {
-        let avatarUrl = userData.avatarUrl || '';
-
-        // Fotoğraf Seçilmişse Firebase Storage'a Yükleme
-        if (avatarFile) {
-          btnSave.innerText = "Fotoğraf Yükleniyor...";
-          const storageRef = ref(storage, `profile_pictures/${userData.username}_${Date.now()}`);
-          await uploadBytes(storageRef, avatarFile);
-          avatarUrl = await getDownloadURL(storageRef);
-        }
-
         const updateData = {
           name: updatedName,
           country: updatedCountry,
           city: updatedCity,
           birth: updatedBirth,
           secretQuestion: updatedSecretQuestion,
-          secretAnswer: updatedSecretAnswer,
-          avatarUrl: avatarUrl
+          secretAnswer: updatedSecretAnswer
         };
 
         if (newPassword) {
           updateData.password = newPassword;
         }
 
-        // Firebase Firestore Güncelleme
         const userRef = doc(db, "users", userData.username);
         await updateDoc(userRef, updateData);
 
-        // LocalStorage Güncelleme
         Object.assign(userData, updateData);
         localStorage.setItem('sytraexUser', JSON.stringify(userData));
 
         renderUserInfo();
         closeEditModal();
-        alert("Profil bilgileriniz ve fotoğrafınız başarıyla güncellendi!");
+        alert("Profil bilgileriniz başarıyla güncellendi!");
 
       } catch (err) {
         console.error("Profil güncelleme hatası:", err);
-        alert("Güncelleme sırasında hata oluştu: " + err.message);
+        alert("Güncelleme hatası: " + err.message);
       } finally {
         btnSave.innerText = "Kaydet ve Güncelle";
         btnSave.disabled = false;
       }
     });
 
-    // Kullanıcının Gönderilerini Çekme
     async function loadUserPosts() {
       const container = document.getElementById('userPostsContainer');
       container.innerHTML = '<p style="color:#aaa;">Gönderileriniz yükleniyor...</p>';
@@ -622,7 +632,6 @@
       }
     }
 
-    // Çıkış Yap
     window.logout = function() {
       localStorage.removeItem('loggedIn');
       localStorage.removeItem('sytraexUser');
