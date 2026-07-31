@@ -144,43 +144,78 @@
       color: #000;
     }
 
-    /* Dinamik Fotoğraf Listesi & Buton */
-    .image-input-item {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 8px;
+    /* Görsel Önizleme Grid Stili */
+    .image-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
     }
 
-    .btn-add-img {
-      background: transparent;
+    .preview-item {
+      position: relative;
+      width: 100%;
+      height: 90px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 204, 0, 0.4);
+    }
+
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .preview-item .remove-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: rgba(239, 68, 68, 0.85);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      font-size: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .preview-item .cover-badge {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 204, 0, 0.9);
+      color: #000;
+      font-size: 9px;
+      font-weight: bold;
+      text-align: center;
+      padding: 2px 0;
+    }
+
+    .btn-upload-photos {
+      display: inline-block;
+      padding: 12px 20px;
+      background: rgba(255, 204, 0, 0.15);
       border: 1px dashed #ffcc00;
       color: #ffcc00;
-      padding: 8px 16px;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 13px;
       font-weight: bold;
+      font-size: 14px;
       transition: 0.3s;
-      margin-top: 5px;
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
     }
 
-    .btn-add-img:hover {
-      background: rgba(255, 204, 0, 0.15);
-    }
-
-    .btn-remove-img {
-      background: rgba(239, 68, 68, 0.2);
-      border: 1px solid #ef4444;
-      color: #ef4444;
-      border-radius: 6px;
-      padding: 0 12px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .btn-remove-img:hover {
-      background: #ef4444;
-      color: #fff;
+    .btn-upload-photos:hover {
+      background: rgba(255, 204, 0, 0.25);
     }
 
     .section-divider {
@@ -298,15 +333,16 @@
           <span class="section-divider-title">🖼️ Medya Bağlantıları</span>
         </div>
 
-        <!-- Çoklu Görsel Ekleme (10 Tane) -->
+        <!-- Bilgisayardan Fotoğraf Seçme -->
         <div class="form-group">
-          <label>Fotoğraf Bağlantıları (En fazla 10 fotoğraf ekleyebilirsiniz):</label>
-          <div id="imageInputsContainer">
-            <div class="image-input-item">
-              <input type="url" class="post-image-url" placeholder="Görsel 1 (Kapak Görseli URL)" required>
-            </div>
-          </div>
-          <button type="button" class="btn-add-img" id="btnAddImage" onclick="addImageInput()">+ Başka Fotoğraf Ekle</button>
+          <label>Cihazınızdan Fotoğraflar Seçin (Maksimum 10 Fotoğraf):</label>
+          
+          <label for="filePhotoInput" class="btn-upload-photos">
+            📷 Bilgisayardan / Telefondan Fotoğraf Seç
+          </label>
+          <input type="file" id="filePhotoInput" accept="image/*" multiple style="display:none;">
+
+          <div id="imagePreviewGrid" class="image-preview-grid"></div>
         </div>
 
         <!-- YouTube Video Linki -->
@@ -375,7 +411,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Oturum Kontrolü
     const loggedIn = localStorage.getItem('loggedIn');
     const userData = JSON.parse(localStorage.getItem('sytraexUser'));
 
@@ -384,33 +419,69 @@
       window.location.href = "login.html";
     }
 
-    // Dinamik Fotoğraf Kutusu Ekleme (Maks 10)
-    let imageCount = 1;
-    window.addImageInput = function() {
-      if (imageCount >= 10) {
-        alert("En fazla 10 adet fotoğraf ekleyebilirsiniz.");
+    // Yüklenen Resimlerin Base64 Dizisi
+    let uploadedBase64Images = [];
+
+    // Dosya Seçme Olayı
+    document.getElementById('filePhotoInput').addEventListener('change', function(e) {
+      const files = Array.from(e.target.files);
+      
+      if (uploadedBase64Images.length + files.length > 10) {
+        alert("En fazla 10 adet fotoğraf yükleyebilirsiniz.");
         return;
       }
-      imageCount++;
 
-      const container = document.getElementById("imageInputsContainer");
-      const div = document.createElement("div");
-      div.className = "image-input-item";
-      div.innerHTML = `
-        <input type="url" class="post-image-url" placeholder="Görsel ${imageCount} URL">
-        <button type="button" class="btn-remove-img" onclick="removeImageInput(this)">✕</button>
-      `;
-      container.appendChild(div);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const img = new Image();
+          img.onload = function() {
+            // Görseli tarayıcıda optimize et (Max genişlik: 1000px)
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
 
-      if (imageCount === 10) {
-        document.getElementById("btnAddImage").style.display = "none";
-      }
-    };
+            let maxWidth = 1000;
+            let scale = maxWidth / img.width;
+            if (scale > 1) scale = 1;
 
-    window.removeImageInput = function(btn) {
-      btn.parentElement.remove();
-      imageCount--;
-      document.getElementById("btnAddImage").style.display = "inline-block";
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
+
+            uploadedBase64Images.push(compressedBase64);
+            renderPreviews();
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      this.value = ''; // Input'u sıfırla ki aynı dosya tekrar seçilebilsin
+    });
+
+    // Önizleme Render
+    function renderPreviews() {
+      const grid = document.getElementById('imagePreviewGrid');
+      grid.innerHTML = '';
+
+      uploadedBase64Images.forEach((base64, idx) => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        
+        item.innerHTML = `
+          <img src="${base64}">
+          <button type="button" class="remove-btn" onclick="removeImage(${idx})">✕</button>
+          ${idx === 0 ? '<span class="cover-badge">KAPAK</span>' : ''}
+        `;
+        grid.appendChild(item);
+      });
+    }
+
+    window.removeImage = function(index) {
+      uploadedBase64Images.splice(index, 1);
+      renderPreviews();
     };
 
     // Canlı Lokasyon API
@@ -460,21 +531,18 @@
       if (e.target !== locationInput) cityList.style.display = "none";
     });
 
-    // Gönderiyi Veritabanına Kaydetme
+    // Gönderiyi Kaydetme
     document.getElementById('shareForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const submitBtn = document.getElementById('submitBtn');
+      
+      if (uploadedBase64Images.length === 0) {
+        alert("Lütfen en az 1 adet fotoğraf seçiniz.");
+        return;
+      }
 
+      const submitBtn = document.getElementById('submitBtn');
       submitBtn.innerText = "Yayınlanıyor...";
       submitBtn.disabled = true;
-
-      // Tüm Görsel Linklerini Toplama
-      const imageUrls = [];
-      document.querySelectorAll('.post-image-url').forEach(input => {
-        if (input.value.trim() !== "") {
-          imageUrls.push(input.value.trim());
-        }
-      });
 
       try {
         const newPost = {
@@ -486,11 +554,11 @@
           mode: document.getElementById('postMode').value,
           
           // Medya
-          imageUrl: imageUrls[0] || '', // İlk görsel kapak resmi
-          images: imageUrls,             // Tüm 10 görsel dizisi
+          imageUrl: uploadedBase64Images[0], // İlk resim kapak resmi
+          images: uploadedBase64Images,       // 10 adede kadar Base64 resim dizisi
           youtubeUrl: document.getElementById('youtubeUrl').value.trim(),
 
-          // Gruplandırılmış İçerik Yapısı
+          // Yapılandırılmış İçerik
           details: {
             summary: document.getElementById('summaryContent').value.trim(),
             sightseeing: document.getElementById('sightseeingContent').value.trim(),
@@ -499,7 +567,7 @@
             tips: document.getElementById('tipsContent').value.trim()
           },
 
-          likes: 0,
+          ratings: {},
           createdAt: new Date().toISOString()
         };
 
