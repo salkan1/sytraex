@@ -34,10 +34,7 @@
       gap: 12px;
     }
 
-    .logo-img {
-      width: 45px;
-      height: 45px;
-    }
+    .logo-img { width: 45px; height: 45px; }
 
     .logo-text h1 {
       margin: 0;
@@ -46,11 +43,7 @@
       text-transform: lowercase;
     }
 
-    .logo-text p {
-      margin: 0;
-      font-size: 11px;
-      color: #aaa;
-    }
+    .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
 
     nav {
       display: flex;
@@ -73,17 +66,8 @@
       transition: color 0.3s;
     }
 
-    nav ul li a:hover {
-      color: #ffcc00;
-    }
+    nav ul li a:hover { color: #ffcc00; }
 
-    .lang-switch a {
-      color: #ffcc00;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    /* Hero Bölümü */
     .hero {
       text-align: center;
       padding: 60px 20px 40px;
@@ -123,9 +107,7 @@
       font-size: 14px;
     }
 
-    .btn:hover {
-      background: #e6b800;
-    }
+    .btn:hover { background: #e6b800; }
 
     .btn.secondary {
       background: transparent;
@@ -133,11 +115,8 @@
       color: #ffcc00;
     }
 
-    .btn.secondary:hover {
-      background: rgba(255, 204, 0, 0.1);
-    }
+    .btn.secondary:hover { background: rgba(255, 204, 0, 0.1); }
 
-    /* Arama Filtre Paneli */
     .search-section {
       max-width: 1100px;
       margin: -20px auto 50px;
@@ -161,14 +140,10 @@
     }
 
     @media (max-width: 900px) {
-      .search-grid {
-        grid-template-columns: 1fr;
-      }
+      .search-grid { grid-template-columns: 1fr; }
     }
 
-    .search-group {
-      position: relative;
-    }
+    .search-group { position: relative; }
 
     .search-group label {
       display: block;
@@ -190,15 +165,9 @@
       box-sizing: border-box;
     }
 
-    .search-group input:focus, .search-group select:focus {
-      border-color: #ffcc00;
-    }
+    .search-group input:focus, .search-group select:focus { border-color: #ffcc00; }
+    .search-group select option { background: #1e293b; }
 
-    .search-group select option {
-      background: #1e293b;
-    }
-
-    /* Canlı Autocomplete Listesi */
     .autocomplete-items {
       position: absolute;
       border: 1px solid #ffcc00;
@@ -244,11 +213,8 @@
       transition: 0.3s;
     }
 
-    .search-btn:hover {
-      background: #e6b800;
-    }
+    .search-btn:hover { background: #e6b800; }
 
-    /* Vitrin Bölümü */
     .featured-section {
       max-width: 1100px;
       margin: 0 auto 60px;
@@ -309,9 +275,7 @@
   <section class="hero">
     <h2>Dünyayı Keşfet. Anılarını Paylaş.</h2>
     <p>Sytraex, seyahat deneyimlerini paylaşabileceğin ve ilham alabileceğin sosyal topluluk.</p>
-    <div class="buttons" id="heroButtons">
-      <!-- Dinamik Butonlar Script Tarafından Doldurulacak -->
-    </div>
+    <div class="buttons" id="heroButtons"></div>
   </section>
 
   <!-- Gelişmiş Arama Paneli -->
@@ -319,19 +283,18 @@
     <div class="search-card">
       <form id="searchForm" class="search-grid" autocomplete="off">
         
-        <!-- TEK LOKASYON ARAMA KUTUSU -->
+        <!-- TEK AKILLI LOKASYON KUTUSU (İl, İlçe, Ülke) -->
         <div class="search-group">
           <label for="locationInput">Nereye Gitmek İstiyorsun?</label>
           <input 
             type="text" 
             id="locationInput" 
-            placeholder="İl, eyalet veya şehir yazın (Örn: İstanbul, Roma)..." 
+            placeholder="İlçe, il veya ülke yazın (Örn: Bodrum, Roma)..." 
             required
           >
           <div id="cityAutocompleteList" class="autocomplete-items"></div>
         </div>
 
-        <!-- Süre Seçimi -->
         <div class="search-group">
           <label for="searchDuration">Süre / Zaman:</label>
           <select id="searchDuration">
@@ -344,7 +307,6 @@
           </select>
         </div>
 
-        <!-- Seyahat Modu / Konsept -->
         <div class="search-group">
           <label for="searchMode">Seyahat Modu:</label>
           <select id="searchMode">
@@ -359,7 +321,6 @@
           </select>
         </div>
 
-        <!-- Arama Butonu -->
         <div class="search-group">
           <button type="submit" class="search-btn">🔍 Deneyimleri Ara</button>
         </div>
@@ -368,7 +329,6 @@
     </div>
   </section>
 
-  <!-- Öne Çıkanlar (Gerçek Kullanıcı İçerikleri) -->
   <section class="featured-section">
     <div class="section-title">
       <span>⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları</span>
@@ -389,68 +349,52 @@
   <script>
     const locationInput = document.getElementById("locationInput");
     const cityList = document.getElementById("cityAutocompleteList");
-
-    // Canlı Küresel Lokasyon API Entegrasyonu (OpenStreetMap Nominatim)
     let debounceTimer;
 
     locationInput.addEventListener("input", function() {
       const query = this.value.trim();
-
       cityList.innerHTML = "";
-
-      if (query.length < 2) {
-        cityList.style.display = "none";
-        return;
-      }
+      if (query.length < 2) { cityList.style.display = "none"; return; }
 
       clearTimeout(debounceTimer);
-
       debounceTimer = setTimeout(() => {
-        const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=8`;
-
-        fetch(apiUrl)
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=8`)
           .then(res => res.json())
           .then(data => {
             cityList.innerHTML = "";
-
             if (data && data.length > 0) {
               data.forEach(item => {
                 const div = document.createElement("div");
-                
-                const mainName = item.address.city || item.address.town || item.address.state || item.display_name.split(',')[0];
+                const districtOrCity = item.address.suburb || item.address.district || item.address.town || item.address.city || item.display_name.split(',')[0];
+                const state = item.address.state || item.address.province || '';
                 const country = item.address.country || '';
 
-                const fullText = country ? `${mainName}, ${country}` : mainName;
+                let locationParts = [districtOrCity];
+                if (state && state !== districtOrCity) locationParts.push(state);
+                if (country) locationParts.push(country);
 
-                div.innerHTML = `<span>📍 <strong>${mainName}</strong></span> <span style="font-size:12px; opacity:0.7;">${country}</span>`;
+                const fullText = locationParts.join(', ');
+
+                div.innerHTML = `<span>📍 <strong>${districtOrCity}</strong> ${state ? `<small style="color:#aaa;">(${state})</small>` : ''}</span> <span style="font-size:11px; opacity:0.7;">${country}</span>`;
 
                 div.addEventListener("click", () => {
                   locationInput.value = fullText;
                   cityList.style.display = "none";
                 });
-
                 cityList.appendChild(div);
               });
               cityList.style.display = "block";
-            } else {
-              cityList.style.display = "none";
             }
-          })
-          .catch(err => console.error("Lokasyon API Hatası:", err));
+          });
       }, 250);
     });
 
-    // Sayfa dışına basılınca kapat
     document.addEventListener("click", (e) => {
-      if (e.target !== locationInput) {
-        cityList.style.display = "none";
-      }
+      if (e.target !== locationInput) cityList.style.display = "none";
     });
 
-    // Arama Yönlendirmesi
     document.getElementById('searchForm').addEventListener('submit', (e) => {
       e.preventDefault();
-
       const location = locationInput.value.trim();
       const duration = document.getElementById('searchDuration').value;
       const mode = document.getElementById('searchMode').value;
@@ -458,7 +402,6 @@
       window.location.href = `search-results.html?location=${encodeURIComponent(location)}&duration=${encodeURIComponent(duration)}&mode=${encodeURIComponent(mode)}`;
     });
 
-    // Oturum Kontrolü ve Bağımsız Paylaşım Sayfası Yönlendirmesi
     const loggedIn = localStorage.getItem('loggedIn');
     const registerNav = document.getElementById('registerNav');
     const loginNav = document.getElementById('loginNav');
