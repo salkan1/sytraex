@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deneyim Paylaş | Sytraex</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0f172a;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img { width: 45px; height: 45px; }
+
+    .logo-text h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #ffcc00;
+      text-transform: lowercase;
+    }
+
+    .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover { color: #ffcc00; }
+
+    .share-container {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .share-card {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .share-card h2 {
+      color: #ffcc00;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      color: #ffcc00;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: #0f172a;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: #ffcc00;
+    }
+
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #ffcc00;
+      border-top: none;
+      z-index: 9999;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: #1e293b;
+      border-radius: 0 0 8px 8px;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .autocomplete-items div {
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .autocomplete-items div:hover {
+      background-color: #ffcc00;
+      color: #000;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: #ffcc00;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .submit-btn:hover { background: #e6b800; }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #888;
+      font-size: 13px;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Sytraex Logo" class="logo-img">
+      <div class="logo-text">
+        <h1>sytraex</h1>
+        <p>Share Your Travel Experience</p>
+      </div>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="profile.html" style="color:#ffcc00; font-weight:bold;">Profilim</a></li>
+        <li><a href="whitepaper.html">White Paper (Stake SYTX)</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="share-container">
+    <div class="share-card">
+      <h2>✈️ Seyahat Deneyimini Paylaş</h2>
+
+      <form id="shareForm" autocomplete="off">
+        
+        <!-- Deneyim Başlığı -->
+        <div class="form-group">
+          <label for="postTitle">Deneyim / Rota Başlığı:</label>
+          <input type="text" id="postTitle" placeholder="Örn: Roma Sokak Lezzetleri & Gece Yürüyüşü" required>
+        </div>
+
+        <!-- Lokasyon (Canlı API) -->
+        <div class="form-group">
+          <label for="locationInput">Nereye Seyahat Edildi? (Lokasyon):</label>
+          <input type="text" id="locationInput" placeholder="Şehir, il veya ülke adı yazın..." required>
+          <div id="cityAutocompleteList" class="autocomplete-items"></div>
+        </div>
+
+        <!-- Süre & Mod Yan Yana -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group">
+            <label for="postDuration">Süre / Zaman Dilimi:</label>
+            <select id="postDuration" required>
+              <option value="3 Saatlik Tur">3 Saatlik Hızlı Tur</option>
+              <option value="Günübirlik (6-12 Saat)">Günübirlik (6-12 Saat)</option>
+              <option value="1 Gün">Tam 1 Gün</option>
+              <option value="Hafta Sonu (2-3 Gün)">Hafta Sonu (2-3 Gün)</option>
+              <option value="1 Hafta veya Daha Uzun">1 Hafta veya Daha Uzun</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="postMode">Seyahat Modu:</label>
+            <select id="postMode" required>
+              <option value="🌙 Gece Hayatı & Eğlence">🌙 Gece Hayatı & Eğlence</option>
+              <option value="☀️ Gündüz Gezi & Şehir">☀️ Gündüz Gezi & Şehir</option>
+              <option value="🏛️ Tarihsel & Kültür">🏛️ Tarihsel & Kültür</option>
+              <option value="🌿 Doğa & Sakinlik">🌿 Doğa & Sakinlik</option>
+              <option value="🍕 Yemek & Gastronomi">🍕 Yemek & Gastronomi</option>
+              <option value="🏄 Macera & Spor">🏄 Macera & Spor</option>
+              <option value="💰 Bütçe Dostu">💰 Bütçe Dostu</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Görsel URL / Görsel Yükleme -->
+        <div class="form-group">
+          <label for="postImage">Fotoğraf Bağlantısı (URL) veya Kapak Görseli:</label>
+          <input type="url" id="postImage" placeholder="https://images.unsplash.com/..." required>
+        </div>
+
+        <!-- Detaylı Açıklama -->
+        <div class="form-group">
+          <label for="postContent">Deneyim Notlarınız & Önerileriniz:</label>
+          <textarea id="postContent" placeholder="Nerede ne yenir? Neresi gezilmeli? Dikkat edilmesi gereken ipuçları..." required></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn" class="submit-btn">🚀 Deneyimi Yayınla</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Sytraex | Share Your Travel Experience</p>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
+      authDomain: "sytraex-462b0.firebaseapp.com",
+      projectId: "sytraex-462b0",
+      storageBucket: "sytraex-462b0.firebasestorage.app",
+      messagingSenderId: "379245018695",
+      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Oturum Kontrolü
+    const loggedIn = localStorage.getItem('loggedIn');
+    const userData = JSON.parse(localStorage.getItem('sytraexUser'));
+
+    if (loggedIn !== "true" || !userData) {
+      alert("Gönderi paylaşabilmek için lütfen önce giriş yapınız.");
+      window.location.href = "login.html";
+    }
+
+    // Canlı Lokasyon API
+    const locationInput = document.getElementById("locationInput");
+    const cityList = document.getElementById("cityAutocompleteList");
+    let debounceTimer;
+
+    locationInput.addEventListener("input", function() {
+      const query = this.value.trim();
+      cityList.innerHTML = "";
+      if (query.length < 2) { cityList.style.display = "none"; return; }
+
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=6`)
+          .then(res => res.json())
+          .then(data => {
+            cityList.innerHTML = "";
+            if (data && data.length > 0) {
+              data.forEach(item => {
+                const div = document.createElement("div");
+                const mainName = item.address.city || item.address.town || item.address.state || item.display_name.split(',')[0];
+                const country = item.address.country || '';
+                const fullText = country ? `${mainName}, ${country}` : mainName;
+
+                div.innerHTML = `📍 <strong>${mainName}</strong> <span style="font-size:11px; color:#aaa;">(${country})</span>`;
+                div.addEventListener("click", () => {
+                  locationInput.value = fullText;
+                  cityList.style.display = "none";
+                });
+                cityList.appendChild(div);
+              });
+              cityList.style.display = "block";
+            }
+          });
+      }, 250);
+    });
+
+    document.addEventListener("click", (e) => {
+      if (e.target !== locationInput) cityList.style.display = "none";
+    });
+
+    // Gönderi Paylaşma Formu
+    document.getElementById('shareForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+
+      submitBtn.innerText = "Yayınlanıyor...";
+      submitBtn.disabled = true;
+
+      try {
+        const newPost = {
+          username: userData.username,
+          authorName: userData.name || userData.username,
+          title: document.getElementById('postTitle').value.trim(),
+          location: locationInput.value.trim(),
+          duration: document.getElementById('postDuration').value,
+          mode: document.getElementById('postMode').value,
+          imageUrl: document.getElementById('postImage').value.trim(),
+          content: document.getElementById('postContent').value.trim(),
+          likes: 0,
+          createdAt: new Date().toISOString()
+        };
+
+        await addDoc(collection(db, "posts"), newPost);
+
+        alert("Tebrikler! Seyahat deneyiminiz başarıyla yayınlandı.");
+        window.location.href = "profile.html?tab=posts";
+
+      } catch (err) {
+        console.error("Gönderi paylaşım hatası:", err);
+        alert("Bir hata oluştu.");
+        submitBtn.innerText = "🚀 Deneyimi Yayınla";
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>
