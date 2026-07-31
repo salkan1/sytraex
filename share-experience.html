@@ -129,16 +129,20 @@
       right: 0;
       background-color: #1e293b;
       border-radius: 0 0 8px 8px;
-      max-height: 200px;
+      max-height: 220px;
       overflow-y: auto;
       display: none;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
     }
 
     .autocomplete-items div {
-      padding: 10px 14px;
+      padding: 12px 15px;
       cursor: pointer;
       font-size: 13px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .autocomplete-items div:hover {
@@ -200,17 +204,17 @@
         <!-- Deneyim Başlığı -->
         <div class="form-group">
           <label for="postTitle">Deneyim / Rota Başlığı:</label>
-          <input type="text" id="postTitle" placeholder="Örn: Roma Sokak Lezzetleri & Gece Yürüyüşü" required>
+          <input type="text" id="postTitle" placeholder="Örn: Bodrum Kalesi ve Tekne Turu Deneyimi" required>
         </div>
 
-        <!-- Lokasyon (Canlı API) -->
+        <!-- Akıllı İl / İlçe Lokasyon Arama Kutusu -->
         <div class="form-group">
-          <label for="locationInput">Nereye Seyahat Edildi? (Lokasyon):</label>
-          <input type="text" id="locationInput" placeholder="Şehir, il veya ülke adı yazın..." required>
+          <label for="locationInput">Nereye Seyahat Edildi? (İl, İlçe veya Belde):</label>
+          <input type="text" id="locationInput" placeholder="İlçe veya il adı yazın (Örn: Bodrum, Fethiye, Kadıköy)..." required>
           <div id="cityAutocompleteList" class="autocomplete-items"></div>
         </div>
 
-        <!-- Süre & Mod Yan Yana -->
+        <!-- Süre & Mod -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
           <div class="form-group">
             <label for="postDuration">Süre / Zaman Dilimi:</label>
@@ -237,16 +241,16 @@
           </div>
         </div>
 
-        <!-- Görsel URL / Görsel Yükleme -->
+        <!-- Görsel Bağlantısı -->
         <div class="form-group">
-          <label for="postImage">Fotoğraf Bağlantısı (URL) veya Kapak Görseli:</label>
+          <label for="postImage">Fotoğraf Bağlantısı (Kapak Görseli URL):</label>
           <input type="url" id="postImage" placeholder="https://images.unsplash.com/..." required>
         </div>
 
-        <!-- Detaylı Açıklama -->
+        <!-- Detaylı Notlar -->
         <div class="form-group">
           <label for="postContent">Deneyim Notlarınız & Önerileriniz:</label>
-          <textarea id="postContent" placeholder="Nerede ne yenir? Neresi gezilmeli? Dikkat edilmesi gereken ipuçları..." required></textarea>
+          <textarea id="postContent" placeholder="Gezilecek mekanlar, ulaşım tavsiyeleri, dikkat edilmesi gerekenler..." required></textarea>
         </div>
 
         <button type="submit" id="submitBtn" class="submit-btn">🚀 Deneyimi Yayınla</button>
@@ -283,7 +287,7 @@
       window.location.href = "login.html";
     }
 
-    // Canlı Lokasyon API
+    // Canlı İlçe/İl API Entegrasyonu (OpenStreetMap)
     const locationInput = document.getElementById("locationInput");
     const cityList = document.getElementById("cityAutocompleteList");
     let debounceTimer;
@@ -295,20 +299,30 @@
 
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=6`)
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=8`)
           .then(res => res.json())
           .then(data => {
             cityList.innerHTML = "";
             if (data && data.length > 0) {
               data.forEach(item => {
                 const div = document.createElement("div");
-                const mainName = item.address.city || item.address.town || item.address.state || item.display_name.split(',')[0];
+                
+                // İlçe / İl / Ülke Bilgilerini Netleştirme
+                const districtOrCity = item.address.suburb || item.address.district || item.address.town || item.address.city || item.display_name.split(',')[0];
+                const state = item.address.state || item.address.province || '';
                 const country = item.address.country || '';
-                const fullText = country ? `${mainName}, ${country}` : mainName;
 
-                div.innerHTML = `📍 <strong>${mainName}</strong> <span style="font-size:11px; color:#aaa;">(${country})</span>`;
+                // Yan Yana Görünüm: "Bodrum, Muğla, Türkiye"
+                let locationParts = [districtOrCity];
+                if (state && state !== districtOrCity) locationParts.push(state);
+                if (country) locationParts.push(country);
+
+                const fullLocationText = locationParts.join(', ');
+
+                div.innerHTML = `<span>📍 <strong>${districtOrCity}</strong> ${state ? `<small style="color:#aaa;">(${state})</small>` : ''}</span> <span style="font-size:11px; opacity:0.7;">${country}</span>`;
+                
                 div.addEventListener("click", () => {
-                  locationInput.value = fullText;
+                  locationInput.value = fullLocationText;
                   cityList.style.display = "none";
                 });
                 cityList.appendChild(div);
@@ -323,12 +337,12 @@
       if (e.target !== locationInput) cityList.style.display = "none";
     });
 
-    // Gönderi Paylaşma Formu
+    // Gönderiyi Firestore Veritabanına Kaydetme
     document.getElementById('shareForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = document.getElementById('submitBtn');
 
-      submitBtn.innerText = "Yayınlanıyor...";
+      submitBtn.innerText = "Veritabanına Kaydediliyor...";
       submitBtn.disabled = true;
 
       try {
@@ -352,7 +366,7 @@
 
       } catch (err) {
         console.error("Gönderi paylaşım hatası:", err);
-        alert("Bir hata oluştu.");
+        alert("Bir hata oluştu: " + err.message);
         submitBtn.innerText = "🚀 Deneyimi Yayınla";
         submitBtn.disabled = false;
       }
