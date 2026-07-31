@@ -107,16 +107,20 @@
       display: flex;
       justify-content: center;
       gap: 15px;
+      flex-wrap: wrap;
     }
 
     .btn {
-      padding: 10px 24px;
+      padding: 12px 24px;
       background: #ffcc00;
       color: #000;
       text-decoration: none;
       border-radius: 8px;
       font-weight: bold;
       transition: 0.3s;
+      cursor: pointer;
+      border: none;
+      font-size: 14px;
     }
 
     .btn:hover {
@@ -133,7 +137,7 @@
       background: rgba(255, 204, 0, 0.1);
     }
 
-    /* Arama Filtre Paneli (3 Sütunlu Tek Lokasyon Yapısı) */
+    /* Arama Filtre Paneli */
     .search-section {
       max-width: 1100px;
       margin: -20px auto 50px;
@@ -151,7 +155,7 @@
 
     .search-grid {
       display: grid;
-      grid-template-columns: 2fr 1.3fr 1.5fr 1fr;
+      grid-template-columns: 2.2fr 1.2fr 1.5fr 1fr;
       gap: 12px;
       align-items: end;
     }
@@ -194,29 +198,32 @@
       background: #1e293b;
     }
 
-    /* Canlı Şehir Autocomplete Listesi */
+    /* Canlı Autocomplete Listesi */
     .autocomplete-items {
       position: absolute;
-      border: 1px solid rgba(255, 204, 0, 0.4);
+      border: 1px solid #ffcc00;
       border-top: none;
-      z-index: 999;
+      z-index: 9999;
       top: 100%;
       left: 0;
       right: 0;
       background-color: #1e293b;
       border-radius: 0 0 8px 8px;
-      max-height: 220px;
+      max-height: 250px;
       overflow-y: auto;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
       display: none;
     }
 
     .autocomplete-items div {
-      padding: 10px 14px;
+      padding: 12px 15px;
       cursor: pointer;
-      font-size: 13px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .autocomplete-items div:hover {
@@ -289,8 +296,8 @@
     <nav>
       <ul>
         <li><a href="index.html" style="color: #ffcc00;">Ana Sayfa</a></li>
-        <li><a href="register.html">Kayıt Ol</a></li>
-        <li><a href="login.html">Giriş Yap</a></li>
+        <li><a href="register.html" id="registerNav">Kayıt Ol</a></li>
+        <li><a href="login.html" id="loginNav">Giriş Yap</a></li>
         <li><a href="whitepaper.html">White Paper (Stake SYTX)</a></li>
       </ul>
       <div class="lang-switch">
@@ -303,23 +310,22 @@
     <h2>Dünyayı Keşfet. Anılarını Paylaş.</h2>
     <p>Sytraex, seyahat deneyimlerini paylaşabileceğin ve ilham alabileceğin sosyal topluluk.</p>
     <div class="buttons" id="heroButtons">
-      <a href="register.html" class="btn">Kayıt Ol</a>
-      <a href="login.html" class="btn secondary">Giriş Yap</a>
+      <!-- Dinamik Butonlar Script Tarafından Doldurulacak -->
     </div>
   </section>
 
-  <!-- Gelişmiş Arama Filtre Paneli (TEK KUTULU LOKASYON) -->
+  <!-- Gelişmiş Arama Paneli -->
   <section class="search-section">
     <div class="search-card">
       <form id="searchForm" class="search-grid" autocomplete="off">
         
-        <!-- TEK ARAMA KUTUSU -->
+        <!-- TEK LOKASYON ARAMA KUTUSU -->
         <div class="search-group">
           <label for="locationInput">Nereye Gitmek İstiyorsun?</label>
           <input 
             type="text" 
             id="locationInput" 
-            placeholder="İl, eyalet veya ülke adı yazın..." 
+            placeholder="İl, eyalet veya şehir yazın (Örn: İstanbul, Roma)..." 
             required
           >
           <div id="cityAutocompleteList" class="autocomplete-items"></div>
@@ -362,7 +368,7 @@
     </div>
   </section>
 
-  <!-- Öne Çıkanlar (Gerçek Kullanıcı İçerikleri Alanı) -->
+  <!-- Öne Çıkanlar (Gerçek Kullanıcı İçerikleri) -->
   <section class="featured-section">
     <div class="section-title">
       <span>⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları</span>
@@ -371,7 +377,8 @@
     <div id="topRatedContainer" class="empty-state">
       <div style="font-size: 28px; margin-bottom: 8px;">🗺️</div>
       <strong style="color: #ffcc00;">Henüz Öne Çıkan Bir Seyahat Rotası Yok</strong>
-      <p>Kullanıcılar deneyimlerini paylaşıp oyladıkça en popüler rotalar burada listelenecektir.</p>
+      <p style="margin-bottom: 20px;">Kullanıcılar deneyimlerini paylaşıp oyladıkça en popüler rotalar burada listelenecektir.</p>
+      <button onclick="handleShareClick()" class="btn">➕ İlk Deneyimi Sen Paylaş!</button>
     </div>
   </section>
 
@@ -383,7 +390,7 @@
     const locationInput = document.getElementById("locationInput");
     const cityList = document.getElementById("cityAutocompleteList");
 
-    // Canlı Arama API Entegrasyonu (OpenStreetMap Nominatim)
+    // Canlı Küresel Lokasyon API Entegrasyonu (OpenStreetMap Nominatim)
     let debounceTimer;
 
     locationInput.addEventListener("input", function() {
@@ -410,13 +417,15 @@
               data.forEach(item => {
                 const div = document.createElement("div");
                 
-                const mainName = item.address.city || item.address.town || item.address.state || item.address.country || item.display_name.split(',')[0];
+                const mainName = item.address.city || item.address.town || item.address.state || item.display_name.split(',')[0];
                 const country = item.address.country || '';
 
-                div.innerHTML = `📍 <strong>${mainName}</strong> ${country ? `<span style="font-size:11px; color:#aaa;">(${country})</span>` : ''}`;
+                const fullText = country ? `${mainName}, ${country}` : mainName;
+
+                div.innerHTML = `<span>📍 <strong>${mainName}</strong></span> <span style="font-size:12px; opacity:0.7;">${country}</span>`;
 
                 div.addEventListener("click", () => {
-                  locationInput.value = country ? `${mainName}, ${country}` : mainName;
+                  locationInput.value = fullText;
                   cityList.style.display = "none";
                 });
 
@@ -428,7 +437,7 @@
             }
           })
           .catch(err => console.error("Lokasyon API Hatası:", err));
-      }, 300);
+      }, 250);
     });
 
     // Sayfa dışına basılınca kapat
@@ -449,22 +458,42 @@
       window.location.href = `search-results.html?location=${encodeURIComponent(location)}&duration=${encodeURIComponent(duration)}&mode=${encodeURIComponent(mode)}`;
     });
 
-    // Oturum Kontrolü
+    // Oturum Kontrolü ve Dinamik Yönlendirme Mantığı
     const loggedIn = localStorage.getItem('loggedIn');
-    const registerLink = document.querySelector('a[href="register.html"]');
-    const loginLink = document.querySelector('a[href="login.html"]');
+    const registerNav = document.getElementById('registerNav');
+    const loginNav = document.getElementById('loginNav');
     const heroButtons = document.getElementById('heroButtons');
 
+    function handleShareClick() {
+      if (localStorage.getItem('loggedIn') === "true") {
+        window.location.href = "profile.html#share";
+      } else {
+        alert("Seyahat deneyiminizi paylaşabilmek için lütfen önce giriş yapınız.");
+        window.location.href = "login.html";
+      }
+    }
+
     if (loggedIn === "true") {
-      if (registerLink) registerLink.style.display = "none";
-      if (loginLink) {
-        loginLink.textContent = "Profilim";
-        loginLink.href = "profile.html";
-        loginLink.style.color = "#ffcc00";
-        loginLink.style.fontWeight = "bold";
+      if (registerNav) registerNav.style.display = "none";
+      if (loginNav) {
+        loginNav.textContent = "Profilim";
+        loginNav.href = "profile.html";
+        loginNav.style.color = "#ffcc00";
+        loginNav.style.fontWeight = "bold";
       }
       if (heroButtons) {
-        heroButtons.innerHTML = `<a href="profile.html" class="btn">Profilime Git</a>`;
+        heroButtons.innerHTML = `
+          <a href="profile.html" class="btn">Profilime Git</a>
+          <button onclick="handleShareClick()" class="btn secondary">➕ Deneyimi Paylaş</button>
+        `;
+      }
+    } else {
+      if (heroButtons) {
+        heroButtons.innerHTML = `
+          <a href="register.html" class="btn">Kayıt Ol</a>
+          <a href="login.html" class="btn secondary">Giriş Yap</a>
+          <button onclick="handleShareClick()" class="btn secondary" style="border-color:#ffcc00; color:#ffcc00;">➕ Deneyimi Paylaş</button>
+        `;
       }
     }
   </script>
