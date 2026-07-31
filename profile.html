@@ -120,7 +120,31 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .content-card h2 { color: #ffcc00; margin-top: 0; margin-bottom: 25px; font-size: 22px; }
+    .header-title-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .header-title-flex h2 { color: #ffcc00; margin: 0; font-size: 22px; }
+
+    .btn-edit {
+      padding: 8px 16px;
+      background: rgba(255, 204, 0, 0.15);
+      border: 1px solid #ffcc00;
+      color: #ffcc00;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-edit:hover {
+      background: #ffcc00;
+      color: #000;
+    }
 
     .info-grid {
       display: grid;
@@ -138,7 +162,7 @@
     .info-box label { display: block; font-size: 11px; color: #aaa; text-transform: uppercase; margin-bottom: 4px; }
     .info-box span { font-size: 14px; font-weight: bold; color: #fff; }
 
-    /* Gönderi Kartları Mimarisi */
+    /* Gönderi Kartları */
     .posts-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -162,6 +186,77 @@
     .post-card-tag { font-size: 10px; background: rgba(255,204,0,0.2); color: #ffcc00; padding: 2px 6px; border-radius: 4px; }
     .post-card-title { font-size: 15px; font-weight: bold; margin: 8px 0 4px 0; color: #fff; }
     .post-card-loc { font-size: 12px; color: #aaa; margin-bottom: 10px; }
+
+    /* Modal / Pop-up Stilleri */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal-card {
+      background: #1e293b;
+      border: 1px solid rgba(255, 204, 0, 0.4);
+      border-radius: 16px;
+      padding: 30px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .modal-card h3 {
+      color: #ffcc00;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 12px; color: #ccc; margin-bottom: 5px; }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      background: #0f172a;
+      color: #fff;
+      box-sizing: border-box;
+      outline: none;
+    }
+    .form-group input:focus { border-color: #ffcc00; }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-save {
+      flex: 1;
+      padding: 10px;
+      background: #ffcc00;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-cancel {
+      flex: 1;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
     footer {
       text-align: center;
@@ -217,7 +312,11 @@
       
       <!-- TAB 1: Profil Bilgileri -->
       <div id="tabInfo">
-        <h2>Profil Bilgilerim</h2>
+        <div class="header-title-flex">
+          <h2>Profil Bilgilerim</h2>
+          <button class="btn-edit" onclick="openEditModal()">✏️ Bilgileri Düzenle</button>
+        </div>
+
         <div class="info-grid">
           <div class="info-box"><label>Kullanıcı Adı</label><span id="infoUsername">-</span></div>
           <div class="info-box"><label>Ad Soyad</label><span id="infoName">-</span></div>
@@ -244,13 +343,39 @@
 
   </div>
 
+  <!-- Profil Düzenleme Pop-Up Penceresi (Modal) -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal-card">
+      <h3>✏️ Profil Bilgilerini Düzenle</h3>
+      <form id="editForm">
+        <div class="form-group">
+          <label for="editName">Ad Soyad:</label>
+          <input type="text" id="editName" required>
+        </div>
+        <div class="form-group">
+          <label for="editCountry">Ülke:</label>
+          <input type="text" id="editCountry" required>
+        </div>
+        <div class="form-group">
+          <label for="editCity">İl / Şehir:</label>
+          <input type="text" id="editCity" required>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" onclick="closeEditModal()">İptal</button>
+          <button type="submit" class="btn-save" id="btnSaveEdit">Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <footer>
     <p>© 2026 Sytraex | Share Your Travel Experience</p>
   </footer>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, updateDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
@@ -265,20 +390,23 @@
     const db = getFirestore(app);
 
     // Oturum Kontrolü
-    const userData = JSON.parse(localStorage.getItem('sytraexUser'));
+    let userData = JSON.parse(localStorage.getItem('sytraexUser'));
     if (!userData) {
       window.location.href = "login.html";
     }
 
-    // Profil Bilgilerini Ekrana Yazma
-    document.getElementById('sidebarName').innerText = userData.name || userData.username;
-    document.getElementById('sidebarUsername').innerText = `@${userData.username}`;
-    document.getElementById('infoUsername').innerText = userData.username;
-    document.getElementById('infoName').innerText = userData.name || '-';
-    document.getElementById('infoEmail').innerText = userData.email;
-    document.getElementById('infoCountry').innerText = userData.country || '-';
-    document.getElementById('infoCity').innerText = userData.city || '-';
-    document.getElementById('infoBirth').innerText = userData.birth || '-';
+    function renderUserInfo() {
+      document.getElementById('sidebarName').innerText = userData.name || userData.username;
+      document.getElementById('sidebarUsername').innerText = `@${userData.username}`;
+      document.getElementById('infoUsername').innerText = userData.username;
+      document.getElementById('infoName').innerText = userData.name || '-';
+      document.getElementById('infoEmail').innerText = userData.email;
+      document.getElementById('infoCountry').innerText = userData.country || '-';
+      document.getElementById('infoCity').innerText = userData.city || '-';
+      document.getElementById('infoBirth').innerText = userData.birth || '-';
+    }
+
+    renderUserInfo();
 
     // Tab Geçiş Mantığı
     window.switchTab = function(tabName) {
@@ -301,13 +429,63 @@
       }
     };
 
-    // URL'den tab parametresi gelmişse otomatik yönlendir
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('tab') === 'posts') {
       window.switchTab('posts');
     }
 
-    // Kullanıcının Gönderilerini Firestore'dan Çekme
+    // Modal Aç / Kapat
+    window.openEditModal = function() {
+      document.getElementById('editName').value = userData.name || '';
+      document.getElementById('editCountry').value = userData.country || '';
+      document.getElementById('editCity').value = userData.city || '';
+      document.getElementById('editModal').style.display = 'flex';
+    };
+
+    window.closeEditModal = function() {
+      document.getElementById('editModal').style.display = 'none';
+    };
+
+    // Profil Düzenleme Formu Gönderimi
+    document.getElementById('editForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btnSave = document.getElementById('btnSaveEdit');
+      btnSave.innerText = "Kaydediliyor...";
+      btnSave.disabled = true;
+
+      const updatedName = document.getElementById('editName').value.trim();
+      const updatedCountry = document.getElementById('editCountry').value.trim();
+      const updatedCity = document.getElementById('editCity').value.trim();
+
+      try {
+        // Firebase Firestore Güncelleme
+        const userRef = doc(db, "users", userData.username);
+        await updateDoc(userRef, {
+          name: updatedName,
+          country: updatedCountry,
+          city: updatedCity
+        });
+
+        // LocalStorage Güncelleme
+        userData.name = updatedName;
+        userData.country = updatedCountry;
+        userData.city = updatedCity;
+        localStorage.setItem('sytraexUser', JSON.stringify(userData));
+
+        renderUserInfo();
+        closeEditModal();
+        alert("Profil bilgileriniz başarıyla güncellendi!");
+
+      } catch (err) {
+        console.error("Profil güncelleme hatası:", err);
+        alert("Güncelleme sırasında hata oluştu: " + err.message);
+      } finally {
+        btnSave.innerText = "Kaydet";
+        btnSave.disabled = false;
+      }
+    });
+
+    // Kullanıcının Gönderilerini Çekme
     async function loadUserPosts() {
       const container = document.getElementById('userPostsContainer');
       container.innerHTML = '<p style="color:#aaa;">Gönderileriniz yükleniyor...</p>';
