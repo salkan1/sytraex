@@ -160,6 +160,9 @@
       font-weight: bold;
       border-radius: 8px;
       transition: 0.3s;
+      cursor: pointer;
+      border: none;
+      font-size: 15px;
     }
 
     .btn-create:hover {
@@ -214,7 +217,7 @@
         <div style="font-size: 50px;">🔎</div>
         <h3>Henüz Uygun Bir Seyahat Rotası Bulunamadı</h3>
         <p>Aradığınız kriterlere uygun herhangi bir kullanıcı paylaşımı henüz yapılmamış.</p>
-        <a href="profile.html" class="btn-create">➕ İlk Deneyimi Sen Paylaş!</a>
+        <button onclick="handleShareClick()" class="btn-create">➕ İlk Deneyimi Sen Paylaş!</button>
       </div>
     </div>
 
@@ -244,7 +247,7 @@
       badgesContainer.innerHTML += `<span class="badge">🎯 Mod: ${decodeURIComponent(modeParam)}</span>`;
     }
 
-    // Oturum Kontrolü
+    // Oturum Kontrolü ve Bağımsız Paylaşım Yönlendirmesi
     const loggedIn = localStorage.getItem('loggedIn');
     if (loggedIn === "true") {
       const regNav = document.getElementById('registerNav');
@@ -254,6 +257,15 @@
         logNav.textContent = 'Profilim';
         logNav.href = 'profile.html';
         logNav.style.color = '#ffcc00';
+      }
+    }
+
+    function handleShareClick() {
+      if (localStorage.getItem('loggedIn') === "true") {
+        window.location.href = "share-experience.html";
+      } else {
+        alert("Seyahat deneyiminizi paylaşabilmek için lütfen önce giriş yapınız.");
+        window.location.href = "login.html";
       }
     }
   </script>
