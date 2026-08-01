@@ -228,6 +228,61 @@
     .post-card-title { font-size: 15px; font-weight: bold; margin: 8px 0 4px 0; color: #fff; }
     .post-card-loc { font-size: 12px; color: #aaa; margin-bottom: 10px; }
 
+    /* Cüzdan Paneli Stilleri */
+    .wallet-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border: 1px solid rgba(255, 204, 0, 0.4);
+      border-radius: 16px;
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .wallet-balance-group {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .sytx-icon-large {
+      width: 60px;
+      height: 60px;
+      filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.4));
+    }
+
+    .balance-amount {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffcc00;
+      line-height: 1;
+    }
+
+    .balance-label {
+      font-size: 13px;
+      color: #aaa;
+      margin-top: 5px;
+    }
+
+    .tx-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    .tx-table th, .tx-table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 13px;
+    }
+
+    .tx-table th { color: #ffcc00; font-size: 12px; text-transform: uppercase; }
+    .tx-amount { font-weight: bold; color: #22c55e; }
+
     /* Mesajlar Paneli Stilleri */
     .messages-layout {
       display: grid;
@@ -437,6 +492,10 @@
         <span>👤 Profil Bilgileri</span>
       </button>
 
+      <button class="menu-btn" id="btnWallet" onclick="switchTab('wallet')">
+        <span>💰 Cüzdanım (SYTX)</span>
+      </button>
+
       <button class="menu-btn" id="btnPosts" onclick="switchTab('posts')">
         <span>📝 Gönderilerim</span>
       </button>
@@ -475,7 +534,39 @@
         </div>
       </div>
 
-      <!-- TAB 2: Paylaşılan Gönderiler -->
+      <!-- TAB 2: Cüzdanım (SYTX Coin) -->
+      <div id="tabWallet" style="display:none;">
+        <h2>💰 Sytraex Cüzdanı & Ödüller</h2>
+
+        <div class="wallet-banner">
+          <div class="wallet-balance-group">
+            <img src="logo.png" alt="SYTX Logo" class="sytx-icon-large">
+            <div>
+              <div class="balance-amount"><span id="sytxBalanceText">0</span> <small style="font-size:20px;">SYTX</small></div>
+              <div class="balance-label">Toplam Kazandığınız Sytraex Coin Bakiyesi</div>
+            </div>
+          </div>
+          <a href="whitepaper.html" style="text-decoration:none;">
+            <button style="padding:10px 20px; background:#ffcc00; color:#000; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Stake Et (SYTX)</button>
+          </a>
+        </div>
+
+        <h4 style="color:#ffcc00; margin-bottom:12px;">📊 Coin Kazanç Geçmişi</h4>
+        <table class="tx-table">
+          <thead>
+            <tr>
+              <th>İşlem Türü</th>
+              <th>Açıklama</th>
+              <th>Miktar</th>
+            </tr>
+          </thead>
+          <tbody id="walletTxBody">
+            <!-- Dinamik dolacak -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TAB 3: Paylaşılan Gönderiler -->
       <div id="tabPosts" style="display:none;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
           <h2 style="margin:0;">Paylaştığım Seyahat Deneyimleri</h2>
@@ -487,11 +578,10 @@
         </div>
       </div>
 
-      <!-- TAB 3: Mesajlar & Gelen İstekler -->
+      <!-- TAB 4: Mesajlar & Gelen İstekler -->
       <div id="tabMessages" style="display:none;">
         <h2>💬 Mesajlar ve Bağlantı İstekleri</h2>
 
-        <!-- Gelen Bekleyen İstekler -->
         <div style="margin-bottom: 25px;">
           <h4 style="color:#ffcc00; margin-bottom:12px;">📩 Gelen İstekler</h4>
           <div id="requestsListContainer">
@@ -499,7 +589,6 @@
           </div>
         </div>
 
-        <!-- Sohbet Alanı -->
         <h4 style="color:#ffcc00; margin-bottom:12px;">💬 Aktif Sohbetler</h4>
         <div class="messages-layout">
           <div class="chat-users-list" id="activeChatUsersList">
@@ -683,18 +772,22 @@
     // Tab Geçişleri
     window.switchTab = function(tabName) {
       const tabInfo = document.getElementById('tabInfo');
+      const tabWallet = document.getElementById('tabWallet');
       const tabPosts = document.getElementById('tabPosts');
       const tabMessages = document.getElementById('tabMessages');
       
       const btnInfo = document.getElementById('btnInfo');
+      const btnWallet = document.getElementById('btnWallet');
       const btnPosts = document.getElementById('btnPosts');
       const btnMessages = document.getElementById('btnMessages');
 
       tabInfo.style.display = 'none';
+      tabWallet.style.display = 'none';
       tabPosts.style.display = 'none';
       tabMessages.style.display = 'none';
 
       btnInfo.classList.remove('active');
+      btnWallet.classList.remove('active');
       btnPosts.classList.remove('active');
       btnMessages.classList.remove('active');
 
@@ -702,6 +795,10 @@
         tabPosts.style.display = 'block';
         btnPosts.classList.add('active');
         loadUserPosts();
+      } else if (tabName === 'wallet') {
+        tabWallet.style.display = 'block';
+        btnWallet.classList.add('active');
+        loadWalletData();
       } else if (tabName === 'messages') {
         tabMessages.style.display = 'block';
         btnMessages.classList.add('active');
@@ -715,7 +812,50 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('tab') === 'posts') switchTab('posts');
+    if (urlParams.get('tab') === 'wallet') switchTab('wallet');
     if (urlParams.get('tab') === 'messages') switchTab('messages');
+
+    // Cüzdan Bakiyesi ve İşlemleri Yükle
+    async function loadWalletData() {
+      const balanceText = document.getElementById('sytxBalanceText');
+      const txBody = document.getElementById('walletTxBody');
+
+      try {
+        const q = query(collection(db, "posts"), where("username", "==", userData.username));
+        const querySnapshot = await getDocs(q);
+        const postCount = querySnapshot.size;
+
+        const welcomeBonus = 10;
+        const postBonus = postCount * 25;
+        const totalBalance = welcomeBonus + postBonus;
+
+        balanceText.innerText = totalBalance;
+
+        let html = `
+          <tr>
+            <td>🎁 Hoş Geldin Bonusu</td>
+            <td>Sytraex platformuna kayıt ödülü</td>
+            <td class="tx-amount">+10 SYTX</td>
+          </tr>
+        `;
+
+        querySnapshot.forEach(docSnap => {
+          const p = docSnap.data();
+          html += `
+            <tr>
+              <td>📝 Rota Paylaşım Ödülü</td>
+              <td>${p.title}</td>
+              <td class="tx-amount">+25 SYTX</td>
+            </tr>
+          `;
+        });
+
+        txBody.innerHTML = html;
+
+      } catch (e) {
+        console.error("Cüzdan verisi yüklenemedi:", e);
+      }
+    }
 
     // Bekleyen İstek Rozet Kontrolü
     async function checkPendingRequests() {
