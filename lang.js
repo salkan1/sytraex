@@ -40,6 +40,33 @@ const translations = {
     "top_rated_title": "⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları",
     "no_top_posts": "Henüz öne çıkan bir seyahat rotası yok.",
 
+    // Deneyim Paylaş Sayfası (share-experience.html)
+    "share_title": "✈️ Seyahat Deneyimini Paylaş",
+    "share_label_post_title": "Deneyim / Rota Başlığı:",
+    "share_ph_post_title": "Örn: Bodrum Kalesi, Bitez Sahili ve Tekne Turu Deneyimi",
+    "share_label_loc": "Nereye Seyahat Edildi? (İl, İlçe veya Belde):",
+    "share_ph_loc": "İlçe veya il adı yazın (Örn: Bodrum, Fethiye, Kadıköy)...",
+    "share_label_duration": "Süre / Zaman Dilimi:",
+    "share_label_mode": "Seyahat Modu:",
+    "share_divider_media": "🖼️ Medya Bağlantıları",
+    "share_label_photos": "Cihazınızdan Fotoğraflar Seçin (Maksimum 10 Fotoğraf):",
+    "share_btn_upload": "📷 Bilgisayardan / Telefondan Fotoğraf Seç",
+    "share_cover_badge": "KAPAK",
+    "share_label_youtube": "🎥 YouTube Video Bağlantısı (İsteğe Bağlı):",
+    "share_ph_youtube": "https://www.youtube.com/watch?v=... veya https://youtu.be/...",
+    "share_divider_details": "📝 Seyahat Detayları & Öneriler",
+    "share_label_summary": "📌 Genel Özet & İzlenimleriniz:",
+    "share_ph_summary": "Bu rotanın genel atmosferi, kimlere uygun olduğu ve kısa deneyim özetiniz...",
+    "share_label_sightseeing": "🏛️ Gezilecek Yerler & Aktivite Rotaları:",
+    "share_ph_sightseeing": "Mutlaka görülmesi gereken noktalar, tarihi mekanlar, plajlar veya yürüyüş yolları...",
+    "share_label_stay": "🏨 Konaklama & Otel Tavsiyeleri:",
+    "share_ph_stay": "Kaldığınız veya önereceğiniz otel, pansiyon, kamp alanı bilgileri...",
+    "share_label_food": "🍕 Yeme & İçme Önerileri (Mekanlar & Lezzetler):",
+    "share_ph_food": "Denenmesi gereken yerel lezzetler, restaurant veya kafe tavsiyeleri...",
+    "share_label_tips": "🚌 Ulaşım, Bütçe & Önemli Tüyolar:",
+    "share_ph_tips": "Ulaşım önerileri (araç kiralama, otobüs vs.), ortalama bütçe veya dikkat edilmesi gereken detaylar...",
+    "share_btn_publish": "🚀 Deneyimi Yayınla",
+
     // Arama Sonuçları (search-results.html)
     "results_title": "Arama Sonuçları",
     "results_btn_new": "← Yeni Arama Yap",
@@ -66,7 +93,7 @@ const translations = {
     "forgot_btn_show_pass": "Şifreyi Göster",
     "forgot_success_text": "Hesap Doğrulandı!",
 
-    // Kayıt Ol Sayfası (register.html)
+    // Kayıt Ol Sayfası
     "reg_title": "📝 Sytraex'e Kayıt Ol",
     "reg_label_username": "Kullanıcı Adı:",
     "reg_ph_username": "Örn: selcukalkan",
@@ -88,7 +115,7 @@ const translations = {
     "reg_ph_secret_a": "Cevabınız...",
     "reg_btn_submit": "Kayıt Ol ve Katıl",
 
-    // Detay Sayfası (post-detail.html)
+    // Detay Sayfası
     "detail_sec_summary": "📌 Genel Özet & İzlenimler",
     "detail_sec_sightseeing": "🏛️ Gezilecek Yerler & Aktivite Rotaları",
     "detail_sec_stay": "🏨 Konaklama & Otel Tavsiyeleri",
@@ -102,7 +129,7 @@ const translations = {
     "detail_comment_btn": "Yorum Yap",
     "detail_no_comments": "Henüz yorum yapılmamış. İlk yorumu sen yap!",
 
-    // Genel Profil (public-profile.html)
+    // Genel Profil
     "public_btn_send_req": "💬 Mesaj İsteği Gönder",
     "public_btn_edit_own": "✏️ Kendi Profilini Düzenle",
     "public_btn_pending": "⏳ Mesaj İsteği Gönderildi (Beklemede)",
@@ -178,7 +205,34 @@ const translations = {
     "top_rated_title": "⭐ Top Rated Travel Routes of the Community",
     "no_top_posts": "No featured travel routes yet.",
 
-    // Search Results (search-results.html)
+    // Share Experience Page (share-experience.html)
+    "share_title": "✈️ Share Travel Experience",
+    "share_label_post_title": "Experience / Route Title:",
+    "share_ph_post_title": "e.g. Bodrum Castle, Bitez Beach and Boat Tour Experience",
+    "share_label_loc": "Where Did You Travel? (City, District or Town):",
+    "share_ph_loc": "Type city or district name (e.g. Bodrum, Fethiye, Kadikoy)...",
+    "share_label_duration": "Duration / Time Frame:",
+    "share_label_mode": "Travel Concept:",
+    "share_divider_media": "🖼️ Media Connections",
+    "share_label_photos": "Select Photos from Your Device (Maximum 10 Photos):",
+    "share_btn_upload": "📷 Choose Photos from Device",
+    "share_cover_badge": "COVER",
+    "share_label_youtube": "🎥 YouTube Video Link (Optional):",
+    "share_ph_youtube": "https://www.youtube.com/watch?v=... or https://youtu.be/...",
+    "share_divider_details": "📝 Travel Details & Recommendations",
+    "share_label_summary": "📌 General Overview & Impressions:",
+    "share_ph_summary": "General atmosphere of this route, who it suits, and your brief summary...",
+    "share_label_sightseeing": "🏛️ Places to Visit & Activities:",
+    "share_ph_sightseeing": "Must-see spots, historical sites, beaches or walking trails...",
+    "share_label_stay": "🏨 Accommodation & Hotel Recommendations:",
+    "share_ph_stay": "Information on hotels, hostels or campsites where you stayed or recommend...",
+    "share_label_food": "🍕 Food & Dining Suggestions (Venues & Flavors):",
+    "share_ph_food": "Local flavors to try, restaurant or cafe recommendations...",
+    "share_label_tips": "🚌 Transportation, Budget & Important Tips:",
+    "share_ph_tips": "Transport suggestions (car rental, bus etc.), average budget or key details...",
+    "share_btn_publish": "🚀 Publish Experience",
+
+    // Search Results
     "results_title": "Search Results",
     "results_btn_new": "← New Search",
     "results_all_posts": "All Posts",
@@ -204,7 +258,7 @@ const translations = {
     "forgot_btn_show_pass": "Show Password",
     "forgot_success_text": "Account Verified!",
 
-    // Register Page (register.html)
+    // Register Page
     "reg_title": "📝 Register to Sytraex",
     "reg_label_username": "Username:",
     "reg_ph_username": "e.g. selcukalkan",
@@ -226,7 +280,7 @@ const translations = {
     "reg_ph_secret_a": "Your answer...",
     "reg_btn_submit": "Register and Join",
 
-    // Detail Page (post-detail.html)
+    // Detail Page
     "detail_sec_summary": "📌 General Overview & Impressions",
     "detail_sec_sightseeing": "🏛️ Places to Visit & Activities",
     "detail_sec_stay": "🏨 Accommodation & Hotel Tips",
@@ -240,7 +294,7 @@ const translations = {
     "detail_comment_btn": "Post Comment",
     "detail_no_comments": "No comments yet. Be the first to comment!",
 
-    // Public Profile (public-profile.html)
+    // Public Profile
     "public_btn_send_req": "💬 Send Message Request",
     "public_btn_edit_own": "✏️ Edit Your Profile",
     "public_btn_pending": "⏳ Message Request Sent (Pending)",
