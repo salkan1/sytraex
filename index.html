@@ -28,145 +28,66 @@
       z-index: 1000;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .logo { display: flex; align-items: center; gap: 12px; }
     .logo-img { width: 45px; height: 45px; }
-
-    .logo-text h1 {
-      margin: 0;
-      font-size: 22px;
-      color: #ffcc00;
-      text-transform: lowercase;
-    }
-
+    .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
     .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
 
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      gap: 20px;
-    }
-
-    nav ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
+    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; }
+    nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
     nav ul li a:hover { color: #ffcc00; }
 
-    .hero {
-      text-align: center;
-      padding: 60px 20px 40px;
-      background: radial-gradient(circle, rgba(255,204,0,0.1) 0%, rgba(15,23,42,1) 70%);
-    }
-
-    .hero h2 {
-      font-size: 36px;
-      color: #ffcc00;
-      margin-bottom: 15px;
-    }
-
-    .hero p {
-      font-size: 16px;
-      color: #ccc;
-      max-width: 600px;
-      margin: 0 auto 30px;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 12px 24px;
-      background: #ffcc00;
-      color: #000;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: 0.3s;
-      cursor: pointer;
-      border: none;
-      font-size: 14px;
-    }
-
-    .btn:hover { background: #e6b800; }
-
-    .btn.secondary {
-      background: transparent;
-      border: 1px solid #ffcc00;
-      color: #ffcc00;
-    }
-
-    .btn.secondary:hover { background: rgba(255, 204, 0, 0.1); }
-
-    .search-section {
-      max-width: 1100px;
-      margin: -20px auto 50px;
+    .main-container {
+      max-width: 1000px;
+      margin: 40px auto;
       padding: 0 20px;
     }
 
+    /* Arama Kartı */
     .search-card {
-      background: rgba(30, 41, 59, 0.85);
-      border: 1px solid rgba(255, 204, 0, 0.3);
+      background: #1e293b;
       border-radius: 16px;
-      padding: 25px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      padding: 30px;
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      margin-bottom: 40px;
     }
 
     .search-grid {
       display: grid;
-      grid-template-columns: 2.2fr 1.2fr 1.5fr 1fr;
-      gap: 12px;
+      grid-template-columns: 2fr 1.2fr 1.2fr 1fr;
+      gap: 15px;
       align-items: end;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 800px) {
       .search-grid { grid-template-columns: 1fr; }
     }
 
-    .search-group { position: relative; }
-
-    .search-group label {
-      display: block;
-      font-size: 12px;
-      color: #ffcc00;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    .search-group input, .search-group select {
+    .form-group { position: relative; }
+    .form-group label { display: block; font-size: 12px; color: #ffcc00; margin-bottom: 6px; font-weight: bold; }
+    .form-group input, .form-group select {
       width: 100%;
       padding: 12px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 8px;
       background: #0f172a;
       color: #fff;
-      font-size: 14px;
+      font-size: 13px;
       outline: none;
       box-sizing: border-box;
     }
 
-    .search-group input:focus, .search-group select:focus { border-color: #ffcc00; }
-    .search-group select option { background: #1e293b; }
+    .btn-search {
+      padding: 12px;
+      background: #ffcc00;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      width: 100%;
+    }
 
     .autocomplete-items {
       position: absolute;
@@ -174,78 +95,61 @@
       border-top: none;
       z-index: 9999;
       top: 100%;
-      left: 0;
-      right: 0;
+      left: 0; right: 0;
       background-color: #1e293b;
       border-radius: 0 0 8px 8px;
-      max-height: 250px;
+      max-height: 200px;
       overflow-y: auto;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
       display: none;
     }
 
     .autocomplete-items div {
-      padding: 12px 15px;
+      padding: 10px 12px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 12px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
-      color: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
-    .autocomplete-items div:hover {
-      background-color: #ffcc00;
-      color: #000;
-    }
+    .autocomplete-items div:hover { background-color: #ffcc00; color: #000; }
 
-    .search-btn {
-      width: 100%;
-      padding: 12px;
-      background: #ffcc00;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 15px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .search-btn:hover { background: #e6b800; }
-
-    .featured-section {
-      max-width: 1100px;
-      margin: 0 auto 60px;
-      padding: 0 20px;
-    }
-
+    /* En Çok Oy Alanlar */
     .section-title {
-      font-size: 20px;
       color: #ffcc00;
+      font-size: 20px;
       margin-bottom: 20px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .empty-state {
-      background: rgba(30, 41, 59, 0.4);
-      border: 1px dashed rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
-      padding: 40px 20px;
-      text-align: center;
-      color: #aaa;
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
     }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: #888;
-      font-size: 13px;
+    .post-card {
+      background: #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s, border-color 0.3s;
     }
+
+    .post-card:hover {
+      transform: translateY(-5px);
+      border-color: #ffcc00;
+    }
+
+    .post-card img { width: 100%; height: 160px; object-fit: cover; }
+    .post-card-body { padding: 18px; }
+    .post-card-tag { font-size: 11px; background: rgba(255,204,0,0.15); color: #ffcc00; padding: 3px 8px; border-radius: 4px; }
+    .post-card-title { font-size: 16px; font-weight: bold; margin: 10px 0 6px 0; color: #fff; }
+    .post-card-rating { font-size: 13px; color: #ffcc00; margin-bottom: 6px; font-weight: bold; }
+    .post-card-loc { font-size: 12px; color: #aaa; }
+
+    footer { text-align: center; padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #888; font-size: 13px; margin-top: 60px; }
   </style>
 </head>
 <body>
@@ -261,184 +165,187 @@
 
     <nav>
       <ul>
-        <li><a href="index.html" style="color: #ffcc00;">Ana Sayfa</a></li>
-        <li><a href="register.html" id="registerNav">Kayıt Ol</a></li>
-        <li><a href="login.html" id="loginNav">Giriş Yap</a></li>
+        <li><a href="index.html" style="color:#ffcc00; font-weight:bold;">Ana Sayfa</a></li>
+        <li><a href="profile.html">Profilim</a></li>
         <li><a href="whitepaper.html">White Paper (Stake SYTX)</a></li>
       </ul>
-      <div class="lang-switch">
-        <a href="index.html">TR</a> / <a href="#">EN</a>
-      </div>
     </nav>
   </header>
 
-  <section class="hero">
-    <h2>Dünyayı Keşfet. Anılarını Paylaş.</h2>
-    <p>Sytraex, seyahat deneyimlerini paylaşabileceğin ve ilham alabileceğin sosyal topluluk.</p>
-    <div class="buttons" id="heroButtons"></div>
-  </section>
-
-  <!-- Gelişmiş Arama Paneli -->
-  <section class="search-section">
+  <div class="main-container">
+    
+    <!-- Arama Paneli -->
     <div class="search-card">
-      <form id="searchForm" class="search-grid" autocomplete="off">
-        
-        <!-- TEK AKILLI LOKASYON KUTUSU (İl, İlçe, Ülke) -->
-        <div class="search-group">
-          <label for="locationInput">Nereye Gitmek İstiyorsun?</label>
-          <input 
-            type="text" 
-            id="locationInput" 
-            placeholder="İlçe, il veya ülke yazın (Örn: Bodrum, Roma)..." 
-            required
-          >
-          <div id="cityAutocompleteList" class="autocomplete-items"></div>
-        </div>
+      <form action="search-results.html" method="GET" autocomplete="off">
+        <div class="search-grid">
+          <div class="form-group">
+            <label for="searchLoc">Nereye Gitmek İstiyorsun?</label>
+            <input type="text" name="location" id="searchLoc" placeholder="İlçe, il veya ülke yazın (Örn: Bodrum, Roma)...">
+            <div id="searchAutocompleteList" class="autocomplete-items"></div>
+          </div>
 
-        <div class="search-group">
-          <label for="searchDuration">Süre / Zaman:</label>
-          <select id="searchDuration">
-            <option value="all">Tüm Süreler</option>
-            <option value="3saat">3 Saatlik Hızlı Tur</option>
-            <option value="6saat">Günübirlik (6-12 Saat)</option>
-            <option value="1gun">Tam 1 Gün</option>
-            <option value="3gun">Hafta Sonu (2-3 Gün)</option>
-            <option value="1hafta">1 Hafta veya Daha Uzun</option>
-          </select>
-        </div>
+          <div class="form-group">
+            <label for="searchDuration">Süre / Zaman:</label>
+            <select name="duration" id="searchDuration">
+              <option value="hepsi">Tüm Süreler</option>
+              <option value="3 Saatlik Tur">3 Saatlik Hızlı Tur</option>
+              <option value="Günübirlik">Günübirlik (6-12 Saat)</option>
+              <option value="1 Gün">Tam 1 Gün</option>
+              <option value="Hafta Sonu">Hafta Sonu (2-3 Gün)</option>
+              <option value="1 Hafta">1 Hafta veya Daha Uzun</option>
+            </select>
+          </div>
 
-        <div class="search-group">
-          <label for="searchMode">Seyahat Modu:</label>
-          <select id="searchMode">
-            <option value="all">Tüm Konseptler</option>
-            <option value="gece">🌙 Gece Hayatı & Eğlence</option>
-            <option value="gunduz">☀️ Gündüz Gezi & Şehir</option>
-            <option value="tarih">🏛️ Tarihsel & Kültür</option>
-            <option value="sakinlik">🌿 Doğa & Sakinlik</option>
-            <option value="gastronomi">🍕 Yemek & Gastronomi</option>
-            <option value="macera">🏄 Macera & Spor</option>
-            <option value="butce">💰 Bütçe Dostu / Sırt Çantalı</option>
-          </select>
-        </div>
+          <div class="form-group">
+            <label for="searchMode">Seyahat Modu:</label>
+            <select name="mode" id="searchMode">
+              <option value="hepsi">Tüm Konseptler</option>
+              <option value="Gece Hayatı">🌙 Gece Hayatı & Eğlence</option>
+              <option value="Gündüz Gezi">☀️ Gündüz Gezi & Şehir</option>
+              <option value="Tarihsel">🏛️ Tarihsel & Kültür</option>
+              <option value="Doğa">🌿 Doğa & Sakinlik</option>
+              <option value="Yemek">🍕 Yemek & Gastronomi</option>
+              <option value="Macera">🏄 Macera & Spor</option>
+              <option value="Bütçe Dostu">💰 Bütçe Dostu</option>
+            </select>
+          </div>
 
-        <div class="search-group">
-          <button type="submit" class="search-btn">🔍 Deneyimleri Ara</button>
+          <button type="submit" class="btn-search">🔍 Deneyimleri Ara</button>
         </div>
-
       </form>
     </div>
-  </section>
 
-  <section class="featured-section">
+    <!-- Öne Çıkanlar / En Çok Oy Alanlar -->
     <div class="section-title">
       <span>⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları</span>
     </div>
 
-    <div id="topRatedContainer" class="empty-state">
-      <div style="font-size: 28px; margin-bottom: 8px;">🗺️</div>
-      <strong style="color: #ffcc00;">Henüz Öne Çıkan Bir Seyahat Rotası Yok</strong>
-      <p style="margin-bottom: 20px;">Kullanıcılar deneyimlerini paylaşıp oyladıkça en popüler rotalar burada listelenecektir.</p>
-      <button onclick="handleShareClick()" class="btn">➕ İlk Deneyimi Sen Paylaş!</button>
+    <div id="topRatedGrid" class="posts-grid">
+      <p style="color:#aaa;">Öne çıkan rotalar yükleniyor...</p>
     </div>
-  </section>
+
+  </div>
 
   <footer>
     <p>© 2026 Sytraex | Share Your Travel Experience</p>
   </footer>
 
-  <script>
-    const locationInput = document.getElementById("locationInput");
-    const cityList = document.getElementById("cityAutocompleteList");
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
+      authDomain: "sytraex-462b0.firebaseapp.com",
+      projectId: "sytraex-462b0",
+      storageBucket: "sytraex-462b0.firebasestorage.app",
+      messagingSenderId: "379245018695",
+      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Canlı Lokasyon Arama
+    const searchLoc = document.getElementById("searchLoc");
+    const autoList = document.getElementById("searchAutocompleteList");
     let debounceTimer;
 
-    locationInput.addEventListener("input", function() {
+    searchLoc.addEventListener("input", function() {
       const query = this.value.trim();
-      cityList.innerHTML = "";
-      if (query.length < 2) { cityList.style.display = "none"; return; }
+      autoList.innerHTML = "";
+      if (query.length < 2) { autoList.style.display = "none"; return; }
 
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=8`)
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=6`)
           .then(res => res.json())
           .then(data => {
-            cityList.innerHTML = "";
+            autoList.innerHTML = "";
             if (data && data.length > 0) {
               data.forEach(item => {
                 const div = document.createElement("div");
-                const districtOrCity = item.address.suburb || item.address.district || item.address.town || item.address.city || item.display_name.split(',')[0];
-                const state = item.address.state || item.address.province || '';
+                const city = item.address.city || item.address.town || item.address.suburb || item.display_name.split(',')[0];
                 const country = item.address.country || '';
+                const fullText = `${city}${country ? ', ' + country : ''}`;
 
-                let locationParts = [districtOrCity];
-                if (state && state !== districtOrCity) locationParts.push(state);
-                if (country) locationParts.push(country);
-
-                const fullText = locationParts.join(', ');
-
-                div.innerHTML = `<span>📍 <strong>${districtOrCity}</strong> ${state ? `<small style="color:#aaa;">(${state})</small>` : ''}</span> <span style="font-size:11px; opacity:0.7;">${country}</span>`;
-
+                div.innerHTML = `📍 <strong>${city}</strong> <small style="color:#aaa;">(${country})</small>`;
                 div.addEventListener("click", () => {
-                  locationInput.value = fullText;
-                  cityList.style.display = "none";
+                  searchLoc.value = fullText;
+                  autoList.style.display = "none";
                 });
-                cityList.appendChild(div);
+                autoList.appendChild(div);
               });
-              cityList.style.display = "block";
+              autoList.style.display = "block";
             }
           });
       }, 250);
     });
 
     document.addEventListener("click", (e) => {
-      if (e.target !== locationInput) cityList.style.display = "none";
+      if (e.target !== searchLoc) autoList.style.display = "none";
     });
 
-    document.getElementById('searchForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const location = locationInput.value.trim();
-      const duration = document.getElementById('searchDuration').value;
-      const mode = document.getElementById('searchMode').value;
+    // En Çok Oy Alan Gönderileri Yükle
+    async function loadTopRatedPosts() {
+      const grid = document.getElementById('topRatedGrid');
 
-      window.location.href = `search-results.html?location=${encodeURIComponent(location)}&duration=${encodeURIComponent(duration)}&mode=${encodeURIComponent(mode)}`;
-    });
+      try {
+        const querySnapshot = await getDocs(collection(db, "posts"));
+        const postsList = [];
 
-    const loggedIn = localStorage.getItem('loggedIn');
-    const registerNav = document.getElementById('registerNav');
-    const loginNav = document.getElementById('loginNav');
-    const heroButtons = document.getElementById('heroButtons');
+        querySnapshot.forEach((docSnap) => {
+          const post = docSnap.data();
+          const ratings = post.ratings || {};
+          const votes = Object.values(ratings);
+          const totalVotes = votes.length;
+          
+          let avg = 0;
+          if (totalVotes > 0) {
+            avg = votes.reduce((a, b) => a + b, 0) / totalVotes;
+          }
 
-    function handleShareClick() {
-      if (localStorage.getItem('loggedIn') === "true") {
-        window.location.href = "share-experience.html";
-      } else {
-        alert("Seyahat deneyiminizi paylaşabilmek için lütfen önce giriş yapınız.");
-        window.location.href = "login.html";
+          postsList.push({
+            id: docSnap.id,
+            avgRating: avg,
+            voteCount: totalVotes,
+            ...post
+          });
+        });
+
+        // Oylara Göre Sırala (Puanı yüksek olan en üste)
+        postsList.sort((a, b) => b.avgRating - a.avgRating || b.voteCount - a.voteCount);
+
+        if (postsList.length === 0) {
+          grid.innerHTML = '<p style="color:#aaa; grid-column: 1/-1; text-align:center;">Henüz öne çıkan bir seyahat rotası yok.</p>';
+          return;
+        }
+
+        grid.innerHTML = '';
+        postsList.forEach((post) => {
+          const card = document.createElement('div');
+          card.className = 'post-card';
+          card.onclick = () => window.location.href = `post-detail.html?id=${post.id}`;
+
+          card.innerHTML = `
+            <img src="${post.imageUrl}" alt="${post.title}" onerror="this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=500'">
+            <div class="post-card-body">
+              <span class="post-card-tag">${post.mode || 'Seyahat'}</span>
+              <div class="post-card-title">${post.title}</div>
+              <div class="post-card-rating">⭐ ${post.avgRating > 0 ? post.avgRating.toFixed(1) : 'Yeni'} / 5 <small style="color:#aaa;">(${post.voteCount} Oy)</small></div>
+              <div class="post-card-loc">📍 ${post.location} • ⏱️ ${post.duration}</div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+      } catch (err) {
+        console.error("Öne çıkanlar çekilemedi:", err);
+        grid.innerHTML = '<p style="color:#ff4d4d; grid-column: 1/-1;">Rotalar yüklenirken hata oluştu.</p>';
       }
     }
 
-    if (loggedIn === "true") {
-      if (registerNav) registerNav.style.display = "none";
-      if (loginNav) {
-        loginNav.textContent = "Profilim";
-        loginNav.href = "profile.html";
-        loginNav.style.color = "#ffcc00";
-        loginNav.style.fontWeight = "bold";
-      }
-      if (heroButtons) {
-        heroButtons.innerHTML = `
-          <a href="profile.html" class="btn">Profilime Git</a>
-          <button onclick="handleShareClick()" class="btn secondary">➕ Deneyimi Paylaş</button>
-        `;
-      }
-    } else {
-      if (heroButtons) {
-        heroButtons.innerHTML = `
-          <a href="register.html" class="btn">Kayıt Ol</a>
-          <a href="login.html" class="btn secondary">Giriş Yap</a>
-          <button onclick="handleShareClick()" class="btn secondary" style="border-color:#ffcc00; color:#ffcc00;">➕ Deneyimi Paylaş</button>
-        `;
-      }
-    }
+    loadTopRatedPosts();
   </script>
 
 </body>
