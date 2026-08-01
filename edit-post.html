@@ -6,6 +6,7 @@
   <title>Düzenle | Sytraex</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="logo.png">
+
   <style>
     body { margin: 0; padding: 0; background-color: #0f172a; color: #ffffff; font-family: Arial, sans-serif; }
     header { background: rgba(15, 23, 42, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
@@ -14,14 +15,27 @@
     .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
     .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
     nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; align-items: center; }
-    nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
+    nav ul li a { color: #fff; text-decoration: none; font-weight: 500; transition: color 0.3s; }
     nav ul li a:hover { color: #ffcc00; }
+    .lang-switcher { font-size: 13px; font-weight: bold; color: #ffcc00; margin-left: 10px; }
     .share-container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
-    .share-card { background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(255, 204, 0, 0.3); border-radius: 16px; padding: 35px; }
-    .form-group { margin-bottom: 22px; }
+    .share-card { background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(255, 204, 0, 0.3); border-radius: 16px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
+    .share-card h2 { color: #ffcc00; margin-top: 0; margin-bottom: 25px; font-size: 26px; text-align: center; }
+    .form-group { margin-bottom: 22px; position: relative; }
     .form-group label { display: block; font-size: 13px; color: #ffcc00; margin-bottom: 8px; font-weight: bold; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; background: #0f172a; color: #fff; font-size: 14px; box-sizing: border-box; }
-    .submit-btn { width: 100%; padding: 15px; background: #ffcc00; color: #000; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; background: #0f172a; color: #fff; font-size: 14px; outline: none; box-sizing: border-box; }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .autocomplete-items { position: absolute; border: 1px solid #ffcc00; border-top: none; z-index: 9999; top: 100%; left: 0; right: 0; background-color: #1e293b; border-radius: 0 0 8px 8px; max-height: 220px; overflow-y: auto; display: none; }
+    .autocomplete-items div { padding: 12px 15px; cursor: pointer; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .autocomplete-items div:hover { background-color: #ffcc00; color: #000; }
+    .image-preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; margin-top: 12px; }
+    .preview-item { position: relative; width: 100%; height: 90px; border-radius: 8px; overflow: hidden; border: 2px solid rgba(255, 204, 0, 0.4); }
+    .preview-item img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-item .remove-btn { position: absolute; top: 4px; right: 4px; background: rgba(239, 68, 68, 0.85); color: #fff; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-size: 12px; display: flex; justify-content: center; align-items: center; font-weight: bold; }
+    .btn-upload-photos { display: inline-block; padding: 12px 20px; background: rgba(255, 204, 0, 0.15); border: 1px dashed #ffcc00; color: #ffcc00; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; width: 100%; text-align: center; box-sizing: border-box; }
+    .section-divider { border-top: 1px dashed rgba(255, 204, 0, 0.3); margin: 30px 0 25px 0; position: relative; }
+    .section-divider-title { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #1e293b; padding: 0 15px; color: #ffcc00; font-size: 14px; font-weight: bold; }
+    .submit-btn { width: 100%; padding: 15px; background: #ffcc00; color: #000; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -34,15 +48,20 @@
     <div class="share-card">
       <h2>✏️ Gönderiyi Düzenle</h2>
       <form id="editForm">
-        <div class="form-group"><label>Başlık:</label><input type="text" id="editTitle" required></div>
-        <div class="form-group"><label>Konum:</label><input type="text" id="editLocation" required></div>
-        <div class="form-group"><label>Süre:</label><input type="text" id="editDuration" required></div>
-        <div class="form-group"><label>Özet:</label><textarea id="editSummary"></textarea></div>
-        <div class="form-group"><label>Gezilecek Yerler:</label><textarea id="editSightseeing"></textarea></div>
-        <div class="form-group"><label>Konaklama:</label><textarea id="editStay"></textarea></div>
-        <div class="form-group"><label>Yeme İçme:</label><textarea id="editFood"></textarea></div>
-        <div class="form-group"><label>Tüyolar:</label><textarea id="editTips"></textarea></div>
-        <button type="submit" class="submit-btn" id="btnSave">Güncellemeleri Kaydet</button>
+        <div class="form-group"><label>Deneyim Başlığı:</label><input type="text" id="postTitle" required></div>
+        <div class="form-group"><label>Konum:</label><input type="text" id="locationInput" required><div id="cityAutocompleteList" class="autocomplete-items"></div></div>
+        <div class="form-group"><label>Süre:</label><select id="postDuration"><option value="3 Saatlik Tur">3 Saatlik Hızlı Tur</option><option value="Günübirlik (6-12 Saat)">Günübirlik</option><option value="1 Gün">1 Gün</option><option value="Hafta Sonu">Hafta Sonu</option><option value="1 Hafta+">1 Hafta+</option></select></div>
+        <div class="form-group"><label>Seyahat Modu:</label><select id="postMode"><option value="🌙 Gece Hayatı">🌙 Gece Hayatı</option><option value="☀️ Gündüz Gezi">☀️ Gündüz Gezi</option><option value="🏛️ Tarihsel">🏛️ Tarihsel</option><option value="🌿 Doğa">🌿 Doğa</option></select></div>
+        <div class="section-divider"><span class="section-divider-title">🖼️ Medya</span></div>
+        <div class="form-group"><label>Fotoğraflar:</label><label for="filePhotoInput" class="btn-upload-photos">📷 Fotoğraf Seç</label><input type="file" id="filePhotoInput" accept="image/*" multiple style="display:none;"><div id="imagePreviewGrid" class="image-preview-grid"></div></div>
+        <div class="form-group"><label>YouTube Linki:</label><input type="url" id="youtubeUrl"></div>
+        <div class="section-divider"><span class="section-divider-title">📝 Detaylar</span></div>
+        <div class="form-group"><label>Özet:</label><textarea id="summaryContent"></textarea></div>
+        <div class="form-group"><label>Gezilecek Yerler:</label><textarea id="sightseeingContent"></textarea></div>
+        <div class="form-group"><label>Konaklama:</label><textarea id="stayContent"></textarea></div>
+        <div class="form-group"><label>Yeme İçme:</label><textarea id="foodContent"></textarea></div>
+        <div class="form-group"><label>Tüyolar:</label><textarea id="tipsContent"></textarea></div>
+        <button type="submit" id="submitBtn" class="submit-btn">💾 Güncellemeleri Kaydet</button>
       </form>
     </div>
   </div>
@@ -52,39 +71,88 @@
     import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     const db = getFirestore(initializeApp({ apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E", authDomain: "sytraex-462b0.firebaseapp.com", projectId: "sytraex-462b0", storageBucket: "sytraex-462b0.firebasestorage.app", messagingSenderId: "379245018695", appId: "1:379245018695:web:0beff2afb3210a2f6cbb62" }));
     const postId = new URLSearchParams(window.location.search).get('id');
+    let uploadedBase64Images = [];
 
     async function loadData() {
       const docSnap = await getDoc(doc(db, "posts", postId));
       if (docSnap.exists()) {
         const d = docSnap.data();
-        document.getElementById('editTitle').value = d.title;
-        document.getElementById('editLocation').value = d.location;
-        document.getElementById('editDuration').value = d.duration;
-        document.getElementById('editSummary').value = d.details?.summary || "";
-        document.getElementById('editSightseeing').value = d.details?.sightseeing || "";
-        document.getElementById('editStay').value = d.details?.stay || "";
-        document.getElementById('editFood').value = d.details?.food || "";
-        document.getElementById('editTips').value = d.details?.tips || "";
+        document.getElementById('postTitle').value = d.title || "";
+        document.getElementById('locationInput').value = d.location || "";
+        document.getElementById('postDuration').value = d.duration || "";
+        document.getElementById('postMode').value = d.mode || "";
+        document.getElementById('summaryContent').value = d.details?.summary || "";
+        document.getElementById('sightseeingContent').value = d.details?.sightseeing || "";
+        document.getElementById('stayContent').value = d.details?.stay || "";
+        document.getElementById('foodContent').value = d.details?.food || "";
+        document.getElementById('tipsContent').value = d.details?.tips || "";
+        document.getElementById('youtubeUrl').value = d.youtubeUrl || "";
+        uploadedBase64Images = d.images || [d.imageUrl];
+        renderPreviews();
       }
     }
+
+    // Lokasyon Otomatik Tamamlama
+    const locationInput = document.getElementById("locationInput");
+    const cityList = document.getElementById("cityAutocompleteList");
+    locationInput.addEventListener("input", function() {
+        const q = this.value.trim();
+        if(q.length < 2) { cityList.style.display = "none"; return; }
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=5`)
+        .then(res => res.json()).then(data => {
+            cityList.innerHTML = "";
+            data.forEach(item => {
+                const div = document.createElement("div");
+                div.innerText = item.display_name.split(',')[0];
+                div.onclick = () => { locationInput.value = item.display_name; cityList.style.display = "none"; };
+                cityList.appendChild(div);
+            });
+            cityList.style.display = "block";
+        });
+    });
+
+    // Fotoğraf Yükleme
+    document.getElementById('filePhotoInput').addEventListener('change', function(e) {
+      Array.from(e.target.files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (event) => { uploadedBase64Images.push(event.target.result); renderPreviews(); };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    function renderPreviews() {
+      const grid = document.getElementById('imagePreviewGrid'); grid.innerHTML = '';
+      uploadedBase64Images.forEach((img, idx) => {
+        const item = document.createElement('div'); item.className = 'preview-item';
+        item.innerHTML = `<img src="${img}"><button type="button" class="remove-btn" onclick="removeImage(${idx})">✕</button>`;
+        grid.appendChild(item);
+      });
+    }
+
+    window.removeImage = (idx) => { uploadedBase64Images.splice(idx, 1); renderPreviews(); };
 
     document.getElementById('editForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       await updateDoc(doc(db, "posts", postId), {
-        title: document.getElementById('editTitle').value,
-        location: document.getElementById('editLocation').value,
-        duration: document.getElementById('editDuration').value,
+        title: document.getElementById('postTitle').value,
+        location: document.getElementById('locationInput').value,
+        duration: document.getElementById('postDuration').value,
+        mode: document.getElementById('postMode').value,
+        images: uploadedBase64Images,
+        imageUrl: uploadedBase64Images[0],
+        youtubeUrl: document.getElementById('youtubeUrl').value,
         details: {
-          summary: document.getElementById('editSummary').value,
-          sightseeing: document.getElementById('editSightseeing').value,
-          stay: document.getElementById('editStay').value,
-          food: document.getElementById('editFood').value,
-          tips: document.getElementById('editTips').value
+          summary: document.getElementById('summaryContent').value,
+          sightseeing: document.getElementById('sightseeingContent').value,
+          stay: document.getElementById('stayContent').value,
+          food: document.getElementById('foodContent').value,
+          tips: document.getElementById('tipsContent').value
         }
       });
       alert("Başarıyla güncellendi!");
       window.location.href = `post-detail.html?id=${postId}`;
     });
+    
     loadData();
   </script>
 </body>
