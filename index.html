@@ -33,13 +33,85 @@
     .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
     .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
 
-    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; }
+    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; align-items: center; }
     nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
     nav ul li a:hover { color: #ffcc00; }
 
+    .lang-switcher {
+      font-size: 13px;
+      font-weight: bold;
+      color: #ffcc00;
+      margin-left: 10px;
+    }
+
+    /* Hero (Karşılama) Alanı */
+    .hero-section {
+      text-align: center;
+      padding: 50px 20px 30px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-logo {
+      width: 70px;
+      height: 70px;
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-size: 38px;
+      font-weight: 800;
+      color: #ffcc00;
+      margin: 15px 0;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      color: #ccc;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .btn-hero-primary {
+      padding: 14px 28px;
+      background: #ffcc00;
+      color: #000;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    .btn-hero-primary:hover { background: #e6b800; }
+
+    .btn-hero-secondary {
+      padding: 14px 28px;
+      background: transparent;
+      border: 2px solid #ffcc00;
+      color: #ffcc00;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    .btn-hero-secondary:hover { background: rgba(255, 204, 0, 0.15); }
+
+    /* Ana Konteyner */
     .main-container {
       max-width: 1000px;
-      margin: 40px auto;
+      margin: 20px auto 40px auto;
       padding: 0 20px;
     }
 
@@ -61,6 +133,7 @@
 
     @media (max-width: 800px) {
       .search-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 28px; }
     }
 
     .form-group { position: relative; }
@@ -168,9 +241,27 @@
         <li><a href="index.html" style="color:#ffcc00; font-weight:bold;">Ana Sayfa</a></li>
         <li><a href="profile.html">Profilim</a></li>
         <li><a href="whitepaper.html">White Paper (Stake SYTX)</a></li>
+        <li class="lang-switcher">TR / EN</li>
       </ul>
     </nav>
   </header>
+
+  <!-- Giriş Karşılama (Hero) Alanı -->
+  <div class="hero-section">
+    <img src="logo.png" alt="Sytraex Logo" class="hero-logo">
+    <div style="color: #ffcc00; font-weight: bold; font-size: 20px; text-transform: lowercase;">sytraex</div>
+    <div style="font-size: 12px; color: #aaa; margin-bottom: 20px;">Share Your Travel Experience</div>
+
+    <h1 class="hero-title">Dünyayı Keşfet.<br>Anılarını Paylaş.</h1>
+    <p class="hero-subtitle">
+      Sytraex, seyahat deneyimlerini paylaşabileceğin ve ilham alabileceğin sosyal topluluk.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="profile.html" class="btn-hero-primary">Profilime Git</a>
+      <a href="share-experience.html" class="btn-hero-secondary">➕ Deneyimi Paylaş</a>
+    </div>
+  </div>
 
   <div class="main-container">
     
@@ -313,7 +404,6 @@
           });
         });
 
-        // Oylara Göre Sırala (Puanı yüksek olan en üste)
         postsList.sort((a, b) => b.avgRating - a.avgRating || b.voteCount - a.voteCount);
 
         if (postsList.length === 0) {
