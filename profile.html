@@ -533,15 +533,15 @@
         </div>
 
         <div class="info-grid">
-          <div class="info-box"><label>Kullanıcı Adı</label><span id="infoUsername">-</span></div>
-          <div class="info-box"><label>Ad Soyad</label><span id="infoName">-</span></div>
-          <div class="info-box"><label>E-Posta Adresi</label><span id="infoEmail">-</span></div>
-          <div class="info-box"><label>Şifre</label><span>••••••••</span></div>
-          <div class="info-box"><label>Ülke</label><span id="infoCountry">-</span></div>
-          <div class="info-box"><label>İl / Şehir</label><span id="infoCity">-</span></div>
-          <div class="info-box"><label>Doğum Tarihi</label><span id="infoBirth">-</span></div>
-          <div class="info-box"><label>Gizli Soru</label><span id="infoSecretQuestion">-</span></div>
-          <div class="info-box"><label>Gizli Soru Cevabı</label><span id="infoSecretAnswer">••••••</span></div>
+          <div class="info-box"><label data-i18n="profile_lbl_username">Kullanıcı Adı</label><span id="infoUsername">-</span></div>
+          <div class="info-box"><label data-i18n="profile_lbl_fullname">Ad Soyad</label><span id="infoName">-</span></div>
+          <div class="info-box"><label data-i18n="profile_lbl_email">E-Posta Adresi</label><span id="infoEmail">-</span></div>
+          <div class="info-box"><label data-i18n="profile_lbl_password">Şifre</label><span>••••••••</span></div>
+          <div class="info-box"><label data-i18n="profile_lbl_country">Ülke</label><span id="infoCountry">-</span></div>
+          <div class="info-box"><label data-i18n="profile_lbl_city">İl / Şehir</label><span id="infoCity">-</span></div>
+          <div class="info-box"><label data-i18n="profile_lbl_birth">Doğum Tarihi</label><span id="infoBirth">-</span></div>
+          <div class="info-box"><label data-i18n="profile_lbl_secret_q">Gizli Soru</label><span id="infoSecretQuestion">-</span></div>
+          <div class="info-box"><label data-i18n="profile_lbl_secret_a">Gizli Soru Cevabı</label><span id="infoSecretAnswer">••••••</span></div>
         </div>
       </div>
 
@@ -580,30 +580,30 @@
       <!-- TAB 3: Paylaşılan Gönderiler -->
       <div id="tabPosts" style="display:none;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-          <h2 style="margin:0;">Paylaştığım Seyahat Deneyimleri</h2>
-          <a href="share-experience.html" style="text-decoration:none;"><button style="padding:8px 16px; background:#ffcc00; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">+ Yeni Ekle</button></a>
+          <h2 style="margin:0;" data-i18n="my_posts_title">Paylaştığım Seyahat Deneyimleri</h2>
+          <a href="share-experience.html" style="text-decoration:none;"><button style="padding:8px 16px; background:#ffcc00; border:none; border-radius:6px; font-weight:bold; cursor:pointer;" data-i18n="my_posts_add_new">+ Yeni Ekle</button></a>
         </div>
 
         <div id="userPostsContainer" class="posts-grid">
-          <p style="color:#aaa;">Gönderileriniz yükleniyor...</p>
+          <p style="color:#aaa;" data-i18n="my_posts_loading">Gönderileriniz yükleniyor...</p>
         </div>
       </div>
 
       <!-- TAB 4: Mesajlar & Gelen İstekler -->
       <div id="tabMessages" style="display:none;">
-        <h2>💬 Mesajlar ve Bağlantı İstekleri</h2>
+        <h2 data-i18n="messages_title">💬 Mesajlar ve Bağlantı İstekleri</h2>
 
         <div style="margin-bottom: 25px;">
-          <h4 style="color:#ffcc00; margin-bottom:12px;">📩 Gelen İstekler</h4>
+          <h4 style="color:#ffcc00; margin-bottom:12px;" data-i18n="messages_incoming_title">📩 Gelen İstekler</h4>
           <div id="requestsListContainer">
-            <p style="color:#aaa; font-size:13px;">Gelen mesaj isteği bulunmuyor.</p>
+            <p style="color:#aaa; font-size:13px;" data-i18n="messages_no_incoming">Gelen mesaj isteği bulunmuyor.</p>
           </div>
         </div>
 
-        <h4 style="color:#ffcc00; margin-bottom:12px;">💬 Aktif Sohbetler</h4>
+        <h4 style="color:#ffcc00; margin-bottom:12px;" data-i18n="messages_active_title">💬 Aktif Sohbetler</h4>
         <div class="messages-layout">
           <div class="chat-users-list" id="activeChatUsersList">
-            <p style="color:#aaa; font-size:12px;">Sohbet edilebilir kullanıcı yok.</p>
+            <p style="color:#aaa; font-size:12px;" data-i18n="messages_no_active">Sohbet edilebilir kullanıcı yok.</p>
           </div>
 
           <div class="chat-box" id="chatBoxArea" style="display:none;">
@@ -611,8 +611,8 @@
             <div class="chat-messages" id="chatMessagesContainer"></div>
 
             <div class="chat-input-area">
-              <input type="text" id="msgInputText" placeholder="Mesajınızı yazınız...">
-              <button onclick="sendChatMessage()">Gönder</button>
+              <input type="text" id="msgInputText" data-i18n-ph="messages_ph_input" placeholder="Mesajınızı yazınız...">
+              <button onclick="sendChatMessage()" data-i18n="messages_btn_send">Gönder</button>
             </div>
           </div>
         </div>
@@ -625,52 +625,52 @@
   <!-- Düzenleme Modalı -->
   <div class="modal-overlay" id="editModal">
     <div class="modal-card">
-      <h3>✏️ Profil Bilgilerini Düzenle</h3>
+      <h3 data-i18n="edit_modal_title">✏️ Profil Bilgilerini Düzenle</h3>
       <form id="editForm">
         <div class="form-group">
-          <label for="editName">Ad Soyad:</label>
+          <label for="editName" data-i18n="reg_label_fullname">Ad Soyad:</label>
           <input type="text" id="editName" required>
         </div>
 
         <div class="form-group">
-          <label for="editPassword">Yeni Şifre (Değiştirmeyecekseniz boş bırakın):</label>
-          <input type="password" id="editPassword" placeholder="Yeni şifrenizi yazınız...">
+          <label for="editPassword" data-i18n="edit_lbl_new_pass">Yeni Şifre (Değiştirmeyecekseniz boş bırakın):</label>
+          <input type="password" id="editPassword" data-i18n-ph="edit_ph_new_pass" placeholder="Yeni şifrenizi yazınız...">
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
           <div class="form-group">
-            <label for="editCountry">Ülke:</label>
+            <label for="editCountry" data-i18n="profile_lbl_country">Ülke:</label>
             <input type="text" id="editCountry" required>
           </div>
           <div class="form-group">
-            <label for="editCity">İl / Şehir:</label>
+            <label for="editCity" data-i18n="profile_lbl_city">İl / Şehir:</label>
             <input type="text" id="editCity" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="editBirth">Doğum Tarihi:</label>
+          <label for="editBirth" data-i18n="profile_lbl_birth">Doğum Tarihi:</label>
           <input type="date" id="editBirth" required>
         </div>
 
         <div class="form-group">
-          <label for="editSecretQuestion">Gizli Soru:</label>
+          <label for="editSecretQuestion" data-i18n="profile_lbl_secret_q">Gizli Soru:</label>
           <select id="editSecretQuestion" required>
-            <option value="pet">İlk evcil hayvanınızın adı nedir?</option>
-            <option value="school">İlkokul öğretmeninizin adı nedir?</option>
-            <option value="city">Annenizin doğduğu şehir neresidir?</option>
-            <option value="car">İlk sahip olduğunuz arabanın markası nedir?</option>
+            <option value="pet" data-i18n="reg_opt_pet">İlk evcil hayvanınızın adı nedir?</option>
+            <option value="school" data-i18n="reg_opt_school">İlkokul öğretmeninizin adı nedir?</option>
+            <option value="city" data-i18n="reg_opt_city">Annenizin doğduğu şehir neresidir?</option>
+            <option value="car" data-i18n="reg_opt_car">İlk sahip olduğunuz arabanın markası nedir?</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="editSecretAnswer">Gizli Soru Cevabı:</label>
+          <label for="editSecretAnswer" data-i18n="profile_lbl_secret_a">Gizli Soru Cevabı:</label>
           <input type="text" id="editSecretAnswer" required>
         </div>
 
         <div class="modal-actions">
-          <button type="button" class="btn-cancel" onclick="closeEditModal()">İptal</button>
-          <button type="submit" class="btn-save" id="btnSaveEdit">Kaydet ve Güncelle</button>
+          <button type="button" class="btn-cancel" onclick="closeEditModal()" data-i18n="edit_btn_cancel">İptal</button>
+          <button type="submit" class="btn-save" id="btnSaveEdit" data-i18n="edit_btn_save">Kaydet ve Güncelle</button>
         </div>
       </form>
     </div>
@@ -830,6 +830,7 @@
     async function loadWalletData() {
       const balanceText = document.getElementById('sytxBalanceText');
       const txBody = document.getElementById('walletTxBody');
+      const currentLang = localStorage.getItem('sytraexLang') || 'tr';
 
       try {
         const q = query(collection(db, "posts"), where("username", "==", userData.username));
@@ -842,10 +843,14 @@
 
         balanceText.innerText = totalBalance;
 
+        const wTitle = currentLang === 'en' ? '🎁 Welcome Bonus' : '🎁 Hoş Geldin Bonusu';
+        const wDesc = currentLang === 'en' ? 'Registration reward for joining Sytraex' : 'Sytraex platformuna kayıt ödülü';
+        const pTitle = currentLang === 'en' ? '📝 Route Share Reward' : '📝 Rota Paylaşım Ödülü';
+
         let html = `
           <tr>
-            <td>🎁 Hoş Geldin Bonusu</td>
-            <td>Sytraex platformuna kayıt ödülü</td>
+            <td>${wTitle}</td>
+            <td>${wDesc}</td>
             <td class="tx-amount">+10 SYTX</td>
           </tr>
         `;
@@ -854,7 +859,7 @@
           const p = docSnap.data();
           html += `
             <tr>
-              <td>📝 Rota Paylaşım Ödülü</td>
+              <td>${pTitle}</td>
               <td>${p.title}</td>
               <td class="tx-amount">+25 SYTX</td>
             </tr>
@@ -899,7 +904,9 @@
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {
-          container.innerHTML = '<p style="color:#aaa; font-size:13px;">Gelen mesaj isteği bulunmuyor.</p>';
+          container.innerHTML = '<p style="color:#aaa; font-size:13px;" data-i18n="messages_no_incoming">Gelen mesaj isteği bulunmuyor.</p>';
+          const currentLang = localStorage.getItem('sytraexLang') || 'tr';
+          if (typeof applyLanguage === 'function') applyLanguage(currentLang);
           return;
         }
 
@@ -919,12 +926,15 @@
               </div>
             </div>
             <div class="req-actions">
-              <button class="btn-acc" onclick="handleRequestAction('${reqId}', 'accepted')">✅ Kabul Et</button>
-              <button class="btn-rej" onclick="handleRequestAction('${reqId}', 'rejected')">❌ Reddet</button>
+              <button class="btn-acc" onclick="handleRequestAction('${reqId}', 'accepted')" data-i18n="messages_btn_accept">✅ Kabul Et</button>
+              <button class="btn-rej" onclick="handleRequestAction('${reqId}', 'rejected')" data-i18n="messages_btn_reject">❌ Reddet</button>
             </div>
           `;
           container.appendChild(card);
         });
+
+        const currentLang = localStorage.getItem('sytraexLang') || 'tr';
+        if (typeof applyLanguage === 'function') applyLanguage(currentLang);
 
       } catch (e) {
         console.error("İstek yükleme hatası:", e);
@@ -958,7 +968,9 @@
         snap2.forEach(d => partners.add(d.data().sender));
 
         if (partners.size === 0) {
-          container.innerHTML = '<p style="color:#aaa; font-size:12px;">Sohbet edilebilir onaylı bağlantınız yok.</p>';
+          container.innerHTML = '<p style="color:#aaa; font-size:12px;" data-i18n="messages_no_active">Sohbet edilebilir onaylı bağlantınız yok.</p>';
+          const currentLang = localStorage.getItem('sytraexLang') || 'tr';
+          if (typeof applyLanguage === 'function') applyLanguage(currentLang);
           return;
         }
 
@@ -983,11 +995,15 @@
       document.querySelectorAll('.chat-user-item').forEach(el => el.classList.remove('active'));
       if (element) element.classList.add('active');
 
+      const currentLang = localStorage.getItem('sytraexLang') || 'tr';
+      const chatWithText = currentLang === 'en' ? 'Chat with' : 'ile Sohbet';
+
       document.getElementById('chatBoxArea').style.display = 'flex';
-      document.getElementById('chatTargetHeader').innerText = `@${partnerUser} ile Sohbet`;
+      document.getElementById('chatTargetHeader').innerText = `@${partnerUser} ${chatWithText}`;
 
       const msgContainer = document.getElementById('chatMessagesContainer');
-      msgContainer.innerHTML = '<p style="color:#aaa; font-size:12px;">Mesajlar yükleniyor...</p>';
+      msgContainer.innerHTML = '<p style="color:#aaa; font-size:12px;" data-i18n="messages_chat_loading">Mesajlar yükleniyor...</p>';
+      if (typeof applyLanguage === 'function') applyLanguage(currentLang);
 
       if (unsubscribeChat) unsubscribeChat();
 
@@ -1092,7 +1108,7 @@
 
     async function loadUserPosts() {
       const container = document.getElementById('userPostsContainer');
-      container.innerHTML = '<p style="color:#aaa;">Gönderileriniz yükleniyor...</p>';
+      const currentLang = localStorage.getItem('sytraexLang') || 'tr';
 
       try {
         const q = query(collection(db, "posts"), where("username", "==", userData.username));
@@ -1101,10 +1117,11 @@
         if (querySnapshot.empty) {
           container.innerHTML = `
             <div style="grid-column: 1/-1; text-align:center; padding:30px; background:#0f172a; border-radius:12px; border:1px dashed rgba(255,255,255,0.1);">
-              <p style="color:#aaa; margin-bottom:15px;">Henüz paylaştığınız bir seyahat deneyimi bulunmuyor.</p>
-              <a href="share-experience.html" style="text-decoration:none;"><button style="padding:10px 20px; background:#ffcc00; color:#000; border:none; border-radius:8px; font-weight:bold; cursor:pointer;" data-i18n="hero_btn_share">➕ İlk Deneyimi Paylaş</button></a>
+              <p style="color:#aaa; margin-bottom:15px;" data-i18n="my_posts_empty">Henüz paylaştığınız bir seyahat deneyimi bulunmuyor.</p>
+              <a href="share-experience.html" style="text-decoration:none;"><button style="padding:10px 20px; background:#ffcc00; color:#000; border:none; border-radius:8px; font-weight:bold; cursor:pointer;" data-i18n="my_posts_empty_btn">➕ İlk Deneyimi Paylaş</button></a>
             </div>
           `;
+          if (typeof applyLanguage === 'function') applyLanguage(currentLang);
           return;
         }
 
