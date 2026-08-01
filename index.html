@@ -224,6 +224,9 @@
 
     footer { text-align: center; padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #888; font-size: 13px; margin-top: 60px; }
   </style>
+
+  <!-- Dil Yönetim Kütüphanesi -->
+  <script src="lang.js"></script>
 </head>
 <body>
 
@@ -238,9 +241,9 @@
 
     <nav>
       <ul>
-        <li><a href="index.html" style="color:#ffcc00; font-weight:bold;">Ana Sayfa</a></li>
-        <li><a href="profile.html">Profilim</a></li>
-        <li><a href="whitepaper.html">White Paper (Stake SYTX)</a></li>
+        <li><a href="index.html" style="color:#ffcc00; font-weight:bold;" data-i18n="nav_home">Ana Sayfa</a></li>
+        <li><a href="profile.html" data-i18n="nav_profile">Profilim</a></li>
+        <li><a href="whitepaper.html" data-i18n="nav_whitepaper">White Paper (Stake SYTX)</a></li>
         <li class="lang-switcher">TR / EN</li>
       </ul>
     </nav>
@@ -252,14 +255,14 @@
     <div style="color: #ffcc00; font-weight: bold; font-size: 20px; text-transform: lowercase;">sytraex</div>
     <div style="font-size: 12px; color: #aaa; margin-bottom: 20px;">Share Your Travel Experience</div>
 
-    <h1 class="hero-title">Dünyayı Keşfet.<br>Anılarını Paylaş.</h1>
-    <p class="hero-subtitle">
+    <h1 class="hero-title" data-i18n="hero_title">Dünyayı Keşfet.<br>Anılarını Paylaş.</h1>
+    <p class="hero-subtitle" data-i18n="hero_subtitle">
       Sytraex, seyahat deneyimlerini paylaşabileceğin ve ilham alabileceğin sosyal topluluk.
     </p>
 
     <div class="hero-buttons">
-      <a href="profile.html" class="btn-hero-primary">Profilime Git</a>
-      <a href="share-experience.html" class="btn-hero-secondary">➕ Deneyimi Paylaş</a>
+      <a href="profile.html" class="btn-hero-primary" data-i18n="hero_btn_profile">Profilime Git</a>
+      <a href="share-experience.html" class="btn-hero-secondary" data-i18n="hero_btn_share">➕ Deneyimi Paylaş</a>
     </div>
   </div>
 
@@ -270,45 +273,45 @@
       <form action="search-results.html" method="GET" autocomplete="off">
         <div class="search-grid">
           <div class="form-group">
-            <label for="searchLoc">Nereye Gitmek İstiyorsun?</label>
-            <input type="text" name="location" id="searchLoc" placeholder="İlçe, il veya ülke yazın (Örn: Bodrum, Roma)...">
+            <label for="searchLoc" data-i18n="search_label_loc">Nereye Gitmek İstiyorsun?</label>
+            <input type="text" name="location" id="searchLoc" data-i18n-ph="search_ph_loc" placeholder="İlçe, il veya ülke yazın (Örn: Bodrum, Roma)...">
             <div id="searchAutocompleteList" class="autocomplete-items"></div>
           </div>
 
           <div class="form-group">
-            <label for="searchDuration">Süre / Zaman:</label>
+            <label for="searchDuration" data-i18n="search_label_duration">Süre / Zaman:</label>
             <select name="duration" id="searchDuration">
-              <option value="hepsi">Tüm Süreler</option>
-              <option value="3 Saatlik Tur">3 Saatlik Hızlı Tur</option>
-              <option value="Günübirlik">Günübirlik (6-12 Saat)</option>
-              <option value="1 Gün">Tam 1 Gün</option>
-              <option value="Hafta Sonu">Hafta Sonu (2-3 Gün)</option>
-              <option value="1 Hafta">1 Hafta veya Daha Uzun</option>
+              <option value="hepsi" data-i18n="search_opt_dur_all">Tüm Süreler</option>
+              <option value="3 Saatlik Tur" data-i18n="search_opt_dur_3h">3 Saatlik Hızlı Tur</option>
+              <option value="Günübirlik" data-i18n="search_opt_dur_day">Günübirlik (6-12 Saat)</option>
+              <option value="1 Gün" data-i18n="search_opt_dur_1d">Tam 1 Gün</option>
+              <option value="Hafta Sonu" data-i18n="search_opt_dur_weekend">Hafta Sonu (2-3 Gün)</option>
+              <option value="1 Hafta" data-i18n="search_opt_dur_1w">1 Hafta veya Daha Uzun</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="searchMode">Seyahat Modu:</label>
+            <label for="searchMode" data-i18n="search_label_mode">Seyahat Modu:</label>
             <select name="mode" id="searchMode">
-              <option value="hepsi">Tüm Konseptler</option>
-              <option value="Gece Hayatı">🌙 Gece Hayatı & Eğlence</option>
-              <option value="Gündüz Gezi">☀️ Gündüz Gezi & Şehir</option>
-              <option value="Tarihsel">🏛️ Tarihsel & Kültür</option>
-              <option value="Doğa">🌿 Doğa & Sakinlik</option>
-              <option value="Yemek">🍕 Yemek & Gastronomi</option>
-              <option value="Macera">🏄 Macera & Spor</option>
-              <option value="Bütçe Dostu">💰 Bütçe Dostu</option>
+              <option value="hepsi" data-i18n="search_opt_mode_all">Tüm Konseptler</option>
+              <option value="Gece Hayatı" data-i18n="search_opt_mode_night">🌙 Gece Hayatı & Eğlence</option>
+              <option value="Gündüz Gezi" data-i18n="search_opt_mode_day">☀️ Gündüz Gezi & Şehir</option>
+              <option value="Tarihsel" data-i18n="search_opt_mode_history">🏛️ Tarihsel & Kültür</option>
+              <option value="Doğa" data-i18n="search_opt_mode_nature">🌿 Doğa & Sakinlik</option>
+              <option value="Yemek" data-i18n="search_opt_mode_food">🍕 Yemek & Gastronomi</option>
+              <option value="Macera" data-i18n="search_opt_mode_adventure">🏄 Macera & Spor</option>
+              <option value="Bütçe Dostu" data-i18n="search_opt_mode_budget">💰 Bütçe Dostu</option>
             </select>
           </div>
 
-          <button type="submit" class="btn-search">🔍 Deneyimleri Ara</button>
+          <button type="submit" class="btn-search" data-i18n="search_btn_submit">🔍 Deneyimleri Ara</button>
         </div>
       </form>
     </div>
 
     <!-- Öne Çıkanlar / En Çok Oy Alanlar -->
     <div class="section-title">
-      <span>⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları</span>
+      <span data-i18n="top_rated_title">⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları</span>
     </div>
 
     <div id="topRatedGrid" class="posts-grid">
@@ -318,7 +321,7 @@
   </div>
 
   <footer>
-    <p>© 2026 Sytraex | Share Your Travel Experience</p>
+    <p data-i18n="footer_text">© 2026 Sytraex | Share Your Travel Experience</p>
   </footer>
 
   <script type="module">
@@ -407,7 +410,7 @@
         postsList.sort((a, b) => b.avgRating - a.avgRating || b.voteCount - a.voteCount);
 
         if (postsList.length === 0) {
-          grid.innerHTML = '<p style="color:#aaa; grid-column: 1/-1; text-align:center;">Henüz öne çıkan bir seyahat rotası yok.</p>';
+          grid.innerHTML = '<p style="color:#aaa; grid-column: 1/-1; text-align:center;" data-i18n="no_top_posts">Henüz öne çıkan bir seyahat rotası yok.</p>';
           return;
         }
 
