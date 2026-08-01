@@ -1,1319 +1,260 @@
 <!DOCTYPE html>
-
 <html lang="tr">
-
 <head>
-
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Seyahat Detayı | Sytraex</title>
-
   <link rel="stylesheet" href="style.css">
-
   <link rel="icon" type="image/png" href="logo.png">
 
-
-
   <style>
-
-    body {
-
-      margin: 0;
-
-      padding: 0;
-
-      background-color: #0f172a;
-
-      color: #ffffff;
-
-      font-family: Arial, sans-serif;
-
-    }
-
-
-
-    header {
-
-      background: rgba(15, 23, 42, 0.95);
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-      padding: 15px 30px;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      position: sticky;
-
-      top: 0;
-
-      z-index: 1000;
-
-    }
-
-
-
+    body { margin: 0; padding: 0; background-color: #0f172a; color: #ffffff; font-family: Arial, sans-serif; }
+    header { background: rgba(15, 23, 42, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
     .logo { display: flex; align-items: center; gap: 12px; }
-
     .logo-img { width: 45px; height: 45px; }
-
     .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
-
     .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
-
-
-
     nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; align-items: center; }
-
     nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
-
     nav ul li a:hover { color: #ffcc00; }
-
-
-
-    .lang-switcher {
-
-      font-size: 13px;
-
-      font-weight: bold;
-
-      color: #ffcc00;
-
-      margin-left: 10px;
-
-    }
-
-
-
-    .detail-container {
-
-      max-width: 900px;
-
-      margin: 40px auto;
-
-      padding: 0 20px;
-
-    }
-
-
-
-    /* Başlık ve Yazar Kartı */
-
-    .post-header-card {
-
-      background: #1e293b;
-
-      border-radius: 16px;
-
-      padding: 25px;
-
-      border: 1px solid rgba(255, 204, 0, 0.3);
-
-      margin-bottom: 25px;
-
-    }
-
-
-
+    .lang-switcher { font-size: 13px; font-weight: bold; color: #ffcc00; margin-left: 10px; }
+    .detail-container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+    .post-header-card { background: #1e293b; border-radius: 16px; padding: 25px; border: 1px solid rgba(255, 204, 0, 0.3); margin-bottom: 25px; }
     .post-title { font-size: 28px; color: #ffcc00; margin: 0 0 15px 0; }
-
-
-
-    .author-bar {
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      flex-wrap: wrap;
-
-      gap: 15px;
-
-      padding-top: 15px;
-
-      border-top: 1px solid rgba(255,255,255,0.1);
-
-    }
-
-
-
-    .author-info {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 12px;
-
-      cursor: pointer;
-
-    }
-
-
-
-    .author-avatar {
-
-      width: 48px;
-
-      height: 48px;
-
-      border-radius: 50%;
-
-      border: 2px solid #ffcc00;
-
-      object-fit: cover;
-
-    }
-
-
-
+    .author-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .author-info { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .author-avatar { width: 48px; height: 48px; border-radius: 50%; border: 2px solid #ffcc00; object-fit: cover; }
     .author-name { font-weight: bold; color: #fff; font-size: 15px; }
-
     .author-username { font-size: 12px; color: #aaa; }
-
-
-
     .post-badges { display: flex; gap: 10px; flex-wrap: wrap; }
-
     .badge { background: rgba(255,204,0,0.15); color: #ffcc00; border: 1px solid #ffcc00; padding: 5px 12px; border-radius: 20px; font-size: 12px; }
-
-
-
-    /* Galeri */
-
-    .gallery-container {
-
-      margin-bottom: 30px;
-
-    }
-
-
-
-    .main-image {
-
-      width: 100%;
-
-      height: 420px;
-
-      object-fit: cover;
-
-      border-radius: 16px;
-
-      border: 1px solid rgba(255, 255, 255, 0.1);
-
-      margin-bottom: 12px;
-
-    }
-
-
-
-    .thumbnails-grid {
-
-      display: grid;
-
-      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-
-      gap: 10px;
-
-    }
-
-
-
-    .thumb-img {
-
-      width: 100%;
-
-      height: 70px;
-
-      object-fit: cover;
-
-      border-radius: 8px;
-
-      cursor: pointer;
-
-      border: 2px solid transparent;
-
-      transition: 0.3s;
-
-    }
-
-
-
-    .thumb-img:hover, .thumb-img.active {
-
-      border-color: #ffcc00;
-
-      transform: scale(1.03);
-
-    }
-
-
-
-    /* Video Alanı */
-
-    .video-wrapper {
-
-      position: relative;
-
-      padding-bottom: 56.25%;
-
-      height: 0;
-
-      border-radius: 16px;
-
-      overflow: hidden;
-
-      margin-bottom: 30px;
-
-      border: 1px solid rgba(255,204,0,0.3);
-
-    }
-
-
-
-    .video-wrapper iframe {
-
-      position: absolute;
-
-      top: 0; left: 0; width: 100%; height: 100%;
-
-    }
-
-
-
-    /* Detay Metin Blokları */
-
-    .content-card {
-
-      background: #1e293b;
-
-      border-radius: 16px;
-
-      padding: 30px;
-
-      border: 1px solid rgba(255, 255, 255, 0.1);
-
-      margin-bottom: 30px;
-
-    }
-
-
-
-    .section-block {
-
-      margin-bottom: 25px;
-
-    }
-
-
-
+    .gallery-container { margin-bottom: 30px; }
+    .main-image { width: 100%; height: 420px; object-fit: cover; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 12px; }
+    .thumbnails-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; }
+    .thumb-img { width: 100%; height: 70px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
+    .thumb-img:hover, .thumb-img.active { border-color: #ffcc00; transform: scale(1.03); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 16px; overflow: hidden; margin-bottom: 30px; border: 1px solid rgba(255,204,0,0.3); }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    .content-card { background: #1e293b; border-radius: 16px; padding: 30px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 30px; }
+    .section-block { margin-bottom: 25px; }
     .section-block:last-child { margin-bottom: 0; }
-
-
-
-    .section-title {
-
-      color: #ffcc00;
-
-      font-size: 18px;
-
-      margin-top: 0;
-
-      margin-bottom: 10px;
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 8px;
-
-      border-bottom: 1px solid rgba(255,204,0,0.2);
-
-      padding-bottom: 6px;
-
-    }
-
-
-
-    .section-text {
-
-      color: #ddd;
-
-      line-height: 1.6;
-
-      font-size: 15px;
-
-      white-space: pre-line;
-
-    }
-
-
-
-    /* Puanlama Kartı */
-
-    .rating-card {
-
-      background: #1e293b;
-
-      border-radius: 16px;
-
-      padding: 25px;
-
-      border: 1px solid rgba(255, 204, 0, 0.3);
-
-      text-align: center;
-
-      margin-bottom: 30px;
-
-    }
-
-
-
+    .section-title { color: #ffcc00; font-size: 18px; margin-top: 0; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,204,0,0.2); padding-bottom: 6px; }
+    .section-text { color: #ddd; line-height: 1.6; font-size: 15px; white-space: pre-line; }
+    .rating-card { background: #1e293b; border-radius: 16px; padding: 25px; border: 1px solid rgba(255, 204, 0, 0.3); text-align: center; margin-bottom: 30px; }
     .rating-card h3 { color: #ffcc00; margin-top: 0; }
-
-
-
-    .star-rating {
-
-      font-size: 32px;
-
-      color: #555;
-
-      cursor: pointer;
-
-      display: inline-block;
-
-      margin: 10px 0;
-
-    }
-
-
-
-    .star-rating span {
-
-      transition: color 0.2s;
-
-    }
-
-
-
-    .star-rating span:hover,
-
-    .star-rating span.active {
-
-      color: #ffcc00;
-
-    }
-
-
-
-    .avg-score {
-
-      font-size: 20px;
-
-      font-weight: bold;
-
-      color: #fff;
-
-    }
-
-
-
-    /* Yorumlar Bölümü */
-
-    .comments-section {
-
-      background: #1e293b;
-
-      border-radius: 16px;
-
-      padding: 30px;
-
-      border: 1px solid rgba(255, 255, 255, 0.1);
-
-    }
-
-
-
+    .star-rating { font-size: 32px; color: #555; cursor: pointer; display: inline-block; margin: 10px 0; }
+    .star-rating span { transition: color 0.2s; }
+    .star-rating span:hover, .star-rating span.active { color: #ffcc00; }
+    .avg-score { font-size: 20px; font-weight: bold; color: #fff; }
+    .comments-section { background: #1e293b; border-radius: 16px; padding: 30px; border: 1px solid rgba(255, 255, 255, 0.1); }
     .comments-section h3 { color: #ffcc00; margin-top: 0; margin-bottom: 20px; }
-
-
-
-    .comment-form {
-
-      margin-bottom: 30px;
-
-    }
-
-
-
-    .comment-form textarea {
-
-      width: 100%;
-
-      padding: 12px;
-
-      border: 1px solid rgba(255,255,255,0.2);
-
-      border-radius: 8px;
-
-      background: #0f172a;
-
-      color: #fff;
-
-      font-size: 14px;
-
-      outline: none;
-
-      box-sizing: border-box;
-
-      resize: vertical;
-
-      min-height: 80px;
-
-      margin-bottom: 10px;
-
-    }
-
-
-
-    .comment-form button {
-
-      padding: 10px 20px;
-
-      background: #ffcc00;
-
-      color: #000;
-
-      border: none;
-
-      border-radius: 8px;
-
-      font-weight: bold;
-
-      cursor: pointer;
-
-    }
-
-
-
-    .comment-list {
-
-      display: flex;
-
-      flex-direction: column;
-
-      gap: 15px;
-
-    }
-
-
-
-    .comment-item {
-
-      background: #0f172a;
-
-      padding: 15px;
-
-      border-radius: 10px;
-
-      border: 1px solid rgba(255,255,255,0.05);
-
-    }
-
-
-
-    .comment-user {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 10px;
-
-      margin-bottom: 8px;
-
-    }
-
-
-
-    .comment-avatar {
-
-      width: 32px;
-
-      height: 32px;
-
-      border-radius: 50%;
-
-      object-fit: cover;
-
-    }
-
-
-
+    .comment-form { margin-bottom: 30px; }
+    .comment-form textarea { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: #0f172a; color: #fff; font-size: 14px; outline: none; box-sizing: border-box; resize: vertical; min-height: 80px; margin-bottom: 10px; }
+    .comment-form button { padding: 10px 20px; background: #ffcc00; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    .comment-list { display: flex; flex-direction: column; gap: 15px; }
+    .comment-item { background: #0f172a; padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); }
+    .comment-user { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .comment-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
     .comment-username { font-weight: bold; font-size: 13px; color: #ffcc00; }
-
     .comment-date { font-size: 11px; color: #888; margin-left: auto; }
-
     .comment-text { font-size: 14px; color: #ddd; line-height: 1.4; margin: 0; }
-
-
-
-    footer {
-
-      text-align: center;
-
-      padding: 20px;
-
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-
-      color: #888;
-
-      font-size: 13px;
-
-      margin-top: 60px;
-
-    }
-
+    /* EKLENEN BUTONLAR */
+    .post-actions { margin-bottom: 15px; }
+    .btn-action { padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; border: none; margin-right: 10px; }
+    .btn-edit { background: rgba(255, 204, 0, 0.15); border: 1px solid #ffcc00; color: #ffcc00; }
+    .btn-del { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; }
+    footer { text-align: center; padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #888; font-size: 13px; margin-top: 60px; }
   </style>
-
-
-
-  <!-- Dil Kütüphanesi Entegrasyonu -->
-
   <script src="lang.js"></script>
-
 </head>
-
 <body>
-
-
-
   <header>
-
-    <div class="logo">
-
-      <img src="logo.png" alt="Sytraex Logo" class="logo-img">
-
-      <div class="logo-text">
-
-        <h1>sytraex</h1>
-
-        <p>Share Your Travel Experience</p>
-
-      </div>
-
-    </div>
-
-
-
-    <nav>
-
-      <ul>
-
-        <li><a href="index.html" data-i18n="nav_home">Ana Sayfa</a></li>
-
-        <li><a href="profile.html" data-i18n="nav_profile">Profilim</a></li>
-
-        <li><a href="whitepaper.html" data-i18n="nav_whitepaper">White Paper (Stake SYTX)</a></li>
-
-        <li class="lang-switcher">TR / EN</li>
-
-      </ul>
-
-    </nav>
-
+    <div class="logo"><img src="logo.png" alt="Sytraex Logo" class="logo-img"><div class="logo-text"><h1>sytraex</h1><p>Share Your Travel Experience</p></div></div>
+    <nav><ul><li><a href="index.html" data-i18n="nav_home">Ana Sayfa</a></li><li><a href="profile.html" data-i18n="nav_profile">Profilim</a></li><li><a href="whitepaper.html" data-i18n="nav_whitepaper">White Paper (Stake SYTX)</a></li><li class="lang-switcher">TR / EN</li></ul></nav>
   </header>
 
-
-
   <div class="detail-container">
-
-    
-
-    <!-- Üst Başlık ve Yazar Bilgisi -->
-
     <div class="post-header-card">
-
-      <h1 class="post-title" id="postTitle">Yükleniyor...</h1>
-
-      
-
-      <div class="author-bar">
-
-        <div class="author-info" id="authorCard">
-
-          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200" class="author-avatar" id="authorAvatar">
-
-          <div>
-
-            <div class="author-name" id="authorName">-</div>
-
-            <div class="author-username" id="authorUsername">@...</div>
-
-          </div>
-
-        </div>
-
-
-
-        <div class="post-badges" id="postBadges"></div>
-
+      <!-- EKLENEN BUTONLAR -->
+      <div id="authorActions" class="post-actions" style="display:none;">
+        <button onclick="editPost()" class="btn-action btn-edit">✏️ Düzenle</button>
+        <button onclick="deletePost()" class="btn-action btn-del">🗑️ Sil</button>
       </div>
-
+      <h1 class="post-title" id="postTitle">Yükleniyor...</h1>
+      <div class="author-bar">
+        <div class="author-info" id="authorCard">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200" class="author-avatar" id="authorAvatar">
+          <div>
+            <div class="author-name" id="authorName">-</div>
+            <div class="author-username" id="authorUsername">@...</div>
+          </div>
+        </div>
+        <div class="post-badges" id="postBadges"></div>
+      </div>
     </div>
 
-
-
-    <!-- Fotoğraf Galerisi -->
-
-    <div class="gallery-container" id="galleryWrapper">
-
-      <img src="" class="main-image" id="mainImage" alt="Seyahat Fotoğrafı">
-
-      <div class="thumbnails-grid" id="thumbnailsGrid"></div>
-
-    </div>
-
-
-
-    <!-- YouTube Video -->
-
+    <div class="gallery-container" id="galleryWrapper"><img src="" class="main-image" id="mainImage" alt="Seyahat Fotoğrafı"><div class="thumbnails-grid" id="thumbnailsGrid"></div></div>
     <div id="videoContainer" style="display:none;"></div>
-
-
-
-    <!-- Seyahat Detayları -->
-
     <div class="content-card" id="detailsCard"></div>
 
-
-
-    <!-- Puanlama Kartı -->
-
     <div class="rating-card">
-
       <h3 data-i18n="detail_rate_title">⭐ Bu Deneyimi Puanlayın</h3>
-
-      <div class="star-rating" id="starRating">
-
-        <span data-star="1">★</span>
-
-        <span data-star="2">★</span>
-
-        <span data-star="3">★</span>
-
-        <span data-star="4">★</span>
-
-        <span data-star="5">★</span>
-
-      </div>
-
+      <div class="star-rating" id="starRating"><span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span></div>
       <div class="avg-score" id="avgScoreText">Ortalama Puan: - / 5</div>
-
       <div style="font-size: 12px; color: #aaa; margin-top: 4px;" id="totalVotesText">(0 Oy Kullanıldı)</div>
-
     </div>
-
-
-
-    <!-- Yorumlar Bölümü -->
 
     <div class="comments-section">
-
       <h3><span data-i18n="detail_comments_title">💬 Kullanıcı Yorumları</span> (<span id="commentsCount">0</span>)</h3>
-
-
-
       <div class="comment-form">
-
         <textarea id="commentText" data-i18n-ph="detail_comment_ph" placeholder="Bu rota hakkında bir şeyler yazın veya soru sorun..."></textarea>
-
         <button id="btnSubmitComment" onclick="submitComment()" data-i18n="detail_comment_btn">Yorum Yap</button>
-
       </div>
-
-
-
-      <div class="comment-list" id="commentList">
-
-        <p style="color:#aaa;">Yorumlar yükleniyor...</p>
-
-      </div>
-
+      <div class="comment-list" id="commentList"><p style="color:#aaa;">Yorumlar yükleniyor...</p></div>
     </div>
-
-
-
   </div>
 
-
-
-  <footer>
-
-    <p data-i18n="footer_text">© 2026 Sytraex | Share Your Travel Experience</p>
-
-  </footer>
-
-
+  <footer><p data-i18n="footer_text">© 2026 Sytraex | Share Your Travel Experience</p></footer>
 
   <script type="module">
-
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-
-    import { getFirestore, doc, getDoc, updateDoc, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-
+    import { getFirestore, doc, getDoc, updateDoc, deleteDoc, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
-
       apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
-
       authDomain: "sytraex-462b0.firebaseapp.com",
-
       projectId: "sytraex-462b0",
-
       storageBucket: "sytraex-462b0.firebasestorage.app",
-
       messagingSenderId: "379245018695",
-
       appId: "1:379245018695:web:0beff2afb3210a2f6cbb62"
-
     };
 
-
-
-    const app = initializeApp(firebaseConfig);
-
-    const db = getFirestore(app);
-
-
-
+    const db = getFirestore(initializeApp(firebaseConfig));
     const currentUser = JSON.parse(localStorage.getItem('sytraexUser'));
-
     const urlParams = new URLSearchParams(window.location.search);
-
     const postId = urlParams.get('id');
 
-
-
-    if (!postId) {
-
-      alert("Gönderi bulunamadı!");
-
-      window.location.href = "index.html";
-
-    }
-
-
+    if (!postId) { window.location.href = "index.html"; }
 
     let postData = null;
 
-
-
-    async function loadPostDetail() {
-
-      try {
-
-        const postRef = doc(db, "posts", postId);
-
-        const postSnap = await getDoc(postRef);
-
-
-
-        if (!postSnap.exists()) {
-
-          alert("Bu gönderi silinmiş veya mevcut değil.");
-
-          window.location.href = "index.html";
-
-          return;
-
+    // EKLENEN YETKİ KONTROL VE İŞLEM FONKSİYONLARI
+    window.editPost = () => window.location.href = `edit-post.html?id=${postId}`;
+    window.deletePost = async () => {
+        if(confirm("Bu gönderiyi silmek istediğinize emin misiniz?")) {
+            await deleteDoc(doc(db, "posts", postId));
+            window.location.href = "profile.html?tab=posts";
         }
-
-
-
-        postData = postSnap.data();
-
-
-
-        document.getElementById('postTitle').innerText = postData.title;
-
-        document.getElementById('postBadges').innerHTML = `
-
-          <span class="badge">📍 ${postData.location}</span>
-
-          <span class="badge">⏱️ ${postData.duration}</span>
-
-          <span class="badge">${postData.mode || 'Seyahat'}</span>
-
-        `;
-
-
-
-        document.getElementById('authorName').innerText = postData.authorName || postData.username;
-
-        document.getElementById('authorUsername').innerText = `@${postData.username}`;
-
-        
-
-        try {
-
-          const userSnap = await getDoc(doc(db, "users", postData.username));
-
-          if (userSnap.exists() && userSnap.data().avatarUrl) {
-
-            document.getElementById('authorAvatar').src = userSnap.data().avatarUrl;
-
-          }
-
-        } catch (e) {}
-
-
-
-        document.getElementById('authorCard').addEventListener('click', () => {
-
-          window.location.href = `public-profile.html?user=${postData.username}`;
-
-        });
-
-
-
-        const allImages = postData.images && postData.images.length > 0 ? postData.images : [postData.imageUrl];
-
-        if (allImages.length > 0 && allImages[0]) {
-
-          const mainImg = document.getElementById('mainImage');
-
-          mainImg.src = allImages[0];
-
-
-
-          const thumbsGrid = document.getElementById('thumbnailsGrid');
-
-          thumbsGrid.innerHTML = '';
-
-
-
-          allImages.forEach((imgUrl, index) => {
-
-            const thumb = document.createElement('img');
-
-            thumb.src = imgUrl;
-
-            thumb.className = `thumb-img ${index === 0 ? 'active' : ''}`;
-
-            thumb.onclick = () => {
-
-              mainImg.src = imgUrl;
-
-              document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
-
-              thumb.classList.add('active');
-
-            };
-
-            thumbsGrid.appendChild(thumb);
-
-          });
-
-        }
-
-
-
-        if (postData.youtubeUrl) {
-
-          let embedUrl = '';
-
-          if (postData.youtubeUrl.includes('v=')) {
-
-            embedUrl = 'https://www.youtube.com/embed/' + postData.youtubeUrl.split('v=')[1].split('&')[0];
-
-          } else if (postData.youtubeUrl.includes('youtu.be/')) {
-
-            embedUrl = 'https://www.youtube.com/embed/' + postData.youtubeUrl.split('youtu.be/')[1];
-
-          }
-
-
-
-          if (embedUrl) {
-
-            const vContainer = document.getElementById('videoContainer');
-
-            vContainer.className = 'video-wrapper';
-
-            vContainer.style.display = 'block';
-
-            vContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>`;
-
-          }
-
-        }
-
-
-
-        const detailsCard = document.getElementById('detailsCard');
-
-        detailsCard.innerHTML = '';
-
-
-
-        const d = postData.details || {};
-
-        const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-
-
-
-        const sections = [
-
-          { key: 'detail_sec_summary', defaultTitle: '📌 Genel Özet & İzlenimler', text: d.summary || postData.content },
-
-          { key: 'detail_sec_sightseeing', defaultTitle: '🏛️ Gezilecek Yerler & Aktivite Rotaları', text: d.sightseeing },
-
-          { key: 'detail_sec_stay', defaultTitle: '🏨 Konaklama & Otel Tavsiyeleri', text: d.stay },
-
-          { key: 'detail_sec_food', defaultTitle: '🍕 Yeme & İçme Önerileri', text: d.food },
-
-          { key: 'detail_sec_tips', defaultTitle: '🚌 Ulaşım, Bütçe & Önemli Tüyolar', text: d.tips }
-
-        ];
-
-
-
-        sections.forEach(sec => {
-
-          if (sec.text && sec.text.trim() !== '') {
-
-            detailsCard.innerHTML += `
-
-              <div class="section-block">
-
-                <h4 class="section-title" data-i18n="${sec.key}">${sec.defaultTitle}</h4>
-
-                <div class="section-text">${sec.text}</div>
-
-              </div>
-
-            `;
-
-          }
-
-        });
-
-
-
-        if (typeof applyLanguage === 'function') {
-
-          applyLanguage(currentLang);
-
-        }
-
-
-
-        renderRatings();
-
-        loadComments();
-
-
-
-      } catch (err) {
-
-        console.error("Detay yükleme hatası:", err);
-
-      }
-
-    }
-
-
-
-    function renderRatings() {
-
-      const ratings = postData.ratings || {};
-
-      const votes = Object.values(ratings);
-
-      const totalVotes = votes.length;
-
-      const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-
-      
-
-      let avg = 0;
-
-      if (totalVotes > 0) {
-
-        const sum = votes.reduce((a, b) => a + b, 0);
-
-        avg = (sum / totalVotes).toFixed(1);
-
-      }
-
-
-
-      const scorePrefix = currentLang === 'en' ? 'Average Rating' : 'Ortalama Puan';
-
-      const votesSuffix = currentLang === 'en' ? 'Votes Cast' : 'Oy Kullanıldı';
-
-
-
-      document.getElementById('avgScoreText').innerText = `${scorePrefix}: ${avg > 0 ? avg : '-'} / 5`;
-
-      document.getElementById('totalVotesText').innerText = `(${totalVotes} ${votesSuffix})`;
-
-
-
-      if (currentUser && ratings[currentUser.username]) {
-
-        highlightStars(ratings[currentUser.username]);
-
-      }
-
-    }
-
-
-
-    function highlightStars(count) {
-
-      const stars = document.querySelectorAll('#starRating span');
-
-      stars.forEach((s, idx) => {
-
-        if (idx < count) {
-
-          s.classList.add('active');
-
-        } else {
-
-          s.classList.remove('active');
-
-        }
-
-      });
-
-    }
-
-
-
-    document.querySelectorAll('#starRating span').forEach(star => {
-
-      star.addEventListener('click', async () => {
-
-        if (!currentUser) {
-
-          alert("Oy kullanabilmek için lütfen giriş yapınız.");
-
-          window.location.href = "login.html";
-
-          return;
-
-        }
-
-
-
-        const score = parseInt(star.getAttribute('data-star'));
-
-        highlightStars(score);
-
-
-
-        try {
-
-          const postRef = doc(db, "posts", postId);
-
-          const updateObj = {};
-
-          updateObj[`ratings.${currentUser.username}`] = score;
-
-
-
-          await updateDoc(postRef, updateObj);
-
-          
-
-          if (!postData.ratings) postData.ratings = {};
-
-          postData.ratings[currentUser.username] = score;
-
-
-
-          renderRatings();
-
-          alert("Oyunuz başarıyla kaydedildi!");
-
-        } catch (e) {
-
-          console.error("Oy verme hatası:", e);
-
-        }
-
-      });
-
-    });
-
-
-
-    async function loadComments() {
-
-      const container = document.getElementById('commentList');
-
-      try {
-
-        const q = query(collection(db, "comments"), where("postId", "==", postId));
-
-        const querySnapshot = await getDocs(q);
-
-
-
-        document.getElementById('commentsCount').innerText = querySnapshot.size;
-
-
-
-        if (querySnapshot.empty) {
-
-          container.innerHTML = '<p style="color:#aaa;" data-i18n="detail_no_comments">Henüz yorum yapılmamış. İlk yorumu sen yap!</p>';
-
-          const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-
-          if (typeof applyLanguage === 'function') applyLanguage(currentLang);
-
-          return;
-
-        }
-
-
-
-        container.innerHTML = '';
-
-        querySnapshot.forEach(docSnap => {
-
-          const c = docSnap.data();
-
-          const item = document.createElement('div');
-
-          item.className = 'comment-item';
-
-          item.innerHTML = `
-
-            <div class="comment-user">
-
-              <img src="${c.avatarUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200'}" class="comment-avatar">
-
-              <span class="comment-username">${c.authorName || c.username}</span>
-
-              <span class="comment-date">${new Date(c.createdAt).toLocaleDateString('tr-TR')}</span>
-
-            </div>
-
-            <p class="comment-text">${c.text}</p>
-
-          `;
-
-          container.appendChild(item);
-
-        });
-
-
-
-      } catch (err) {
-
-        console.error("Yorum çekme hatası:", err);
-
-      }
-
-    }
-
-
-
-    window.submitComment = async function() {
-
-      if (!currentUser) {
-
-        alert("Yorum yapabilmek için lütfen önce giriş yapınız.");
-
-        window.location.href = "login.html";
-
-        return;
-
-      }
-
-
-
-      const text = document.getElementById('commentText').value.trim();
-
-      if (!text) {
-
-        alert("Lütfen bir yorum yazın.");
-
-        return;
-
-      }
-
-
-
-      const btn = document.getElementById('btnSubmitComment');
-
-      btn.innerText = "Gönderiliyor...";
-
-      btn.disabled = true;
-
-
-
-      try {
-
-        await addDoc(collection(db, "comments"), {
-
-          postId: postId,
-
-          username: currentUser.username,
-
-          authorName: currentUser.name || currentUser.username,
-
-          avatarUrl: currentUser.avatarUrl || '',
-
-          text: text,
-
-          createdAt: new Date().toISOString()
-
-        });
-
-
-
-        document.getElementById('commentText').value = '';
-
-        loadComments();
-
-
-
-      } catch (e) {
-
-        alert("Yorum gönderilemedi: " + e.message);
-
-      } finally {
-
-        btn.innerText = "Yorum Yap";
-
-        btn.disabled = false;
-
-      }
-
     };
 
+    async function loadPostDetail() {
+      try {
+        const postSnap = await getDoc(doc(db, "posts", postId));
+        if (!postSnap.exists()) { window.location.href = "index.html"; return; }
+        postData = postSnap.data();
 
+        // Yetki kontrolü
+        if (currentUser && postData.username === currentUser.username) {
+            document.getElementById('authorActions').style.display = 'block';
+        }
+
+        document.getElementById('postTitle').innerText = postData.title;
+        document.getElementById('postBadges').innerHTML = `<span class="badge">📍 ${postData.location}</span><span class="badge">⏱️ ${postData.duration}</span><span class="badge">${postData.mode || 'Seyahat'}</span>`;
+        document.getElementById('authorName').innerText = postData.authorName || postData.username;
+        document.getElementById('authorUsername').innerText = `@${postData.username}`;
+        
+        try {
+          const userSnap = await getDoc(doc(db, "users", postData.username));
+          if (userSnap.exists() && userSnap.data().avatarUrl) { document.getElementById('authorAvatar').src = userSnap.data().avatarUrl; }
+        } catch (e) {}
+
+        document.getElementById('authorCard').addEventListener('click', () => { window.location.href = `public-profile.html?user=${postData.username}`; });
+
+        const allImages = postData.images && postData.images.length > 0 ? postData.images : [postData.imageUrl];
+        if (allImages.length > 0 && allImages[0]) {
+          const mainImg = document.getElementById('mainImage'); mainImg.src = allImages[0];
+          const thumbsGrid = document.getElementById('thumbnailsGrid'); thumbsGrid.innerHTML = '';
+          allImages.forEach((imgUrl, index) => {
+            const thumb = document.createElement('img'); thumb.src = imgUrl; thumb.className = `thumb-img ${index === 0 ? 'active' : ''}`;
+            thumb.onclick = () => { mainImg.src = imgUrl; document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active')); thumb.classList.add('active'); };
+            thumbsGrid.appendChild(thumb);
+          });
+        }
+
+        if (postData.youtubeUrl) {
+          let embedUrl = '';
+          if (postData.youtubeUrl.includes('v=')) { embedUrl = 'https://www.youtube.com/embed/' + postData.youtubeUrl.split('v=')[1].split('&')[0]; }
+          else if (postData.youtubeUrl.includes('youtu.be/')) { embedUrl = 'https://www.youtube.com/embed/' + postData.youtubeUrl.split('youtu.be/')[1]; }
+          if (embedUrl) { const vContainer = document.getElementById('videoContainer'); vContainer.className = 'video-wrapper'; vContainer.style.display = 'block'; vContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>`; }
+        }
+
+        const detailsCard = document.getElementById('detailsCard'); detailsCard.innerHTML = '';
+        const d = postData.details || {};
+        const sections = [
+          { key: 'detail_sec_summary', defaultTitle: '📌 Genel Özet & İzlenimler', text: d.summary || postData.content },
+          { key: 'detail_sec_sightseeing', defaultTitle: '🏛️ Gezilecek Yerler & Aktivite Rotaları', text: d.sightseeing },
+          { key: 'detail_sec_stay', defaultTitle: '🏨 Konaklama & Otel Tavsiyeleri', text: d.stay },
+          { key: 'detail_sec_food', defaultTitle: '🍕 Yeme & İçme Önerileri', text: d.food },
+          { key: 'detail_sec_tips', defaultTitle: '🚌 Ulaşım, Bütçe & Önemli Tüyolar', text: d.tips }
+        ];
+        sections.forEach(sec => { if (sec.text && sec.text.trim() !== '') { detailsCard.innerHTML += `<div class="section-block"><h4 class="section-title" data-i18n="${sec.key}">${sec.defaultTitle}</h4><div class="section-text">${sec.text}</div></div>`; } });
+
+        if (typeof applyLanguage === 'function') { applyLanguage(localStorage.getItem('sytraexLang') || 'tr'); }
+        renderRatings(); loadComments();
+      } catch (err) { console.error("Detay yükleme hatası:", err); }
+    }
+
+    function renderRatings() {
+      const ratings = postData.ratings || {};
+      const votes = Object.values(ratings);
+      const totalVotes = votes.length;
+      let avg = 0;
+      if (totalVotes > 0) { avg = (votes.reduce((a, b) => a + b, 0) / totalVotes).toFixed(1); }
+      document.getElementById('avgScoreText').innerText = `Ortalama Puan: ${avg > 0 ? avg : '-'} / 5`;
+      document.getElementById('totalVotesText').innerText = `(${totalVotes} Oy Kullanıldı)`;
+      if (currentUser && ratings[currentUser.username]) { highlightStars(ratings[currentUser.username]); }
+    }
+
+    function highlightStars(count) {
+      document.querySelectorAll('#starRating span').forEach((s, idx) => { idx < count ? s.classList.add('active') : s.classList.remove('active'); });
+    }
+
+    document.querySelectorAll('#starRating span').forEach(star => {
+      star.addEventListener('click', async () => {
+        if (!currentUser) { alert("Lütfen giriş yapınız."); window.location.href = "login.html"; return; }
+        const score = parseInt(star.getAttribute('data-star'));
+        highlightStars(score);
+        try {
+          const updateObj = {}; updateObj[`ratings.${currentUser.username}`] = score;
+          await updateDoc(doc(db, "posts", postId), updateObj);
+          postData.ratings[currentUser.username] = score;
+          renderRatings();
+        } catch (e) { console.error(e); }
+      });
+    });
+
+    async function loadComments() {
+      const container = document.getElementById('commentList');
+      const q = query(collection(db, "comments"), where("postId", "==", postId));
+      const querySnapshot = await getDocs(q);
+      document.getElementById('commentsCount').innerText = querySnapshot.size;
+      if (querySnapshot.empty) { container.innerHTML = '<p style="color:#aaa;">Henüz yorum yok.</p>'; return; }
+      container.innerHTML = '';
+      querySnapshot.forEach(docSnap => {
+        const c = docSnap.data();
+        container.innerHTML += `<div class="comment-item"><div class="comment-user"><img src="${c.avatarUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200'}" class="comment-avatar"><span class="comment-username">${c.authorName || c.username}</span></div><p class="comment-text">${c.text}</p></div>`;
+      });
+    }
+
+    window.submitComment = async function() {
+      if (!currentUser) { alert("Lütfen giriş yapınız."); window.location.href = "login.html"; return; }
+      const text = document.getElementById('commentText').value.trim();
+      if (!text) return;
+      await addDoc(collection(db, "comments"), { postId, username: currentUser.username, authorName: currentUser.name || currentUser.username, avatarUrl: currentUser.avatarUrl || '', text, createdAt: new Date().toISOString() });
+      document.getElementById('commentText').value = ''; loadComments();
+    };
 
     loadPostDetail();
-
   </script>
-
-
-
 </body>
-
-</html> 
+</html>
