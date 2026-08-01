@@ -40,6 +40,16 @@ const translations = {
     "top_rated_title": "⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları",
     "no_top_posts": "Henüz öne çıkan bir seyahat rotası yok.",
 
+    // Arama Sonuçları (search-results.html)
+    "results_title": "Arama Sonuçları",
+    "results_btn_new": "← Yeni Arama Yap",
+    "results_all_posts": "Tüm Gönderiler",
+    "results_dur_filtered": "⏱️ Süre Filtreli",
+    "results_mode_filtered": "🎯 Mod Filtreli",
+    "results_no_match_title": "Henüz Uygun Bir Seyahat Rotası Bulunamadı",
+    "results_no_match_desc": "Aradığınız kriterlere uygun herhangi bir kullanıcı paylaşımı bulunamadı.",
+    "results_btn_first_share": "+ İlk Deneyimi Sen Paylaş!",
+
     // Giriş Yap Sayfası
     "login_title": "Giriş Yap",
     "login_ph_identifier": "E-posta veya Kullanıcı Adı",
@@ -167,6 +177,16 @@ const translations = {
     // Home Posts
     "top_rated_title": "⭐ Top Rated Travel Routes of the Community",
     "no_top_posts": "No featured travel routes yet.",
+
+    // Search Results (search-results.html)
+    "results_title": "Search Results",
+    "results_btn_new": "← New Search",
+    "results_all_posts": "All Posts",
+    "results_dur_filtered": "⏱️ Duration Filtered",
+    "results_mode_filtered": "🎯 Mode Filtered",
+    "results_no_match_title": "No Suitable Travel Route Found Yet",
+    "results_no_match_desc": "No user posts matching your criteria were found.",
+    "results_btn_first_share": "+ Be the First to Share!",
 
     // Login Page
     "login_title": "Login",
