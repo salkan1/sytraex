@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gönderiyi Düzenle | Sytraex</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background-color: #0f172a; color: #fff; font-family: Arial, sans-serif; padding: 40px 20px; }
+    .container { max-width: 600px; margin: 0 auto; background: #1e293b; padding: 30px; border-radius: 16px; border: 1px solid rgba(255, 204, 0, 0.3); }
+    h2 { color: #ffcc00; margin-top: 0; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; color: #ffcc00; margin-bottom: 8px; font-weight: bold; }
+    input, textarea { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: #0f172a; color: #fff; box-sizing: border-box; }
+    textarea { height: 100px; resize: vertical; }
+    .btn-save { width: 100%; padding: 15px; background: #ffcc00; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>✏️ Gönderiyi Düzenle</h2>
+    <form id="editForm">
+      <div class="form-group"><label>Başlık</label><input type="text" id="editTitle" required></div>
+      <div class="form-group"><label>Konum</label><input type="text" id="editLocation" required></div>
+      <div class="form-group"><label>Süre</label><input type="text" id="editDuration" required></div>
+      <div class="form-group"><label>Özet</label><textarea id="editSummary"></textarea></div>
+      <button type="submit" class="btn-save" id="btnSave">Güncellemeleri Kaydet</button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
+      authDomain: "sytraex-462b0.firebaseapp.com",
+      projectId: "sytraex-462b0",
+      storageBucket: "sytraex-462b0.firebasestorage.app",
+      messagingSenderId: "379245018695",
+      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62"
+    };
+
+    const db = getFirestore(initializeApp(firebaseConfig));
+    const postId = new URLSearchParams(window.location.search).get('id');
+
+    async function initEdit() {
+      const docSnap = await getDoc(doc(db, "posts", postId));
+      if (docSnap.exists()) {
+        const d = docSnap.data();
+        document.getElementById('editTitle').value = d.title;
+        document.getElementById('editLocation').value = d.location;
+        document.getElementById('editDuration').value = d.duration;
+        document.getElementById('editSummary').value = d.details?.summary || d.content || "";
+      }
+    }
+
+    document.getElementById('editForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnSave');
+      btn.innerText = "Kaydediliyor...";
+      
+      try {
+        await updateDoc(doc(db, "posts", postId), {
+          title: document.getElementById('editTitle').value,
+          location: document.getElementById('editLocation').value,
+          duration: document.getElementById('editDuration').value,
+          "details.summary": document.getElementById('editSummary').value
+        });
+        alert("Başarıyla güncellendi!");
+        window.location.href = `post-detail.html?id=${postId}`;
+      } catch (err) { alert("Hata: " + err.message); }
+    });
+
+    initEdit();
+  </script>
+</body>
+</html>
