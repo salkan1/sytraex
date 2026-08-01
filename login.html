@@ -1,201 +1,422 @@
-// Sytraex TR / EN Dil Sözlüğü
-const translations = {
-  tr: {
-    // Header & Nav
-    "nav_home": "Ana Sayfa",
-    "nav_profile": "Profilim",
-    "nav_whitepaper": "White Paper (Stake SYTX)",
-    "nav_login": "Giriş Yap",
-    "nav_register": "Kayıt Ol",
-    
-    // Hero / Karşılama
-    "hero_title": "Dünyayı Keşfet.<br>Anılarını Paylaş.",
-    "hero_subtitle": "Sytraex, seyahat deneyimlerini paylaşabileceğin ve ilham alabileceğin sosyal topluluk.",
-    "hero_btn_profile": "Profilime Git",
-    "hero_btn_share": "➕ Deneyimi Paylaş",
-
-    // Arama Paneli
-    "search_label_loc": "Nereye Gitmek İstiyorsun?",
-    "search_ph_loc": "İlçe, il veya ülke yazın (Örn: Bodrum, Roma)...",
-    "search_label_duration": "Süre / Zaman:",
-    "search_opt_dur_all": "Tüm Süreler",
-    "search_opt_dur_3h": "3 Saatlik Hızlı Tur",
-    "search_opt_dur_day": "Günübirlik (6-12 Saat)",
-    "search_opt_dur_1d": "Tam 1 Gün",
-    "search_opt_dur_weekend": "Hafta Sonu (2-3 Gün)",
-    "search_opt_dur_1w": "1 Hafta veya Daha Uzun",
-    
-    "search_label_mode": "Seyahat Modu:",
-    "search_opt_mode_all": "Tüm Konseptler",
-    "search_opt_mode_night": "🌙 Gece Hayatı & Eğlence",
-    "search_opt_mode_day": "☀️ Gündüz Gezi & Şehir",
-    "search_opt_mode_history": "🏛️ Tarihsel & Kültür",
-    "search_opt_mode_nature": "🌿 Doğa & Sakinlik",
-    "search_opt_mode_food": "🍕 Yemek & Gastronomi",
-    "search_opt_mode_adventure": "🏄 Macera & Spor",
-    "search_opt_mode_budget": "💰 Bütçe Dostu",
-    "search_btn_submit": "🔍 Deneyimleri Ara",
-
-    // Ana Sayfa Rotalar
-    "top_rated_title": "⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları",
-    "no_top_posts": "Henüz öne çıkan bir seyahat rotası yok.",
-
-    // Giriş Yap Sayfası (login.html)
-    "login_title": "Giriş Yap",
-    "login_ph_identifier": "E-posta veya Kullanıcı Adı",
-    "login_ph_password": "Şifre",
-    "login_btn_submit": "Giriş Yap",
-    "login_forgot_pass": "Şifremi Unuttum?",
-    "login_no_account": "Hesabınız yok mu?",
-
-    // Şifre Kurtarma Modalı
-    "forgot_modal_title": "Şifre Kurtarma",
-    "forgot_step1_text": "Sistemdeki E-posta adresinizi veya Kullanıcı Adınızı giriniz:",
-    "forgot_btn_find": "Hesabı Bul",
-    "forgot_ph_answer": "Gizli Soru Cevabınız",
-    "forgot_btn_show_pass": "Şifreyi Göster",
-    "forgot_success_text": "Hesap Doğrulandı!",
-
-    // Profil Sayfası
-    "profile_title": "Profil Bilgilerim",
-    "profile_edit_btn": "✏️ Bilgileri Düzenle",
-    "profile_menu_info": "👤 Profil Bilgileri",
-    "profile_menu_wallet": "💰 Cüzdanım (SYTX)",
-    "profile_menu_posts": "📝 Gönderilerim",
-    "profile_menu_messages": "💬 Mesajlar / İstekler",
-    "profile_menu_share": "➕ Yeni Deneyim Paylaş",
-    "profile_btn_logout": "Çıkış Yap",
-    "profile_change_photo": "📷 Fotoğraf Değiştir",
-
-    // Cüzdan
-    "wallet_title": "💰 Sytraex Cüzdanı & Ödüller",
-    "wallet_sub_label": "Toplam Kazandığınız Sytraex Coin Bakiyesi",
-    "wallet_stake_btn": "Stake Et (SYTX)",
-    "wallet_history_title": "📊 Coin Kazanç Geçmişi",
-    "wallet_th_type": "İşlem Türü",
-    "wallet_th_desc": "Açıklama",
-    "wallet_th_amount": "Miktar",
-
-    // Footer
-    "footer_text": "© 2026 Sytraex | Share Your Travel Experience"
-  },
-  en: {
-    // Header & Nav
-    "nav_home": "Home",
-    "nav_profile": "My Profile",
-    "nav_whitepaper": "White Paper (Stake SYTX)",
-    "nav_login": "Login",
-    "nav_register": "Register",
-    
-    // Hero
-    "hero_title": "Explore The World.<br>Share Your Memories.",
-    "hero_subtitle": "Sytraex is a social community where you can share travel experiences and get inspired.",
-    "hero_btn_profile": "Go to My Profile",
-    "hero_btn_share": "➕ Share Experience",
-
-    // Search Panel
-    "search_label_loc": "Where Do You Want To Go?",
-    "search_ph_loc": "Type district, city or country (e.g. Bodrum, Rome)...",
-    "search_label_duration": "Duration / Time:",
-    "search_opt_dur_all": "All Durations",
-    "search_opt_dur_3h": "3-Hour Quick Tour",
-    "search_opt_dur_day": "Day Trip (6-12 Hours)",
-    "search_opt_dur_1d": "Full 1 Day",
-    "search_opt_dur_weekend": "Weekend (2-3 Days)",
-    "search_opt_dur_1w": "1 Week or Longer",
-    
-    "search_label_mode": "Travel Concept:",
-    "search_opt_mode_all": "All Concepts",
-    "search_opt_mode_night": "🌙 Nightlife & Fun",
-    "search_opt_mode_day": "☀️ Day Tour & City",
-    "search_opt_mode_history": "🏛️ Historical & Culture",
-    "search_opt_mode_nature": "🌿 Nature & Quiet",
-    "search_opt_mode_food": "🍕 Food & Gastronomy",
-    "search_opt_mode_adventure": "🏄 Adventure & Sports",
-    "search_opt_mode_budget": "💰 Budget Friendly",
-    "search_btn_submit": "🔍 Search Experiences",
-
-    // Home Posts
-    "top_rated_title": "⭐ Top Rated Travel Routes of the Community",
-    "no_top_posts": "No featured travel routes yet.",
-
-    // Login Page (login.html)
-    "login_title": "Login",
-    "login_ph_identifier": "Email or Username",
-    "login_ph_password": "Password",
-    "login_btn_submit": "Login",
-    "login_forgot_pass": "Forgot Password?",
-    "login_no_account": "Don't have an account?",
-
-    // Password Recovery Modal
-    "forgot_modal_title": "Password Recovery",
-    "forgot_step1_text": "Enter your Email address or Username registered in the system:",
-    "forgot_btn_find": "Find Account",
-    "forgot_ph_answer": "Answer to Secret Question",
-    "forgot_btn_show_pass": "Show Password",
-    "forgot_success_text": "Account Verified!",
-
-    // Profile Page
-    "profile_title": "My Profile Information",
-    "profile_edit_btn": "✏️ Edit Info",
-    "profile_menu_info": "👤 Profile Info",
-    "profile_menu_wallet": "💰 My Wallet (SYTX)",
-    "profile_menu_posts": "📝 My Posts",
-    "profile_menu_messages": "💬 Messages / Requests",
-    "profile_menu_share": "➕ Share New Experience",
-    "profile_btn_logout": "Logout",
-    "profile_change_photo": "📷 Change Photo",
-
-    // Wallet
-    "wallet_title": "💰 Sytraex Wallet & Rewards",
-    "wallet_sub_label": "Total Sytraex Coin Balance Earned",
-    "wallet_stake_btn": "Stake Now (SYTX)",
-    "wallet_history_title": "📊 Coin Earnings History",
-    "wallet_th_type": "Transaction Type",
-    "wallet_th_desc": "Description",
-    "wallet_th_amount": "Amount",
-
-    // Footer
-    "footer_text": "© 2026 Sytraex | Share Your Travel Experience"
-  }
-};
-
-let currentLang = localStorage.getItem('sytraexLang') || 'tr';
-
-document.addEventListener('DOMContentLoaded', () => {
-  applyLanguage(currentLang);
-  renderLangSwitcher();
-});
-
-window.setLanguage = function(lang) {
-  currentLang = lang;
-  localStorage.setItem('sytraexLang', lang);
-  applyLanguage(lang);
-  renderLangSwitcher();
-};
-
-function applyLanguage(lang) {
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (translations[lang] && translations[lang][key]) {
-      el.innerHTML = translations[lang][key];
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giriş Yap | Sytraex</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="logo.png">
+  
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0f172a;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
     }
-  });
 
-  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-    const key = el.getAttribute('data-i18n-ph');
-    if (translations[lang] && translations[lang][key]) {
-      el.placeholder = translations[lang][key];
+    header {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-  });
-}
 
-function renderLangSwitcher() {
-  const switchers = document.querySelectorAll('.lang-switcher');
-  switchers.forEach(sw => {
-    sw.innerHTML = `
-      <span onclick="setLanguage('tr')" style="cursor:pointer; ${currentLang === 'tr' ? 'color:#ffcc00; font-weight:bold; text-decoration:underline;' : 'color:#aaa;'}">TR</span> / 
-      <span onclick="setLanguage('en')" style="cursor:pointer; ${currentLang === 'en' ? 'color:#ffcc00; font-weight:bold; text-decoration:underline;' : 'color:#aaa;'}">EN</span>
-    `;
-  });
-}
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 45px;
+      height: 45px;
+    }
+
+    .logo-text h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #ffcc00;
+      text-transform: lowercase;
+    }
+
+    .logo-text p {
+      margin: 0;
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ffcc00;
+    }
+
+    .lang-switcher {
+      font-size: 13px;
+      font-weight: bold;
+      color: #ffcc00;
+      margin-left: 10px;
+    }
+
+    .login-container {
+      padding: 60px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 35px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      backdrop-filter: blur(8px);
+    }
+
+    form h2 {
+      color: #ffcc00;
+      margin-top: 0;
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 26px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      box-sizing: border-box;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #ffcc00;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #ffcc00;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.1s;
+    }
+
+    button:hover {
+      background: #e6b800;
+    }
+
+    .form-footer {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    .form-footer a {
+      color: #ffcc00;
+      text-decoration: none;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Modal Stilleri */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #1e293b;
+      border: 1px solid #ffcc00;
+      border-radius: 12px;
+      padding: 25px;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+
+  <!-- Dil Kütüphanesi Entegrasyonu -->
+  <script src="lang.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Sytraex Logo" class="logo-img">
+      <div class="logo-text">
+        <h1>sytraex</h1>
+        <p>Share Your Travel Experience</p>
+      </div>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="index.html" data-i18n="nav_home">Ana Sayfa</a></li>
+        <li><a href="register.html" data-i18n="nav_register">Kayıt Ol</a></li>
+        <li><a href="login.html" style="color: #ffcc00;" data-i18n="nav_login">Giriş Yap</a></li>
+        <li><a href="whitepaper.html" data-i18n="nav_whitepaper">White Paper (Stake SYTX)</a></li>
+        <li class="lang-switcher">TR / EN</li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Giriş Formu -->
+  <div class="login-container">
+    <form id="loginForm">
+      <h2 data-i18n="login_title">Giriş Yap</h2>
+
+      <div class="form-group">
+        <input type="text" id="loginIdentifier" data-i18n-ph="login_ph_identifier" placeholder="E-posta veya Kullanıcı Adı" required>
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="password" data-i18n-ph="login_ph_password" placeholder="Şifre" required>
+      </div>
+
+      <button type="submit" id="submitBtn" data-i18n="login_btn_submit">Giriş Yap</button>
+
+      <div class="form-footer">
+        <a href="#" id="forgotPasswordBtn" data-i18n="login_forgot_pass">Şifremi Unuttum?</a>
+        <span><span data-i18n="login_no_account">Hesabınız yok mu?</span> <a href="register.html" data-i18n="nav_register">Kayıt Ol</a></span>
+      </div>
+    </form>
+  </div>
+
+  <!-- Şifremi Unuttum Modal -->
+  <div class="modal" id="forgotModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <h3 style="color: #ffcc00; margin-top:0;" data-i18n="forgot_modal_title">Şifre Kurtarma</h3>
+      
+      <!-- Adım 1: E-posta Girme -->
+      <div id="forgotStep1">
+        <p style="font-size: 13px; color: #ccc;" data-i18n="forgot_step1_text">Sistemdeki E-posta adresinizi veya Kullanıcı Adınızı giriniz:</p>
+        <input type="text" id="forgotEmail" data-i18n-ph="login_ph_identifier" placeholder="E-posta / Kullanıcı Adı" style="margin-bottom: 15px;">
+        <button type="button" id="findAccountBtn" data-i18n="forgot_btn_find">Hesabı Bul</button>
+      </div>
+
+      <!-- Adım 2: Gizli Soru Yanıtlama -->
+      <div id="forgotStep2" style="display: none;">
+        <p style="font-size: 13px; color: #ffcc00; font-weight: bold;" id="questionText"></p>
+        <input type="text" id="forgotAnswer" data-i18n-ph="forgot_ph_answer" placeholder="Gizli Soru Cevabınız" style="margin-bottom: 15px;">
+        <button type="button" id="verifyAnswerBtn" data-i18n="forgot_btn_show_pass">Şifreyi Göster</button>
+      </div>
+
+      <!-- Adım 3: Şifre Sonucu -->
+      <div id="forgotStep3" style="display: none; text-align: center;">
+        <p style="font-size: 13px; color: #2ecc71;" data-i18n="forgot_success_text">Hesap Doğrulandı!</p>
+        <div id="recoveredPassword" style="font-size: 18px; font-weight: bold; color: #ffcc00; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; border: 1px dashed #ffcc00;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
+      authDomain: "sytraex-462b0.firebaseapp.com",
+      projectId: "sytraex-462b0",
+      storageBucket: "sytraex-462b0.firebasestorage.app",
+      messagingSenderId: "379245018695",
+      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62",
+      measurementId: "G-60667BRD3S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 1. Giriş Yapma Mantığı
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const identifier = document.getElementById('loginIdentifier').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+      const submitBtn = document.getElementById('submitBtn');
+
+      submitBtn.innerText = "Kontrol Ediliyor...";
+      submitBtn.disabled = true;
+
+      try {
+        let foundUser = null;
+
+        const userDocRef = doc(db, "users", identifier);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          foundUser = userDocSnap.data();
+        } else {
+          const q = query(collection(db, "users"), where("email", "==", identifier));
+          const querySnap = await getDocs(q);
+          if (!querySnap.empty) {
+            foundUser = querySnap.docs[0].data();
+          }
+        }
+
+        if (!foundUser) {
+          alert("Kullanıcı bulunamadı! Lütfen e-posta veya kullanıcı adınızı kontrol edin.");
+          return;
+        }
+
+        if (foundUser.password === password) {
+          alert("Giriş başarılı! Hoş geldin, " + (foundUser.name || foundUser.username));
+          localStorage.setItem('sytraexUser', JSON.stringify(foundUser));
+          localStorage.setItem('loggedIn', 'true');
+          window.location.href = "profile.html";
+        } else {
+          alert("Hatalı şifre girdiniz!");
+        }
+
+      } catch (err) {
+        console.error("Giriş hatası:", err);
+        alert("Bağlantı hatası oluştu.");
+      } finally {
+        submitBtn.innerText = "Giriş Yap";
+        submitBtn.disabled = false;
+      }
+    });
+
+    // 2. Şifremi Unuttum Modalı ve Gizli Soru Kontrolü
+    const modal = document.getElementById('forgotModal');
+    const forgotBtn = document.getElementById('forgotPasswordBtn');
+    const closeModal = document.getElementById('closeModal');
+
+    let recoveredUser = null;
+
+    const questionMap = {
+      "pet": "İlk evcil hayvanınızın adı nedir?",
+      "school": "İlkokul öğretmeninizin adı nedir?",
+      "city": "Annenizin doğduğu şehir neresidir?",
+      "car": "İlk sahip olduğunuz arabanın markası nedir?"
+    };
+
+    forgotBtn.onclick = () => { modal.style.display = 'flex'; };
+    closeModal.onclick = () => { modal.style.display = 'none'; resetForgotForm(); };
+
+    document.getElementById('findAccountBtn').addEventListener('click', async () => {
+      const inputVal = document.getElementById('forgotEmail').value.trim().toLowerCase();
+      if (!inputVal) {
+        alert("Lütfen e-posta veya kullanıcı adı giriniz.");
+        return;
+      }
+
+      try {
+        const userDocRef = doc(db, "users", inputVal);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          recoveredUser = userDocSnap.data();
+        } else {
+          const q = query(collection(db, "users"), where("email", "==", inputVal));
+          const querySnap = await getDocs(q);
+          if (!querySnap.empty) {
+            recoveredUser = querySnap.docs[0].data();
+          }
+        }
+
+        if (recoveredUser) {
+          document.getElementById('forgotStep1').style.display = 'none';
+          document.getElementById('forgotStep2').style.display = 'block';
+          
+          const qText = questionMap[recoveredUser.secretQuestion] || "Gizli sorunuz:";
+          document.getElementById('questionText').innerText = "Gizli Soru: " + qText;
+        } else {
+          alert("Bu bilgilerle eşleşen bir hesap bulunamadı.");
+        }
+      } catch (err) {
+        console.error("Hesap arama hatası:", err);
+      }
+    });
+
+    document.getElementById('verifyAnswerBtn').addEventListener('click', () => {
+      const answerInput = document.getElementById('forgotAnswer').value.trim().toLowerCase();
+
+      if (recoveredUser && recoveredUser.secretAnswer.toLowerCase() === answerInput) {
+        document.getElementById('forgotStep2').style.display = 'none';
+        document.getElementById('forgotStep3').style.display = 'block';
+        document.getElementById('recoveredPassword').innerText = "Şifreniz: " + recoveredUser.password;
+      } else {
+        alert("Gizli soru cevabı hatalı!");
+      }
+    });
+
+    function resetForgotForm() {
+      document.getElementById('forgotStep1').style.display = 'block';
+      document.getElementById('forgotStep2').style.display = 'none';
+      document.getElementById('forgotStep3').style.display = 'none';
+      document.getElementById('forgotEmail').value = '';
+      document.getElementById('forgotAnswer').value = '';
+      recoveredUser = null;
+    }
+  </script>
+
+</body>
+</html>
