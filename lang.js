@@ -40,6 +40,49 @@ const translations = {
     "top_rated_title": "⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları",
     "no_top_posts": "Henüz öne çıkan bir seyahat rotası yok.",
 
+    // Giriş Yap Sayfası
+    "login_title": "Giriş Yap",
+    "login_ph_identifier": "E-posta veya Kullanıcı Adı",
+    "login_ph_password": "Şifre",
+    "login_btn_submit": "Giriş Yap",
+    "login_forgot_pass": "Şifremi Unuttum?",
+    "login_no_account": "Hesabınız yok mu?",
+
+    // Şifre Kurtarma Modalı
+    "forgot_modal_title": "Şifre Kurtarma",
+    "forgot_step1_text": "Sistemdeki E-posta adresinizi veya Kullanıcı Adınızı giriniz:",
+    "forgot_btn_find": "Hesabı Bul",
+    "forgot_ph_answer": "Gizli Soru Cevabınız",
+    "forgot_btn_show_pass": "Şifreyi Göster",
+    "forgot_success_text": "Hesap Doğrulandı!",
+
+    // Detay Sayfası (post-detail.html)
+    "detail_sec_summary": "📌 Genel Özet & İzlenimler",
+    "detail_sec_sightseeing": "🏛️ Gezilecek Yerler & Aktivite Rotaları",
+    "detail_sec_stay": "🏨 Konaklama & Otel Tavsiyeleri",
+    "detail_sec_food": "🍕 Yeme & İçme Önerileri",
+    "detail_sec_tips": "🚌 Ulaşım, Bütçe & Önemli Tüyolar",
+    "detail_rate_title": "⭐ Bu Deneyimi Puanlayın",
+    "detail_avg_score": "Ortalama Puan",
+    "detail_votes_suffix": "Oy Kullanıldı",
+    "detail_comments_title": "💬 Kullanıcı Yorumları",
+    "detail_comment_ph": "Bu rota hakkında bir şeyler yazın veya soru sorun...",
+    "detail_comment_btn": "Yorum Yap",
+    "detail_no_comments": "Henüz yorum yapılmamış. İlk yorumu sen yap!",
+
+    // Genel Profil (public-profile.html)
+    "public_btn_send_req": "💬 Mesaj İsteği Gönder",
+    "public_btn_edit_own": "✏️ Kendi Profilini Düzenle",
+    "public_btn_pending": "⏳ Mesaj İsteği Gönderildi (Beklemede)",
+    "public_btn_open_chat": "💬 Sohbeti Aç",
+    "public_routes_title": "🗺️ Paylaştığı Seyahat Rotaları & Deneyimleri",
+    "public_no_posts": "Bu kullanıcının henüz paylaştığı bir seyahat rotası yok.",
+    "public_modal_title": "📩 Mesaj İsteği Gönder",
+    "public_modal_desc_prefix": "kullanıcısına ilk mesaj isteğinizi gönderin. İsteğinizi kabul ettiğinde mesajlaşmaya başlayabilirsiniz.",
+    "public_modal_ph": "Merhaba! Seyahat rotanız hakkında bir şey sormak istiyordum...",
+    "public_btn_cancel": "İptal",
+    "public_btn_submit_req": "İsteği Gönder",
+
     // Profil Sayfası
     "profile_title": "Profil Bilgilerim",
     "profile_edit_btn": "✏️ Bilgileri Düzenle",
@@ -103,6 +146,49 @@ const translations = {
     "top_rated_title": "⭐ Top Rated Travel Routes of the Community",
     "no_top_posts": "No featured travel routes yet.",
 
+    // Login Page
+    "login_title": "Login",
+    "login_ph_identifier": "Email or Username",
+    "login_ph_password": "Password",
+    "login_btn_submit": "Login",
+    "login_forgot_pass": "Forgot Password?",
+    "login_no_account": "Don't have an account?",
+
+    // Password Recovery Modal
+    "forgot_modal_title": "Password Recovery",
+    "forgot_step1_text": "Enter your Email address or Username registered in the system:",
+    "forgot_btn_find": "Find Account",
+    "forgot_ph_answer": "Answer to Secret Question",
+    "forgot_btn_show_pass": "Show Password",
+    "forgot_success_text": "Account Verified!",
+
+    // Detail Page (post-detail.html)
+    "detail_sec_summary": "📌 General Overview & Impressions",
+    "detail_sec_sightseeing": "🏛️ Places to Visit & Activities",
+    "detail_sec_stay": "🏨 Accommodation & Hotel Tips",
+    "detail_sec_food": "🍕 Food & Dining Recommendations",
+    "detail_sec_tips": "🚌 Transportation, Budget & Important Tips",
+    "detail_rate_title": "⭐ Rate This Experience",
+    "detail_avg_score": "Average Rating",
+    "detail_votes_suffix": "Votes Cast",
+    "detail_comments_title": "💬 User Comments",
+    "detail_comment_ph": "Write something about this route or ask a question...",
+    "detail_comment_btn": "Post Comment",
+    "detail_no_comments": "No comments yet. Be the first to comment!",
+
+    // Public Profile (public-profile.html)
+    "public_btn_send_req": "💬 Send Message Request",
+    "public_btn_edit_own": "✏️ Edit Your Profile",
+    "public_btn_pending": "⏳ Message Request Sent (Pending)",
+    "public_btn_open_chat": "💬 Open Chat",
+    "public_routes_title": "🗺️ Shared Travel Routes & Experiences",
+    "public_no_posts": "This user hasn't shared any travel routes yet.",
+    "public_modal_title": "📩 Send Message Request",
+    "public_modal_desc_prefix": "Send your first message request to user. You can start messaging once accepted.",
+    "public_modal_ph": "Hi! I wanted to ask something about your travel route...",
+    "public_btn_cancel": "Cancel",
+    "public_btn_submit_req": "Send Request",
+
     // Profile Page
     "profile_title": "My Profile Information",
     "profile_edit_btn": "✏️ Edit Info",
@@ -128,16 +214,13 @@ const translations = {
   }
 };
 
-// Mevcut Dili Al (Varsayılan: 'tr')
 let currentLang = localStorage.getItem('sytraexLang') || 'tr';
 
-// Sayfa Yüklendiğinde Dili Uygula
 document.addEventListener('DOMContentLoaded', () => {
   applyLanguage(currentLang);
   renderLangSwitcher();
 });
 
-// Dili Değiştirme Fonksiyonu
 window.setLanguage = function(lang) {
   currentLang = lang;
   localStorage.setItem('sytraexLang', lang);
@@ -145,7 +228,6 @@ window.setLanguage = function(lang) {
   renderLangSwitcher();
 };
 
-// Çevirileri HTML Elemanlarına Eşleme
 function applyLanguage(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
@@ -162,7 +244,6 @@ function applyLanguage(lang) {
   });
 }
 
-// Header'daki TR / EN Butonlarını Çizme
 function renderLangSwitcher() {
   const switchers = document.querySelectorAll('.lang-switcher');
   switchers.forEach(sw => {
