@@ -1,0 +1,174 @@
+// Sytraex TR / EN Dil Sözlüğü
+const translations = {
+  tr: {
+    // Header & Nav
+    "nav_home": "Ana Sayfa",
+    "nav_profile": "Profilim",
+    "nav_whitepaper": "White Paper (Stake SYTX)",
+    "nav_login": "Giriş Yap",
+    "nav_register": "Kayıt Ol",
+    
+    // Hero / Karşılama
+    "hero_title": "Dünyayı Keşfet.<br>Anılarını Paylaş.",
+    "hero_subtitle": "Sytraex, seyahat deneyimlerini paylaşabileceğin ve ilham alabileceğin sosyal topluluk.",
+    "hero_btn_profile": "Profilime Git",
+    "hero_btn_share": "➕ Deneyimi Paylaş",
+
+    // Arama Paneli
+    "search_label_loc": "Nereye Gitmek İstiyorsun?",
+    "search_ph_loc": "İlçe, il veya ülke yazın (Örn: Bodrum, Roma)...",
+    "search_label_duration": "Süre / Zaman:",
+    "search_opt_dur_all": "Tüm Süreler",
+    "search_opt_dur_3h": "3 Saatlik Hızlı Tur",
+    "search_opt_dur_day": "Günübirlik (6-12 Saat)",
+    "search_opt_dur_1d": "Tam 1 Gün",
+    "search_opt_dur_weekend": "Hafta Sonu (2-3 Gün)",
+    "search_opt_dur_1w": "1 Hafta veya Daha Uzun",
+    
+    "search_label_mode": "Seyahat Modu:",
+    "search_opt_mode_all": "Tüm Konseptler",
+    "search_opt_mode_night": "🌙 Gece Hayatı & Eğlence",
+    "search_opt_mode_day": "☀️ Gündüz Gezi & Şehir",
+    "search_opt_mode_history": "🏛️ Tarihsel & Kültür",
+    "search_opt_mode_nature": "🌿 Doğa & Sakinlik",
+    "search_opt_mode_food": "🍕 Yemek & Gastronomi",
+    "search_opt_mode_adventure": "🏄 Macera & Spor",
+    "search_opt_mode_budget": "💰 Bütçe Dostu",
+    "search_btn_submit": "🔍 Deneyimleri Ara",
+
+    // Ana Sayfa Rotalar
+    "top_rated_title": "⭐ Topluluğun En Çok Oy Alan Seyahat Rotaları",
+    "no_top_posts": "Henüz öne çıkan bir seyahat rotası yok.",
+
+    // Profil Sayfası
+    "profile_title": "Profil Bilgilerim",
+    "profile_edit_btn": "✏️ Bilgileri Düzenle",
+    "profile_menu_info": "👤 Profil Bilgileri",
+    "profile_menu_wallet": "💰 Cüzdanım (SYTX)",
+    "profile_menu_posts": "📝 Gönderilerim",
+    "profile_menu_messages": "💬 Mesajlar / İstekler",
+    "profile_menu_share": "➕ Yeni Deneyim Paylaş",
+    "profile_btn_logout": "Çıkış Yap",
+    "profile_change_photo": "📷 Fotoğraf Değiştir",
+
+    // Cüzdan
+    "wallet_title": "💰 Sytraex Cüzdanı & Ödüller",
+    "wallet_sub_label": "Toplam Kazandığınız Sytraex Coin Bakiyesi",
+    "wallet_stake_btn": "Stake Et (SYTX)",
+    "wallet_history_title": "📊 Coin Kazanç Geçmişi",
+    "wallet_th_type": "İşlem Türü",
+    "wallet_th_desc": "Açıklama",
+    "wallet_th_amount": "Miktar",
+
+    // Footer
+    "footer_text": "© 2026 Sytraex | Share Your Travel Experience"
+  },
+  en: {
+    // Header & Nav
+    "nav_home": "Home",
+    "nav_profile": "My Profile",
+    "nav_whitepaper": "White Paper (Stake SYTX)",
+    "nav_login": "Login",
+    "nav_register": "Register",
+    
+    // Hero
+    "hero_title": "Explore The World.<br>Share Your Memories.",
+    "hero_subtitle": "Sytraex is a social community where you can share travel experiences and get inspired.",
+    "hero_btn_profile": "Go to My Profile",
+    "hero_btn_share": "➕ Share Experience",
+
+    // Search Panel
+    "search_label_loc": "Where Do You Want To Go?",
+    "search_ph_loc": "Type district, city or country (e.g. Bodrum, Rome)...",
+    "search_label_duration": "Duration / Time:",
+    "search_opt_dur_all": "All Durations",
+    "search_opt_dur_3h": "3-Hour Quick Tour",
+    "search_opt_dur_day": "Day Trip (6-12 Hours)",
+    "search_opt_dur_1d": "Full 1 Day",
+    "search_opt_dur_weekend": "Weekend (2-3 Days)",
+    "search_opt_dur_1w": "1 Week or Longer",
+    
+    "search_label_mode": "Travel Concept:",
+    "search_opt_mode_all": "All Concepts",
+    "search_opt_mode_night": "🌙 Nightlife & Fun",
+    "search_opt_mode_day": "☀️ Day Tour & City",
+    "search_opt_mode_history": "🏛️ Historical & Culture",
+    "search_opt_mode_nature": "🌿 Nature & Quiet",
+    "search_opt_mode_food": "🍕 Food & Gastronomy",
+    "search_opt_mode_adventure": "🏄 Adventure & Sports",
+    "search_opt_mode_budget": "💰 Budget Friendly",
+    "search_btn_submit": "🔍 Search Experiences",
+
+    // Home Posts
+    "top_rated_title": "⭐ Top Rated Travel Routes of the Community",
+    "no_top_posts": "No featured travel routes yet.",
+
+    // Profile Page
+    "profile_title": "My Profile Information",
+    "profile_edit_btn": "✏️ Edit Info",
+    "profile_menu_info": "👤 Profile Info",
+    "profile_menu_wallet": "💰 My Wallet (SYTX)",
+    "profile_menu_posts": "📝 My Posts",
+    "profile_menu_messages": "💬 Messages / Requests",
+    "profile_menu_share": "➕ Share New Experience",
+    "profile_btn_logout": "Logout",
+    "profile_change_photo": "📷 Change Photo",
+
+    // Wallet
+    "wallet_title": "💰 Sytraex Wallet & Rewards",
+    "wallet_sub_label": "Total Sytraex Coin Balance Earned",
+    "wallet_stake_btn": "Stake Now (SYTX)",
+    "wallet_history_title": "📊 Coin Earnings History",
+    "wallet_th_type": "Transaction Type",
+    "wallet_th_desc": "Description",
+    "wallet_th_amount": "Amount",
+
+    // Footer
+    "footer_text": "© 2026 Sytraex | Share Your Travel Experience"
+  }
+};
+
+// Mevcut Dili Al (Varsayılan: 'tr')
+let currentLang = localStorage.getItem('sytraexLang') || 'tr';
+
+// Sayfa Yüklendiğinde Dili Uygula
+document.addEventListener('DOMContentLoaded', () => {
+  applyLanguage(currentLang);
+  renderLangSwitcher();
+});
+
+// Dili Değiştirme Fonksiyonu
+window.setLanguage = function(lang) {
+  currentLang = lang;
+  localStorage.setItem('sytraexLang', lang);
+  applyLanguage(lang);
+  renderLangSwitcher();
+};
+
+// Çevirileri HTML Elemanlarına Eşleme
+function applyLanguage(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (translations[lang] && translations[lang][key]) {
+      el.placeholder = translations[lang][key];
+    }
+  });
+}
+
+// Header'daki TR / EN Butonlarını Çizme
+function renderLangSwitcher() {
+  const switchers = document.querySelectorAll('.lang-switcher');
+  switchers.forEach(sw => {
+    sw.innerHTML = `
+      <span onclick="setLanguage('tr')" style="cursor:pointer; ${currentLang === 'tr' ? 'color:#ffcc00; font-weight:bold; text-decoration:underline;' : 'color:#aaa;'}">TR</span> / 
+      <span onclick="setLanguage('en')" style="cursor:pointer; ${currentLang === 'en' ? 'color:#ffcc00; font-weight:bold; text-decoration:underline;' : 'color:#aaa;'}">EN</span>
+    `;
+  });
+}
