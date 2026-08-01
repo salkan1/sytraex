@@ -33,9 +33,16 @@
     .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
     .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
 
-    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; }
+    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; align-items: center; }
     nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
     nav ul li a:hover { color: #ffcc00; }
+
+    .lang-switcher {
+      font-size: 13px;
+      font-weight: bold;
+      color: #ffcc00;
+      margin-left: 10px;
+    }
 
     .register-container {
       max-width: 500px;
@@ -128,6 +135,9 @@
 
     footer { text-align: center; padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #888; font-size: 13px; margin-top: 40px; }
   </style>
+
+  <!-- Dil Kütüphanesi Entegrasyonu -->
+  <script src="lang.js"></script>
 </head>
 <body>
 
@@ -142,71 +152,72 @@
 
     <nav>
       <ul>
-        <li><a href="index.html">Ana Sayfa</a></li>
-        <li><a href="login.html">Giriş Yap</a></li>
+        <li><a href="index.html" data-i18n="nav_home">Ana Sayfa</a></li>
+        <li><a href="login.html" data-i18n="nav_login">Giriş Yap</a></li>
+        <li class="lang-switcher">TR / EN</li>
       </ul>
     </nav>
   </header>
 
   <div class="register-container">
     <div class="register-card">
-      <h2>📝 Sytraex'e Kayıt Ol</h2>
+      <h2 data-i18n="reg_title">📝 Sytraex'e Kayıt Ol</h2>
 
       <form id="registerForm" autocomplete="off">
         <div class="form-group">
-          <label for="regUsername">Kullanıcı Adı:</label>
-          <input type="text" id="regUsername" placeholder="Örn: selcukalkan" required>
+          <label for="regUsername" data-i18n="reg_label_username">Kullanıcı Adı:</label>
+          <input type="text" id="regUsername" data-i18n-ph="reg_ph_username" placeholder="Örn: selcukalkan" required>
         </div>
 
         <div class="form-group">
-          <label for="regName">Ad Soyad:</label>
-          <input type="text" id="regName" placeholder="Örn: Selçuk Alkan" required>
+          <label for="regName" data-i18n="reg_label_fullname">Ad Soyad:</label>
+          <input type="text" id="regName" data-i18n-ph="reg_ph_fullname" placeholder="Örn: Selçuk Alkan" required>
         </div>
 
         <div class="form-group">
-          <label for="regEmail">E-Posta Adresi:</label>
-          <input type="email" id="regEmail" placeholder="ornek@gmail.com" required>
+          <label for="regEmail" data-i18n="reg_label_email">E-Posta Adresi:</label>
+          <input type="email" id="regEmail" data-i18n-ph="reg_ph_email" placeholder="ornek@gmail.com" required>
         </div>
 
         <div class="form-group">
-          <label for="regPassword">Şifre:</label>
-          <input type="password" id="regPassword" placeholder="••••••••" required>
+          <label for="regPassword" data-i18n="reg_label_password">Şifre:</label>
+          <input type="password" id="regPassword" data-i18n-ph="reg_ph_password" placeholder="••••••••" required>
         </div>
 
         <!-- Tek Kutu: Şehir ve Ülke -->
         <div class="form-group">
-          <label for="regLocation">Yaşadığınız Şehir ve Ülke:</label>
-          <input type="text" id="regLocation" placeholder="Şehir adı yazın (Örn: Tekirdağ, Türkiye)..." required>
+          <label for="regLocation" data-i18n="reg_label_location">Yaşadığınız Şehir ve Ülke:</label>
+          <input type="text" id="regLocation" data-i18n-ph="reg_ph_location" placeholder="Şehir adı yazın (Örn: Tekirdağ, Türkiye)..." required>
           <div id="locationAutocompleteList" class="autocomplete-items"></div>
         </div>
 
         <div class="form-group">
-          <label for="regBirth">Doğum Tarihi:</label>
+          <label for="regBirth" data-i18n="reg_label_birth">Doğum Tarihi:</label>
           <input type="date" id="regBirth" required>
         </div>
 
         <div class="form-group">
-          <label for="regSecretQuestion">Gizli Soru (Şifre Kurtarma İçin):</label>
+          <label for="regSecretQuestion" data-i18n="reg_label_secret_q">Gizli Soru (Şifre Kurtarma İçin):</label>
           <select id="regSecretQuestion" required>
-            <option value="pet">İlk evcil hayvanınızın adı nedir?</option>
-            <option value="school">İlkokul öğretmeninizin adı nedir?</option>
-            <option value="city">Annenizin doğduğu şehir neresidir?</option>
-            <option value="car">İlk sahip olduğunuz arabanın markası nedir?</option>
+            <option value="pet" data-i18n="reg_opt_pet">İlk evcil hayvanınızın adı nedir?</option>
+            <option value="school" data-i18n="reg_opt_school">İlkokul öğretmeninizin adı nedir?</option>
+            <option value="city" data-i18n="reg_opt_city">Annenizin doğduğu şehir neresidir?</option>
+            <option value="car" data-i18n="reg_opt_car">İlk sahip olduğunuz arabanın markası nedir?</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="regSecretAnswer">Gizli Soru Cevabı:</label>
-          <input type="text" id="regSecretAnswer" placeholder="Cevabınız..." required>
+          <label for="regSecretAnswer" data-i18n="reg_label_secret_a">Gizli Soru Cevabı:</label>
+          <input type="text" id="regSecretAnswer" data-i18n-ph="reg_ph_secret_a" placeholder="Cevabınız..." required>
         </div>
 
-        <button type="submit" id="regBtn" class="submit-btn">Kayıt Ol ve Katıl</button>
+        <button type="submit" id="regBtn" class="submit-btn" data-i18n="reg_btn_submit">Kayıt Ol ve Katıl</button>
       </form>
     </div>
   </div>
 
   <footer>
-    <p>© 2026 Sytraex | Share Your Travel Experience</p>
+    <p data-i18n="footer_text">© 2026 Sytraex | Share Your Travel Experience</p>
   </footer>
 
   <script type="module">
