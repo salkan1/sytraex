@@ -143,7 +143,6 @@
   </header>
 
   <div class="results-container">
-    
     <div class="search-summary-card">
       <div>
         <h3 style="margin:0 0 10px 0; color:#ffcc00;">Arama Sonuçları</h3>
@@ -155,7 +154,6 @@
     <div id="resultsGrid" class="posts-grid">
       <p style="color:#aaa;">Arama yapılıyor...</p>
     </div>
-
   </div>
 
   <footer>
@@ -179,16 +177,22 @@
     const db = getFirestore(app);
 
     const urlParams = new URLSearchParams(window.location.search);
-    const searchLocation = (urlParams.get('location') || '').trim().toLowerCase();
-    const searchDuration = (urlParams.get('duration') || '').trim().toLowerCase();
-    const searchMode = (urlParams.get('mode') || '').trim().toLowerCase();
+    const rawLocation = (urlParams.get('location') || '').trim();
+    const searchDuration = (urlParams.get('duration') || '').trim();
+    const searchMode = (urlParams.get('mode') || '').trim();
 
-    // Filtre Etiketlerini Göster
+    // Filtre Etiketleri
     const tagsContainer = document.getElementById('filterTagsContainer');
-    if (searchLocation) tagsContainer.innerHTML += `<span class="filter-badge">📍 ${searchLocation}</span>`;
+    if (rawLocation) tagsContainer.innerHTML += `<span class="filter-badge">📍 ${rawLocation}</span>`;
     if (searchDuration && searchDuration !== 'hepsi') tagsContainer.innerHTML += `<span class="filter-badge">⏱️ Süre Filtreli</span>`;
     if (searchMode && searchMode !== 'hepsi') tagsContainer.innerHTML += `<span class="filter-badge">🎯 Mod Filtreli</span>`;
     if (!tagsContainer.innerHTML) tagsContainer.innerHTML = '<span class="filter-badge">Tüm Gönderiler</span>';
+
+    // Arama Kelimelerini Hazırla (Örn: "Bodrum, Muğla, Türkiye" -> ["bodrum", "muğla", "türkiye"])
+    const searchKeywords = rawLocation
+      .toLowerCase()
+      .split(/[\s,]+/)
+      .filter(k => k.length > 1);
 
     async function fetchSearchPosts() {
       const resultsGrid = document.getElementById('resultsGrid');
@@ -204,17 +208,17 @@
           const pDur = (post.duration || '').toLowerCase();
           const pMode = (post.mode || '').toLowerCase();
 
-          // Esnek Arama Mantığı (İçinde geçiyor mu?)
-          let locMatch = !searchLocation || pLoc.includes(searchLocation) || pTitle.includes(searchLocation);
-          
-          // Eğer konum aramada "bodrum, muğla, türkiye" tam yazıldıysa ilk kelimeyi alıp arama yap
-          if (!locMatch && searchLocation.includes(',')) {
-            const firstCity = searchLocation.split(',')[0].trim();
-            locMatch = pLoc.includes(firstCity) || pTitle.includes(firstCity);
+          // Konum/Başlık Eşleşmesi (Anahtar kelimelerden biri geçiyorsa kabul et)
+          let locMatch = false;
+          if (searchKeywords.length === 0) {
+            locMatch = true;
+          } else {
+            locMatch = searchKeywords.some(kw => pLoc.includes(kw) || pTitle.includes(kw));
           }
 
-          let durMatch = !searchDuration || searchDuration === 'hepsi' || pDur.includes(searchDuration);
-          let modeMatch = !searchMode || searchMode === 'hepsi' || pMode.includes(searchMode);
+          // Süre & Mod Eşleşmesi (Boşsa veya "hepsi" ise filtreleme)
+          let durMatch = !searchDuration || searchDuration === 'hepsi' || pDur.includes(searchDuration.toLowerCase());
+          let modeMatch = !searchMode || searchMode === 'hepsi' || pMode.includes(searchMode.toLowerCase());
 
           if (locMatch && durMatch && modeMatch) {
             matchedPosts.push({ id: docSnap.id, ...post });
