@@ -33,9 +33,16 @@
     .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
     .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
 
-    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; }
+    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; align-items: center; }
     nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
     nav ul li a:hover { color: #ffcc00; }
+
+    .lang-switcher {
+      font-size: 13px;
+      font-weight: bold;
+      color: #ffcc00;
+      margin-left: 10px;
+    }
 
     .profile-container {
       max-width: 1000px;
@@ -209,6 +216,9 @@
       margin-top: 80px;
     }
   </style>
+
+  <!-- Dil Kütüphanesi Entegrasyonu -->
+  <script src="lang.js"></script>
 </head>
 <body>
 
@@ -223,9 +233,10 @@
 
     <nav>
       <ul>
-        <li><a href="index.html">Ana Sayfa</a></li>
-        <li><a href="profile.html">Profilim</a></li>
-        <li><a href="whitepaper.html">White Paper (Stake SYTX)</a></li>
+        <li><a href="index.html" data-i18n="nav_home">Ana Sayfa</a></li>
+        <li><a href="profile.html" data-i18n="nav_profile">Profilim</a></li>
+        <li><a href="whitepaper.html" data-i18n="nav_whitepaper">White Paper (Stake SYTX)</a></li>
+        <li class="lang-switcher">TR / EN</li>
       </ul>
     </nav>
   </header>
@@ -243,14 +254,14 @@
         </div>
       </div>
 
-      <button class="btn-message-req" id="btnMsgAction" onclick="handleMessageRequestClick()">
+      <button class="btn-message-req" id="btnMsgAction" onclick="handleMessageRequestClick()" data-i18n="public_btn_send_req">
         💬 Mesaj İsteği Gönder
       </button>
     </div>
 
     <!-- Yayınladığı Rotalar -->
     <div class="section-title">
-      <span>🗺️ Paylaştığı Seyahat Rotaları & Deneyimleri</span>
+      <span data-i18n="public_routes_title">🗺️ Paylaştığı Seyahat Rotaları & Deneyimleri</span>
     </div>
 
     <div id="targetPostsContainer" class="posts-grid">
@@ -262,21 +273,21 @@
   <!-- Mesaj İsteği Notu Modalı -->
   <div class="modal-overlay" id="requestModal">
     <div class="modal-card">
-      <h3>📩 Mesaj İsteği Gönder</h3>
+      <h3 data-i18n="public_modal_title">📩 Mesaj İsteği Gönder</h3>
       <p style="font-size:13px; color:#ccc; margin-bottom:15px;">
-        <strong id="modalTargetName">Kullanıcı</strong> kullanıcısına ilk mesaj isteğinizi gönderin. İsteğinizi kabul ettiğinde mesajlaşmaya başlayabilirsiniz.
+        <strong id="modalTargetName">Kullanıcı</strong> <span data-i18n="public_modal_desc_prefix">kullanıcısına ilk mesaj isteğinizi gönderin. İsteğinizi kabul ettiğinde mesajlaşmaya başlayabilirsiniz.</span>
       </p>
-      <textarea id="requestNote" placeholder="Merhaba! Seyahat rotanız hakkında bir şey sormak istiyordum..."></textarea>
+      <textarea id="requestNote" data-i18n-ph="public_modal_ph" placeholder="Merhaba! Seyahat rotanız hakkında bir şey sormak istiyordum..."></textarea>
       
       <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">İptal</button>
-        <button class="btn-save" id="btnSendRequest" onclick="sendRequestFirebase()">İsteği Gönder</button>
+        <button class="btn-cancel" onclick="closeModal()" data-i18n="public_btn_cancel">İptal</button>
+        <button class="btn-save" id="btnSendRequest" onclick="sendRequestFirebase()" data-i18n="public_btn_submit_req">İsteği Gönder</button>
       </div>
     </div>
   </div>
 
   <footer>
-    <p>© 2026 Sytraex | Share Your Travel Experience</p>
+    <p data-i18n="footer_text">© 2026 Sytraex | Share Your Travel Experience</p>
   </footer>
 
   <script type="module">
@@ -305,9 +316,8 @@
     }
 
     let targetUserData = null;
-    let requestStatus = 'none'; // 'none', 'pending', 'accepted'
+    let requestStatus = 'none';
 
-    // Kullanıcı Bilgilerini Çek
     async function loadUserProfile() {
       try {
         const userDocRef = doc(db, "users", targetUsername);
@@ -334,20 +344,20 @@
           document.getElementById('targetAvatar').src = targetUserData.avatarUrl;
         }
 
-        // Kendi profilimiz mi kontrolü
+        const currentLang = localStorage.getItem('sytraexLang') || 'tr';
+
         if (currentUser && currentUser.username === targetUsername) {
           const btn = document.getElementById('btnMsgAction');
-          btn.innerText = "✏️ Kendi Profilini Düzenle";
+          btn.setAttribute('data-i18n', 'public_btn_edit_own');
+          btn.innerText = currentLang === 'en' ? '✏️ Edit Your Profile' : '✏️ Kendi Profilini Düzenle';
           btn.onclick = () => window.location.href = "profile.html";
           return;
         }
 
-        // İstek Durumunu Kontrol Et
         if (currentUser) {
           checkExistingRequest();
         }
 
-        // Kullanıcının Gönderilerini Çek
         loadTargetPosts();
 
       } catch (err) {
@@ -355,7 +365,6 @@
       }
     }
 
-    // Var Olan Mesaj İsteğini Kontrol Et
     async function checkExistingRequest() {
       try {
         const q = query(
@@ -367,14 +376,18 @@
 
         if (!querySnapshot.empty) {
           const req = querySnapshot.docs[0].data();
-          requestStatus = req.status; // 'pending' veya 'accepted'
+          requestStatus = req.status;
 
           const btn = document.getElementById('btnMsgAction');
+          const currentLang = localStorage.getItem('sytraexLang') || 'tr';
+
           if (requestStatus === 'pending') {
-            btn.innerText = "⏳ Mesaj İsteği Gönderildi (Beklemede)";
+            btn.setAttribute('data-i18n', 'public_btn_pending');
+            btn.innerText = currentLang === 'en' ? '⏳ Message Request Sent (Pending)' : '⏳ Mesaj İsteği Gönderildi (Beklemede)';
             btn.classList.add('disabled');
           } else if (requestStatus === 'accepted') {
-            btn.innerText = "💬 Sohbeti Aç";
+            btn.setAttribute('data-i18n', 'public_btn_open_chat');
+            btn.innerText = currentLang === 'en' ? '💬 Open Chat' : '💬 Sohbeti Aç';
           }
         }
       } catch (e) {
@@ -382,7 +395,6 @@
       }
     }
 
-    // Gönderileri Yükle
     async function loadTargetPosts() {
       const container = document.getElementById('targetPostsContainer');
       try {
@@ -390,7 +402,9 @@
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {
-          container.innerHTML = '<p style="color:#aaa; grid-column: 1/-1;">Bu kullanıcının henüz paylaştığı bir seyahat rotası yok.</p>';
+          container.innerHTML = '<p style="color:#aaa; grid-column: 1/-1;" data-i18n="public_no_posts">Bu kullanıcının henüz paylaştığı bir seyahat rotası yok.</p>';
+          const currentLang = localStorage.getItem('sytraexLang') || 'tr';
+          if (typeof applyLanguage === 'function') applyLanguage(currentLang);
           return;
         }
 
@@ -417,7 +431,6 @@
       }
     }
 
-    // Mesaj İsteği Butonu Tıklaması
     window.handleMessageRequestClick = function() {
       if (!currentUser) {
         alert("Mesaj gönderebilmek için lütfen önce giriş yapınız.");
@@ -431,7 +444,6 @@
       }
 
       if (requestStatus === 'accepted') {
-        alert("Mesajlaşma alanına yönlendiriliyorsunuz...");
         window.location.href = `profile.html?tab=messages`;
         return;
       }
@@ -443,7 +455,6 @@
       document.getElementById('requestModal').style.display = 'none';
     };
 
-    // Firebase'e İstek Kaydetme
     window.sendRequestFirebase = async function() {
       const note = document.getElementById('requestNote').value.trim();
       const btn = document.getElementById('btnSendRequest');
@@ -458,7 +469,7 @@
           senderAvatar: currentUser.avatarUrl || '',
           receiver: targetUsername,
           note: note,
-          status: 'pending', // pending, accepted, rejected
+          status: 'pending',
           createdAt: new Date().toISOString()
         });
 
@@ -467,7 +478,9 @@
 
         requestStatus = 'pending';
         const mainBtn = document.getElementById('btnMsgAction');
-        mainBtn.innerText = "⏳ Mesaj İsteği Gönderildi (Beklemede)";
+        const currentLang = localStorage.getItem('sytraexLang') || 'tr';
+        mainBtn.setAttribute('data-i18n', 'public_btn_pending');
+        mainBtn.innerText = currentLang === 'en' ? '⏳ Message Request Sent (Pending)' : '⏳ Mesaj İsteği Gönderildi (Beklemede)';
         mainBtn.classList.add('disabled');
 
       } catch (e) {
