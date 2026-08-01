@@ -3,76 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gönderiyi Düzenle | Sytraex</title>
+  <title>Düzenle | Sytraex</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="logo.png">
   <style>
-    body { background-color: #0f172a; color: #fff; font-family: Arial, sans-serif; padding: 40px 20px; }
-    .container { max-width: 600px; margin: 0 auto; background: #1e293b; padding: 30px; border-radius: 16px; border: 1px solid rgba(255, 204, 0, 0.3); }
-    h2 { color: #ffcc00; margin-top: 0; }
-    .form-group { margin-bottom: 20px; }
-    label { display: block; color: #ffcc00; margin-bottom: 8px; font-weight: bold; }
-    input, textarea { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: #0f172a; color: #fff; box-sizing: border-box; }
-    textarea { height: 100px; resize: vertical; }
-    .btn-save { width: 100%; padding: 15px; background: #ffcc00; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    body { margin: 0; padding: 0; background-color: #0f172a; color: #ffffff; font-family: Arial, sans-serif; }
+    header { background: rgba(15, 23, 42, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-img { width: 45px; height: 45px; }
+    .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
+    .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
+    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; align-items: center; }
+    nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
+    nav ul li a:hover { color: #ffcc00; }
+    .share-container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+    .share-card { background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(255, 204, 0, 0.3); border-radius: 16px; padding: 35px; }
+    .form-group { margin-bottom: 22px; }
+    .form-group label { display: block; font-size: 13px; color: #ffcc00; margin-bottom: 8px; font-weight: bold; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; background: #0f172a; color: #fff; font-size: 14px; box-sizing: border-box; }
+    .submit-btn { width: 100%; padding: 15px; background: #ffcc00; color: #000; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>✏️ Gönderiyi Düzenle</h2>
-    <form id="editForm">
-      <div class="form-group"><label>Başlık</label><input type="text" id="editTitle" required></div>
-      <div class="form-group"><label>Konum</label><input type="text" id="editLocation" required></div>
-      <div class="form-group"><label>Süre</label><input type="text" id="editDuration" required></div>
-      <div class="form-group"><label>Özet</label><textarea id="editSummary"></textarea></div>
-      <button type="submit" class="btn-save" id="btnSave">Güncellemeleri Kaydet</button>
-    </form>
+  <header>
+    <div class="logo"><img src="logo.png" class="logo-img"><div class="logo-text"><h1>sytraex</h1><p>Share Your Travel Experience</p></div></div>
+    <nav><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="profile.html">Profilim</a></li></ul></nav>
+  </header>
+
+  <div class="share-container">
+    <div class="share-card">
+      <h2>✏️ Gönderiyi Düzenle</h2>
+      <form id="editForm">
+        <div class="form-group"><label>Başlık:</label><input type="text" id="editTitle" required></div>
+        <div class="form-group"><label>Konum:</label><input type="text" id="editLocation" required></div>
+        <div class="form-group"><label>Süre:</label><input type="text" id="editDuration" required></div>
+        <div class="form-group"><label>Özet:</label><textarea id="editSummary"></textarea></div>
+        <div class="form-group"><label>Gezilecek Yerler:</label><textarea id="editSightseeing"></textarea></div>
+        <div class="form-group"><label>Konaklama:</label><textarea id="editStay"></textarea></div>
+        <div class="form-group"><label>Yeme İçme:</label><textarea id="editFood"></textarea></div>
+        <div class="form-group"><label>Tüyolar:</label><textarea id="editTips"></textarea></div>
+        <button type="submit" class="submit-btn" id="btnSave">Güncellemeleri Kaydet</button>
+      </form>
+    </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
-      authDomain: "sytraex-462b0.firebaseapp.com",
-      projectId: "sytraex-462b0",
-      storageBucket: "sytraex-462b0.firebasestorage.app",
-      messagingSenderId: "379245018695",
-      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62"
-    };
-
-    const db = getFirestore(initializeApp(firebaseConfig));
+    const db = getFirestore(initializeApp({ apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E", authDomain: "sytraex-462b0.firebaseapp.com", projectId: "sytraex-462b0", storageBucket: "sytraex-462b0.firebasestorage.app", messagingSenderId: "379245018695", appId: "1:379245018695:web:0beff2afb3210a2f6cbb62" }));
     const postId = new URLSearchParams(window.location.search).get('id');
 
-    async function initEdit() {
+    async function loadData() {
       const docSnap = await getDoc(doc(db, "posts", postId));
       if (docSnap.exists()) {
         const d = docSnap.data();
         document.getElementById('editTitle').value = d.title;
         document.getElementById('editLocation').value = d.location;
         document.getElementById('editDuration').value = d.duration;
-        document.getElementById('editSummary').value = d.details?.summary || d.content || "";
+        document.getElementById('editSummary').value = d.details?.summary || "";
+        document.getElementById('editSightseeing').value = d.details?.sightseeing || "";
+        document.getElementById('editStay').value = d.details?.stay || "";
+        document.getElementById('editFood').value = d.details?.food || "";
+        document.getElementById('editTips').value = d.details?.tips || "";
       }
     }
 
     document.getElementById('editForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = document.getElementById('btnSave');
-      btn.innerText = "Kaydediliyor...";
-      
-      try {
-        await updateDoc(doc(db, "posts", postId), {
-          title: document.getElementById('editTitle').value,
-          location: document.getElementById('editLocation').value,
-          duration: document.getElementById('editDuration').value,
-          "details.summary": document.getElementById('editSummary').value
-        });
-        alert("Başarıyla güncellendi!");
-        window.location.href = `post-detail.html?id=${postId}`;
-      } catch (err) { alert("Hata: " + err.message); }
+      await updateDoc(doc(db, "posts", postId), {
+        title: document.getElementById('editTitle').value,
+        location: document.getElementById('editLocation').value,
+        duration: document.getElementById('editDuration').value,
+        details: {
+          summary: document.getElementById('editSummary').value,
+          sightseeing: document.getElementById('editSightseeing').value,
+          stay: document.getElementById('editStay').value,
+          food: document.getElementById('editFood').value,
+          tips: document.getElementById('editTips').value
+        }
+      });
+      alert("Başarıyla güncellendi!");
+      window.location.href = `post-detail.html?id=${postId}`;
     });
-
-    initEdit();
+    loadData();
   </script>
 </body>
 </html>
