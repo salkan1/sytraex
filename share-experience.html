@@ -46,6 +46,7 @@
       padding: 0;
       display: flex;
       gap: 20px;
+      align-items: center;
     }
 
     nav ul li a {
@@ -56,6 +57,13 @@
     }
 
     nav ul li a:hover { color: #ffcc00; }
+
+    .lang-switcher {
+      font-size: 13px;
+      font-weight: bold;
+      color: #ffcc00;
+      margin-left: 10px;
+    }
 
     .share-container {
       max-width: 800px;
@@ -144,7 +152,6 @@
       color: #000;
     }
 
-    /* Görsel Önizleme Grid Stili */
     .image-preview-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -261,6 +268,9 @@
       margin-top: 60px;
     }
   </style>
+
+  <!-- Dil Kütüphanesi Entegrasyonu -->
+  <script src="lang.js"></script>
 </head>
 <body>
 
@@ -275,69 +285,70 @@
 
     <nav>
       <ul>
-        <li><a href="index.html">Ana Sayfa</a></li>
-        <li><a href="profile.html" style="color:#ffcc00; font-weight:bold;">Profilim</a></li>
-        <li><a href="whitepaper.html">White Paper (Stake SYTX)</a></li>
+        <li><a href="index.html" data-i18n="nav_home">Ana Sayfa</a></li>
+        <li><a href="profile.html" style="color:#ffcc00; font-weight:bold;" data-i18n="nav_profile">Profilim</a></li>
+        <li><a href="whitepaper.html" data-i18n="nav_whitepaper">White Paper (Stake SYTX)</a></li>
+        <li class="lang-switcher">TR / EN</li>
       </ul>
     </nav>
   </header>
 
   <div class="share-container">
     <div class="share-card">
-      <h2>✈️ Seyahat Deneyimini Paylaş</h2>
+      <h2 data-i18n="share_title">✈️ Seyahat Deneyimini Paylaş</h2>
 
       <form id="shareForm" autocomplete="off">
         
         <!-- Deneyim Başlığı -->
         <div class="form-group">
-          <label for="postTitle">Deneyim / Rota Başlığı:</label>
-          <input type="text" id="postTitle" placeholder="Örn: Bodrum Kalesi, Bitez Sahili ve Tekne Turu Deneyimi" required>
+          <label for="postTitle" data-i18n="share_label_post_title">Deneyim / Rota Başlığı:</label>
+          <input type="text" id="postTitle" data-i18n-ph="share_ph_post_title" placeholder="Örn: Bodrum Kalesi, Bitez Sahili ve Tekne Turu Deneyimi" required>
         </div>
 
         <!-- Lokasyon Arama Kutusu -->
         <div class="form-group">
-          <label for="locationInput">Nereye Seyahat Edildi? (İl, İlçe veya Belde):</label>
-          <input type="text" id="locationInput" placeholder="İlçe veya il adı yazın (Örn: Bodrum, Fethiye, Kadıköy)..." required>
+          <label for="locationInput" data-i18n="share_label_loc">Nereye Seyahat Edildi? (İl, İlçe veya Belde):</label>
+          <input type="text" id="locationInput" data-i18n-ph="share_ph_loc" placeholder="İlçe veya il adı yazın (Örn: Bodrum, Fethiye, Kadıköy)..." required>
           <div id="cityAutocompleteList" class="autocomplete-items"></div>
         </div>
 
         <!-- Süre & Mod -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
           <div class="form-group">
-            <label for="postDuration">Süre / Zaman Dilimi:</label>
+            <label for="postDuration" data-i18n="share_label_duration">Süre / Zaman Dilimi:</label>
             <select id="postDuration" required>
-              <option value="3 Saatlik Tur">3 Saatlik Hızlı Tur</option>
-              <option value="Günübirlik (6-12 Saat)">Günübirlik (6-12 Saat)</option>
-              <option value="1 Gün">Tam 1 Gün</option>
-              <option value="Hafta Sonu (2-3 Gün)">Hafta Sonu (2-3 Gün)</option>
-              <option value="1 Hafta veya Daha Uzun">1 Hafta veya Daha Uzun</option>
+              <option value="3 Saatlik Tur" data-i18n="search_opt_dur_3h">3 Saatlik Hızlı Tur</option>
+              <option value="Günübirlik (6-12 Saat)" data-i18n="search_opt_dur_day">Günübirlik (6-12 Saat)</option>
+              <option value="1 Gün" data-i18n="search_opt_dur_1d">Tam 1 Gün</option>
+              <option value="Hafta Sonu (2-3 Gün)" data-i18n="search_opt_dur_weekend">Hafta Sonu (2-3 Gün)</option>
+              <option value="1 Hafta veya Daha Uzun" data-i18n="search_opt_dur_1w">1 Hafta veya Daha Uzun</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="postMode">Seyahat Modu:</label>
+            <label for="postMode" data-i18n="share_label_mode">Seyahat Modu:</label>
             <select id="postMode" required>
-              <option value="🌙 Gece Hayatı & Eğlence">🌙 Gece Hayatı & Eğlence</option>
-              <option value="☀️ Gündüz Gezi & Şehir">☀️ Gündüz Gezi & Şehir</option>
-              <option value="🏛️ Tarihsel & Kültür">🏛️ Tarihsel & Kültür</option>
-              <option value="🌿 Doğa & Sakinlik">🌿 Doğa & Sakinlik</option>
-              <option value="🍕 Yemek & Gastronomi">🍕 Yemek & Gastronomi</option>
-              <option value="🏄 Macera & Spor">🏄 Macera & Spor</option>
-              <option value="💰 Bütçe Dostu">💰 Bütçe Dostu</option>
+              <option value="🌙 Gece Hayatı & Eğlence" data-i18n="search_opt_mode_night">🌙 Gece Hayatı & Eğlence</option>
+              <option value="☀️ Gündüz Gezi & Şehir" data-i18n="search_opt_mode_day">☀️ Gündüz Gezi & Şehir</option>
+              <option value="🏛️ Tarihsel & Kültür" data-i18n="search_opt_mode_history">🏛️ Tarihsel & Kültür</option>
+              <option value="🌿 Doğa & Sakinlik" data-i18n="search_opt_mode_nature">🌿 Doğa & Sakinlik</option>
+              <option value="🍕 Yemek & Gastronomi" data-i18n="search_opt_mode_food">🍕 Yemek & Gastronomi</option>
+              <option value="🏄 Macera & Spor" data-i18n="search_opt_mode_adventure">🏄 Macera & Spor</option>
+              <option value="💰 Bütçe Dostu" data-i18n="search_opt_mode_budget">💰 Bütçe Dostu</option>
             </select>
           </div>
         </div>
 
-        <!-- Medya Bölümü (Fotoğraflar & YouTube Video) -->
+        <!-- Medya Bölümü -->
         <div class="section-divider">
-          <span class="section-divider-title">🖼️ Medya Bağlantıları</span>
+          <span class="section-divider-title" data-i18n="share_divider_media">🖼️ Medya Bağlantıları</span>
         </div>
 
-        <!-- Bilgisayardan Fotoğraf Seçme -->
+        <!-- Fotoğraf Seçme -->
         <div class="form-group">
-          <label>Cihazınızdan Fotoğraflar Seçin (Maksimum 10 Fotoğraf):</label>
+          <label data-i18n="share_label_photos">Cihazınızdan Fotoğraflar Seçin (Maksimum 10 Fotoğraf):</label>
           
-          <label for="filePhotoInput" class="btn-upload-photos">
+          <label for="filePhotoInput" class="btn-upload-photos" data-i18n="share_btn_upload">
             📷 Bilgisayardan / Telefondan Fotoğraf Seç
           </label>
           <input type="file" id="filePhotoInput" accept="image/*" multiple style="display:none;">
@@ -347,52 +358,52 @@
 
         <!-- YouTube Video Linki -->
         <div class="form-group">
-          <label for="youtubeUrl">🎥 YouTube Video Bağlantısı (İsteğe Bağlı):</label>
-          <input type="url" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=... veya https://youtu.be/...">
+          <label for="youtubeUrl" data-i18n="share_label_youtube">🎥 YouTube Video Bağlantısı (İsteğe Bağlı):</label>
+          <input type="url" id="youtubeUrl" data-i18n-ph="share_ph_youtube" placeholder="https://www.youtube.com/watch?v=... veya https://youtu.be/...">
         </div>
 
         <!-- Yapılandırılmış Detay Alanları -->
         <div class="section-divider">
-          <span class="section-divider-title">📝 Seyahat Detayları & Öneriler</span>
+          <span class="section-divider-title" data-i18n="share_divider_details">📝 Seyahat Detayları & Öneriler</span>
         </div>
 
         <!-- 1. Kısa Özet -->
         <div class="form-group">
-          <label for="summaryContent">📌 Genel Özet & İzlenimleriniz:</label>
-          <textarea id="summaryContent" placeholder="Bu rotanın genel atmosferi, kimlere uygun olduğu ve kısa deneyim özetiniz..." required></textarea>
+          <label for="summaryContent" data-i18n="share_label_summary">📌 Genel Özet & İzlenimleriniz:</label>
+          <textarea id="summaryContent" data-i18n-ph="share_ph_summary" placeholder="Bu rotanın genel atmosferi, kimlere uygun olduğu ve kısa deneyim özetiniz..." required></textarea>
         </div>
 
         <!-- 2. Gezilecek Yerler -->
         <div class="form-group">
-          <label for="sightseeingContent">🏛️ Gezilecek Yerler & Aktivite Rotaları:</label>
-          <textarea id="sightseeingContent" placeholder="Mutlaka görülmesi gereken noktalar, tarihi mekanlar, plajlar veya yürüyüş yolları..."></textarea>
+          <label for="sightseeingContent" data-i18n="share_label_sightseeing">🏛️ Gezilecek Yerler & Aktivite Rotaları:</label>
+          <textarea id="sightseeingContent" data-i18n-ph="share_ph_sightseeing" placeholder="Mutlaka görülmesi gereken noktalar, tarihi mekanlar, plajlar veya yürüyüş yolları..."></textarea>
         </div>
 
         <!-- 3. Konaklama -->
         <div class="form-group">
-          <label for="stayContent">🏨 Konaklama & Otel Tavsiyeleri:</label>
-          <textarea id="stayContent" placeholder="Kaldığınız veya önereceğiniz otel, pansiyon, kamp alanı bilgileri..."></textarea>
+          <label for="stayContent" data-i18n="share_label_stay">🏨 Konaklama & Otel Tavsiyeleri:</label>
+          <textarea id="stayContent" data-i18n-ph="share_ph_stay" placeholder="Kaldığınız veya önereceğiniz otel, pansiyon, kamp alanı bilgileri..."></textarea>
         </div>
 
         <!-- 4. Yeme & İçme -->
         <div class="form-group">
-          <label for="foodContent">🍕 Yeme & İçme Önerileri (Mekanlar & Lezzetler):</label>
-          <textarea id="foodContent" placeholder="Denenmesi gereken yerel lezzetler, restaurant veya kafe tavsiyeleri..."></textarea>
+          <label for="foodContent" data-i18n="share_label_food">🍕 Yeme & İçme Önerileri (Mekanlar & Lezzetler):</label>
+          <textarea id="foodContent" data-i18n-ph="share_ph_food" placeholder="Denenmesi gereken yerel lezzetler, restaurant veya kafe tavsiyeleri..."></textarea>
         </div>
 
         <!-- 5. Ulaşım & Tüyolar -->
         <div class="form-group">
-          <label for="tipsContent">🚌 Ulaşım, Bütçe & Önemli Tüyolar:</label>
-          <textarea id="tipsContent" placeholder="Ulaşım önerileri (araç kiralama, otobüs vs.), ortalama bütçe veya dikkat edilmesi gereken detaylar..."></textarea>
+          <label for="tipsContent" data-i18n="share_label_tips">🚌 Ulaşım, Bütçe & Önemli Tüyolar:</label>
+          <textarea id="tipsContent" data-i18n-ph="share_ph_tips" placeholder="Ulaşım önerileri (araç kiralama, otobüs vs.), ortalama bütçe veya dikkat edilmesi gereken detaylar..."></textarea>
         </div>
 
-        <button type="submit" id="submitBtn" class="submit-btn">🚀 Deneyimi Yayınla</button>
+        <button type="submit" id="submitBtn" class="submit-btn" data-i18n="share_btn_publish">🚀 Deneyimi Yayınla</button>
       </form>
     </div>
   </div>
 
   <footer>
-    <p>© 2026 Sytraex | Share Your Travel Experience</p>
+    <p data-i18n="footer_text">© 2026 Sytraex | Share Your Travel Experience</p>
   </footer>
 
   <script type="module">
@@ -419,10 +430,8 @@
       window.location.href = "login.html";
     }
 
-    // Yüklenen Resimlerin Base64 Dizisi
     let uploadedBase64Images = [];
 
-    // Dosya Seçme Olayı
     document.getElementById('filePhotoInput').addEventListener('change', function(e) {
       const files = Array.from(e.target.files);
       
@@ -436,7 +445,6 @@
         reader.onload = function(event) {
           const img = new Image();
           img.onload = function() {
-            // Görseli tarayıcıda optimize et (Max genişlik: 1000px)
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
 
@@ -458,13 +466,14 @@
         reader.readAsDataURL(file);
       });
 
-      this.value = ''; // Input'u sıfırla ki aynı dosya tekrar seçilebilsin
+      this.value = '';
     });
 
-    // Önizleme Render
     function renderPreviews() {
       const grid = document.getElementById('imagePreviewGrid');
       grid.innerHTML = '';
+      const currentLang = localStorage.getItem('sytraexLang') || 'tr';
+      const badgeText = currentLang === 'en' ? 'COVER' : 'KAPAK';
 
       uploadedBase64Images.forEach((base64, idx) => {
         const item = document.createElement('div');
@@ -473,7 +482,7 @@
         item.innerHTML = `
           <img src="${base64}">
           <button type="button" class="remove-btn" onclick="removeImage(${idx})">✕</button>
-          ${idx === 0 ? '<span class="cover-badge">KAPAK</span>' : ''}
+          ${idx === 0 ? `<span class="cover-badge">${badgeText}</span>` : ''}
         `;
         grid.appendChild(item);
       });
@@ -484,7 +493,6 @@
       renderPreviews();
     };
 
-    // Canlı Lokasyon API
     const locationInput = document.getElementById("locationInput");
     const cityList = document.getElementById("cityAutocompleteList");
     let debounceTimer;
@@ -531,7 +539,6 @@
       if (e.target !== locationInput) cityList.style.display = "none";
     });
 
-    // Gönderiyi Kaydetme
     document.getElementById('shareForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -553,12 +560,10 @@
           duration: document.getElementById('postDuration').value,
           mode: document.getElementById('postMode').value,
           
-          // Medya
-          imageUrl: uploadedBase64Images[0], // İlk resim kapak resmi
-          images: uploadedBase64Images,       // 10 adede kadar Base64 resim dizisi
+          imageUrl: uploadedBase64Images[0],
+          images: uploadedBase64Images,
           youtubeUrl: document.getElementById('youtubeUrl').value.trim(),
 
-          // Yapılandırılmış İçerik
           details: {
             summary: document.getElementById('summaryContent').value.trim(),
             sightseeing: document.getElementById('sightseeingContent').value.trim(),
