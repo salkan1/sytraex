@@ -314,6 +314,22 @@
             color: #ffcc00;
             font-size: 18px;
         }
+
+        .error-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #ef4444;
+            font-size: 16px;
+        }
+
+        .error-message a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        .error-message a:hover {
+            text-decoration: underline;
+        }
     </style>
     <script src="lang.js"></script>
 </head>
@@ -342,6 +358,7 @@
             <h2>✏️ Deneyimi Düzenle</h2>
 
             <div id="loadingIndicator" class="loading-spinner">⏳ Gönderi yükleniyor...</div>
+            <div id="errorMessage" class="error-message" style="display:none;"></div>
 
             <form id="editForm" autocomplete="off" style="display:none;">
 
@@ -476,16 +493,29 @@
             window.location.href = "login.html";
         }
 
-        // 2) URL'den postId'yi al
+        // 2) URL'den postId'yi al - HEM id HEM postId parametrelerini kontrol et
         const params = new URLSearchParams(window.location.search);
-        const postId = params.get('postId');
+        let postId = params.get('postId');
+        
+        // Eğer postId yoksa id parametresini kontrol et
         if (!postId) {
-            alert("Geçersiz gönderi ID'si.");
-            window.location.href = "profile.html";
+            postId = params.get('id');
+        }
+        
+        if (!postId) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.style.display = 'block';
+            errorEl.innerHTML = `
+                <p>❌ Geçersiz gönderi ID'si.</p>
+                <p><a href="profile.html">Profilime Dön</a></p>
+            `;
+            document.getElementById('loadingIndicator').style.display = 'none';
+            return;
         }
 
         const loadingEl = document.getElementById('loadingIndicator');
         const formEl = document.getElementById('editForm');
+        const errorEl = document.getElementById('errorMessage');
         let uploadedBase64Images = [];
         let existingImages = [];
 
@@ -496,8 +526,12 @@
                 const docSnap = await getDoc(docRef);
 
                 if (!docSnap.exists()) {
-                    alert("Gönderi bulunamadı.");
-                    window.location.href = "profile.html";
+                    errorEl.style.display = 'block';
+                    errorEl.innerHTML = `
+                        <p>❌ Gönderi bulunamadı.</p>
+                        <p><a href="profile.html">Profilime Dön</a></p>
+                    `;
+                    loadingEl.style.display = 'none';
                     return;
                 }
 
@@ -505,28 +539,32 @@
 
                 // Yetki kontrolü: sadece kendi gönderisini düzenleyebilsin
                 if (data.username !== userData.username) {
-                    alert("Bu gönderiyi düzenleme yetkiniz yok.");
-                    window.location.href = "profile.html";
+                    errorEl.style.display = 'block';
+                    errorEl.innerHTML = `
+                        <p>❌ Bu gönderiyi düzenleme yetkiniz yok.</p>
+                        <p><a href="profile.html">Profilime Dön</a></p>
+                    `;
+                    loadingEl.style.display = 'none';
                     return;
                 }
 
-                // Form alanlarını doldur
+                // Form alanlarını doldur - null kontrolleri ile
                 document.getElementById('postTitle').value = data.title || '';
                 document.getElementById('locationInput').value = data.location || '';
                 document.getElementById('postDuration').value = data.duration || 'Günübirlik (6-12 Saat)';
                 document.getElementById('postMode').value = data.mode || '☀️ Gündüz Gezi & Şehir';
                 document.getElementById('youtubeUrl').value = data.youtubeUrl || '';
 
-                if (data.details) {
-                    document.getElementById('summaryContent').value = data.details.summary || '';
-                    document.getElementById('sightseeingContent').value = data.details.sightseeing || '';
-                    document.getElementById('stayContent').value = data.details.stay || '';
-                    document.getElementById('foodContent').value = data.details.food || '';
-                    document.getElementById('tipsContent').value = data.details.tips || '';
-                }
+                // details objesini güvenli şekilde kontrol et
+                const details = data.details || {};
+                document.getElementById('summaryContent').value = details.summary || '';
+                document.getElementById('sightseeingContent').value = details.sightseeing || '';
+                document.getElementById('stayContent').value = details.stay || '';
+                document.getElementById('foodContent').value = details.food || '';
+                document.getElementById('tipsContent').value = details.tips || '';
 
                 // Mevcut fotoğrafları yükle
-                if (data.images && data.images.length > 0) {
+                if (data.images && Array.isArray(data.images) && data.images.length > 0) {
                     existingImages = data.images;
                     uploadedBase64Images = [...existingImages];
                     renderPreviews();
@@ -534,15 +572,24 @@
                     existingImages = [data.imageUrl];
                     uploadedBase64Images = [data.imageUrl];
                     renderPreviews();
+                } else {
+                    // Hiç fotoğraf yoksa
+                    uploadedBase64Images = [];
+                    renderPreviews();
                 }
 
                 loadingEl.style.display = 'none';
                 formEl.style.display = 'block';
+                errorEl.style.display = 'none';
 
             } catch (err) {
                 console.error("Gönderi yükleme hatası:", err);
-                alert("Gönderi yüklenirken bir hata oluştu: " + err.message);
-                window.location.href = "profile.html";
+                errorEl.style.display = 'block';
+                errorEl.innerHTML = `
+                    <p>❌ Gönderi yüklenirken bir hata oluştu: ${err.message}</p>
+                    <p><a href="profile.html">Profilime Dön</a></p>
+                `;
+                loadingEl.style.display = 'none';
             }
         }
 
@@ -587,6 +634,10 @@
             const grid = document.getElementById('imagePreviewGrid');
             grid.innerHTML = '';
             const badgeText = 'KAPAK';
+
+            if (uploadedBase64Images.length === 0) {
+                return;
+            }
 
             uploadedBase64Images.forEach((base64, idx) => {
                 const item = document.createElement('div');
