@@ -1,260 +1,158 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seyahat Detayı | Sytraex</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="logo.png">
-
-  <style>
-    body { margin: 0; padding: 0; background-color: #0f172a; color: #ffffff; font-family: Arial, sans-serif; }
-    header { background: rgba(15, 23, 42, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-    .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-img { width: 45px; height: 45px; }
-    .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
-    .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
-    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; align-items: center; }
-    nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
-    nav ul li a:hover { color: #ffcc00; }
-    .lang-switcher { font-size: 13px; font-weight: bold; color: #ffcc00; margin-left: 10px; }
-    .detail-container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-    .post-header-card { background: #1e293b; border-radius: 16px; padding: 25px; border: 1px solid rgba(255, 204, 0, 0.3); margin-bottom: 25px; }
-    .post-title { font-size: 28px; color: #ffcc00; margin: 0 0 15px 0; }
-    .author-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); }
-    .author-info { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-    .author-avatar { width: 48px; height: 48px; border-radius: 50%; border: 2px solid #ffcc00; object-fit: cover; }
-    .author-name { font-weight: bold; color: #fff; font-size: 15px; }
-    .author-username { font-size: 12px; color: #aaa; }
-    .post-badges { display: flex; gap: 10px; flex-wrap: wrap; }
-    .badge { background: rgba(255,204,0,0.15); color: #ffcc00; border: 1px solid #ffcc00; padding: 5px 12px; border-radius: 20px; font-size: 12px; }
-    .gallery-container { margin-bottom: 30px; }
-    .main-image { width: 100%; height: 420px; object-fit: cover; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 12px; }
-    .thumbnails-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; }
-    .thumb-img { width: 100%; height: 70px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
-    .thumb-img:hover, .thumb-img.active { border-color: #ffcc00; transform: scale(1.03); }
-    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 16px; overflow: hidden; margin-bottom: 30px; border: 1px solid rgba(255,204,0,0.3); }
-    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-    .content-card { background: #1e293b; border-radius: 16px; padding: 30px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 30px; }
-    .section-block { margin-bottom: 25px; }
-    .section-block:last-child { margin-bottom: 0; }
-    .section-title { color: #ffcc00; font-size: 18px; margin-top: 0; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,204,0,0.2); padding-bottom: 6px; }
-    .section-text { color: #ddd; line-height: 1.6; font-size: 15px; white-space: pre-line; }
-    .rating-card { background: #1e293b; border-radius: 16px; padding: 25px; border: 1px solid rgba(255, 204, 0, 0.3); text-align: center; margin-bottom: 30px; }
-    .rating-card h3 { color: #ffcc00; margin-top: 0; }
-    .star-rating { font-size: 32px; color: #555; cursor: pointer; display: inline-block; margin: 10px 0; }
-    .star-rating span { transition: color 0.2s; }
-    .star-rating span:hover, .star-rating span.active { color: #ffcc00; }
-    .avg-score { font-size: 20px; font-weight: bold; color: #fff; }
-    .comments-section { background: #1e293b; border-radius: 16px; padding: 30px; border: 1px solid rgba(255, 255, 255, 0.1); }
-    .comments-section h3 { color: #ffcc00; margin-top: 0; margin-bottom: 20px; }
-    .comment-form { margin-bottom: 30px; }
-    .comment-form textarea { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: #0f172a; color: #fff; font-size: 14px; outline: none; box-sizing: border-box; resize: vertical; min-height: 80px; margin-bottom: 10px; }
-    .comment-form button { padding: 10px 20px; background: #ffcc00; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-    .comment-list { display: flex; flex-direction: column; gap: 15px; }
-    .comment-item { background: #0f172a; padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); }
-    .comment-user { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-    .comment-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
-    .comment-username { font-weight: bold; font-size: 13px; color: #ffcc00; }
-    .comment-date { font-size: 11px; color: #888; margin-left: auto; }
-    .comment-text { font-size: 14px; color: #ddd; line-height: 1.4; margin: 0; }
-    /* EKLENEN BUTONLAR */
-    .post-actions { margin-bottom: 15px; }
-    .btn-action { padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; border: none; margin-right: 10px; }
-    .btn-edit { background: rgba(255, 204, 0, 0.15); border: 1px solid #ffcc00; color: #ffcc00; }
-    .btn-del { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; }
-    footer { text-align: center; padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #888; font-size: 13px; margin-top: 60px; }
-  </style>
-  <script src="lang.js"></script>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a0f1f"><link rel="icon" href="logo.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/app.css">
+<title>Seyahat Deneyimi | Sytraex</title>
 </head>
-<body>
-  <header>
-    <div class="logo"><img src="logo.png" alt="Sytraex Logo" class="logo-img"><div class="logo-text"><h1>sytraex</h1><p>Share Your Travel Experience</p></div></div>
-    <nav><ul><li><a href="index.html" data-i18n="nav_home">Ana Sayfa</a></li><li><a href="profile.html" data-i18n="nav_profile">Profilim</a></li><li><a href="whitepaper.html" data-i18n="nav_whitepaper">White Paper (Stake SYTX)</a></li><li class="lang-switcher">TR / EN</li></ul></nav>
-  </header>
+<body data-active="explore">
+<div id="site-header"></div>
+<main class="container detail" id="root"><div class="skeleton" style="min-height:420px"></div></main>
+<div id="site-footer"></div>
+<script type="module">
+import { sb, state, initPage, $, $$, t, qs, esc, applyI18n, avatarSrc, safeImg, modeLabel, durLabel, fmtDate, youtubeEmbed, toast, modal, friendlyError, removeImages } from './js/app.js';
 
-  <div class="detail-container">
-    <div class="post-header-card">
-      <!-- EKLENEN BUTONLAR -->
-      <div id="authorActions" class="post-actions" style="display:none;">
-        <button onclick="editPost()" class="btn-action btn-edit">✏️ Düzenle</button>
-        <button onclick="deletePost()" class="btn-action btn-del">🗑️ Sil</button>
-      </div>
-      <h1 class="post-title" id="postTitle">Yükleniyor...</h1>
-      <div class="author-bar">
-        <div class="author-info" id="authorCard">
-          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200" class="author-avatar" id="authorAvatar">
-          <div>
-            <div class="author-name" id="authorName">-</div>
-            <div class="author-username" id="authorUsername">@...</div>
-          </div>
+const id = qs.get('id');
+let post = null, myScore = 0;
+
+await initPage();
+if (!id || !/^[0-9a-f-]{36}$/i.test(id)) { fail(); } else { await load(); }
+
+function fail() {
+  $('#root').innerHTML = `<div class="empty"><h3>${esc(t('post_not_found'))}</h3><a class="btn btn-primary" href="search-results.html">${esc(t('nav_explore'))}</a></div>`;
+}
+
+async function load() {
+  const { data, error } = await sb.from('posts_feed').select('*').eq('id', id).maybeSingle();
+  if (error || !data) return fail();
+  post = data;
+  document.title = `${post.title} | Sytraex`;
+  if (state.user) {
+    const r = await sb.from('post_ratings').select('score').eq('post_id', id).eq('user_id', state.user.id).maybeSingle();
+    myScore = r.data?.score || 0;
+  }
+  render(); loadComments();
+}
+
+function render() {
+  const p = post, mine = state.user?.id === p.user_id;
+  const imgs = (p.images || []).map(safeImg);
+  const embed = youtubeEmbed(p.youtube_url);
+  const sections = [['detail_sec_summary', p.summary], ['detail_sec_sightseeing', p.sightseeing], ['detail_sec_stay', p.stay], ['detail_sec_food', p.food], ['detail_sec_tips', p.tips]]
+    .filter(([, txt]) => txt && txt.trim())
+    .map(([k, txt]) => `<div class="section-block"><h3>${esc(t(k))}</h3><p>${esc(txt)}</p></div>`).join('');
+  const name = p.author_name || p.username;
+
+  $('#root').innerHTML = `
+  <div class="detail-grid">
+    <div>
+      <div class="gallery-main"><img id="mainImg" src="${esc(imgs[0])}" alt="${esc(p.title)}"></div>
+      ${imgs.length > 1 ? `<div class="thumbs">${imgs.map((u, i) => `<button class="${i === 0 ? 'on' : ''}" data-i="${i}" aria-label="${i + 1}"><img src="${esc(u)}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}
+      ${embed ? `<div class="video"><iframe src="${esc(embed)}" title="video" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>` : ''}
+      ${sections}
+    </div>
+    <aside>
+      <div class="side-card">
+        <span class="badge" style="position:static;display:inline-block">${esc(modeLabel(p.mode))}</span>
+        <h1 style="margin-top:12px">${esc(p.title)}</h1>
+        <div class="meta-line"><span>📍 ${esc(p.location)}</span><span>⏱ ${esc(durLabel(p.duration))}</span><span>📅 ${esc(fmtDate(p.created_at))}</span></div>
+        <a class="author" href="public-profile.html?u=${encodeURIComponent(p.username)}" style="margin-top:16px;color:var(--text);text-decoration:none">
+          <img class="avatar lg" src="${esc(avatarSrc(p.author_avatar, name))}" alt=""><span><b>${esc(name)}</b><br><small class="muted">@${esc(p.username)}</small></span></a>
+        <div class="mt" style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-soft btn-sm" id="shareBtn">🔗 ${esc(t('share'))}</button>
+          ${mine ? `<a class="btn btn-ghost btn-sm" href="share-experience.html?edit=${esc(p.id)}">✏️ ${esc(t('edit'))}</a><button class="btn btn-danger btn-sm" id="delBtn">🗑 ${esc(t('delete'))}</button>` : `<button class="btn btn-soft btn-sm" id="reportBtn">⚑ ${esc(t('report'))}</button>`}
         </div>
-        <div class="post-badges" id="postBadges"></div>
       </div>
-    </div>
 
-    <div class="gallery-container" id="galleryWrapper"><img src="" class="main-image" id="mainImage" alt="Seyahat Fotoğrafı"><div class="thumbnails-grid" id="thumbnailsGrid"></div></div>
-    <div id="videoContainer" style="display:none;"></div>
-    <div class="content-card" id="detailsCard"></div>
-
-    <div class="rating-card">
-      <h3 data-i18n="detail_rate_title">⭐ Bu Deneyimi Puanlayın</h3>
-      <div class="star-rating" id="starRating"><span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span></div>
-      <div class="avg-score" id="avgScoreText">Ortalama Puan: - / 5</div>
-      <div style="font-size: 12px; color: #aaa; margin-top: 4px;" id="totalVotesText">(0 Oy Kullanıldı)</div>
-    </div>
-
-    <div class="comments-section">
-      <h3><span data-i18n="detail_comments_title">💬 Kullanıcı Yorumları</span> (<span id="commentsCount">0</span>)</h3>
-      <div class="comment-form">
-        <textarea id="commentText" data-i18n-ph="detail_comment_ph" placeholder="Bu rota hakkında bir şeyler yazın veya soru sorun..."></textarea>
-        <button id="btnSubmitComment" onclick="submitComment()" data-i18n="detail_comment_btn">Yorum Yap</button>
+      <div class="side-card">
+        <h3>${esc(t('rating_title'))}</h3>
+        <div class="stars mt" id="avgText"></div>
+        ${mine ? `<p class="hint mt">${esc(t('rate_own_post'))}</p>` : `
+          <div class="rate-stars mt" id="stars" role="group" aria-label="${esc(t('rating_title'))}">${[1, 2, 3, 4, 5].map(n => `<button data-s="${n}" aria-label="${n}">★</button>`).join('')}</div>
+          <p class="hint mt" id="rateHint">${esc(state.user ? t('rate_hint') : t('login_to_rate'))}</p>`}
       </div>
-      <div class="comment-list" id="commentList"><p style="color:#aaa;">Yorumlar yükleniyor...</p></div>
-    </div>
-  </div>
 
-  <footer><p data-i18n="footer_text">© 2026 Sytraex | Share Your Travel Experience</p></footer>
+      <div class="side-card">
+        <h3>${esc(t('comments_title'))} <span class="muted" id="cCount"></span></h3>
+        <div id="comments" class="mt"></div>
+        ${state.user ? `<form id="cForm" class="mt"><div class="field" style="margin-bottom:10px"><textarea id="cBody" maxlength="1000" style="min-height:80px" placeholder="${esc(t('comment_ph'))}"></textarea></div><button class="btn btn-primary btn-sm" type="submit">${esc(t('comment_send'))}</button></form>`
+          : `<p class="hint mt"><a href="login.html?next=${encodeURIComponent('post-detail.html?id=' + p.id)}">${esc(t('nav_login'))}</a> ${esc(t('login_to_comment'))}</p>`}
+      </div>
+    </aside>
+  </div>`;
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, getDoc, updateDoc, deleteDoc, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  $$('.thumbs button').forEach(b => b.onclick = () => {
+    $('#mainImg').src = imgs[+b.dataset.i];
+    $$('.thumbs button').forEach(x => x.classList.toggle('on', x === b));
+  });
+  paintRating();
+  $$('#stars button').forEach(b => b.onclick = () => rate(+b.dataset.s));
+  $('#shareBtn').onclick = share;
+  if ($('#delBtn')) $('#delBtn').onclick = del;
+  if ($('#reportBtn')) $('#reportBtn').onclick = () => report('post', p.id);
+  if ($('#cForm')) $('#cForm').addEventListener('submit', sendComment);
+}
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
-      authDomain: "sytraex-462b0.firebaseapp.com",
-      projectId: "sytraex-462b0",
-      storageBucket: "sytraex-462b0.firebasestorage.app",
-      messagingSenderId: "379245018695",
-      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62"
-    };
+function paintRating() {
+  const p = post;
+  $('#avgText').textContent = p.votes > 0 ? `★ ${Number(p.avg_score).toFixed(1)} / 5  ·  ${t('votes_count', { n: p.votes })}` : t('no_votes');
+  $$('#stars button').forEach(b => b.classList.toggle('on', +b.dataset.s <= myScore));
+}
+async function rate(score) {
+  if (!state.user) return (location.href = `login.html?next=${encodeURIComponent('post-detail.html?id=' + id)}`);
+  const { error } = await sb.from('post_ratings').upsert({ post_id: id, user_id: state.user.id, score }, { onConflict: 'post_id,user_id' });
+  if (error) return toast(friendlyError(error), 'err');
+  myScore = score; toast(t('rate_thanks'), 'ok');
+  const { data } = await sb.from('posts_feed').select('avg_score,votes').eq('id', id).single();
+  if (data) { post.avg_score = data.avg_score; post.votes = data.votes; }
+  paintRating();
+}
+async function share() {
+  const url = location.href.split('#')[0];
+  try { if (navigator.share) { await navigator.share({ title: post.title, url }); return; } } catch { return; }
+  try { await navigator.clipboard.writeText(url); toast(t('link_copied'), 'ok'); } catch { prompt(t('share'), url); }
+}
+async function del() {
+  const ok = await modal({ title: t('delete_post_t'), body: t('delete_post_d'), confirmText: t('delete'), danger: true });
+  if (!ok) return;
+  const { error } = await sb.from('posts').delete().eq('id', id);
+  if (error) return toast(friendlyError(error), 'err');
+  try { await removeImages('post-images', post.images); } catch {}
+  location.href = 'profile.html?tab=posts';
+}
+async function report(type, targetId) {
+  if (!state.user) return (location.href = `login.html?next=${encodeURIComponent('post-detail.html?id=' + id)}`);
+  const reason = await modal({ title: t('report_title'), body: t('report_desc'), input: { placeholder: t('report_ph'), max: 500 }, confirmText: t('report_send') });
+  if (!reason || reason.length < 3) return;
+  const { error } = await sb.from('reports').insert({ reporter_id: state.user.id, target_type: type, target_id: targetId, reason });
+  toast(error ? friendlyError(error) : t('report_thanks'), error ? 'err' : 'ok');
+}
 
-    const db = getFirestore(initializeApp(firebaseConfig));
-    const currentUser = JSON.parse(localStorage.getItem('sytraexUser'));
-    const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get('id');
-
-    if (!postId) { window.location.href = "index.html"; }
-
-    let postData = null;
-
-    // EKLENEN YETKİ KONTROL VE İŞLEM FONKSİYONLARI
-    window.editPost = () => window.location.href = `edit-post.html?id=${postId}`;
-    window.deletePost = async () => {
-        if(confirm("Bu gönderiyi silmek istediğinize emin misiniz?")) {
-            await deleteDoc(doc(db, "posts", postId));
-            window.location.href = "profile.html?tab=posts";
-        }
-    };
-
-    async function loadPostDetail() {
-      try {
-        const postSnap = await getDoc(doc(db, "posts", postId));
-        if (!postSnap.exists()) { window.location.href = "index.html"; return; }
-        postData = postSnap.data();
-
-        // Yetki kontrolü
-        if (currentUser && postData.username === currentUser.username) {
-            document.getElementById('authorActions').style.display = 'block';
-        }
-
-        document.getElementById('postTitle').innerText = postData.title;
-        document.getElementById('postBadges').innerHTML = `<span class="badge">📍 ${postData.location}</span><span class="badge">⏱️ ${postData.duration}</span><span class="badge">${postData.mode || 'Seyahat'}</span>`;
-        document.getElementById('authorName').innerText = postData.authorName || postData.username;
-        document.getElementById('authorUsername').innerText = `@${postData.username}`;
-        
-        try {
-          const userSnap = await getDoc(doc(db, "users", postData.username));
-          if (userSnap.exists() && userSnap.data().avatarUrl) { document.getElementById('authorAvatar').src = userSnap.data().avatarUrl; }
-        } catch (e) {}
-
-        document.getElementById('authorCard').addEventListener('click', () => { window.location.href = `public-profile.html?user=${postData.username}`; });
-
-        const allImages = postData.images && postData.images.length > 0 ? postData.images : [postData.imageUrl];
-        if (allImages.length > 0 && allImages[0]) {
-          const mainImg = document.getElementById('mainImage'); mainImg.src = allImages[0];
-          const thumbsGrid = document.getElementById('thumbnailsGrid'); thumbsGrid.innerHTML = '';
-          allImages.forEach((imgUrl, index) => {
-            const thumb = document.createElement('img'); thumb.src = imgUrl; thumb.className = `thumb-img ${index === 0 ? 'active' : ''}`;
-            thumb.onclick = () => { mainImg.src = imgUrl; document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active')); thumb.classList.add('active'); };
-            thumbsGrid.appendChild(thumb);
-          });
-        }
-
-        if (postData.youtubeUrl) {
-          let embedUrl = '';
-          if (postData.youtubeUrl.includes('v=')) { embedUrl = 'https://www.youtube.com/embed/' + postData.youtubeUrl.split('v=')[1].split('&')[0]; }
-          else if (postData.youtubeUrl.includes('youtu.be/')) { embedUrl = 'https://www.youtube.com/embed/' + postData.youtubeUrl.split('youtu.be/')[1]; }
-          if (embedUrl) { const vContainer = document.getElementById('videoContainer'); vContainer.className = 'video-wrapper'; vContainer.style.display = 'block'; vContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>`; }
-        }
-
-        const detailsCard = document.getElementById('detailsCard'); detailsCard.innerHTML = '';
-        const d = postData.details || {};
-        const sections = [
-          { key: 'detail_sec_summary', defaultTitle: '📌 Genel Özet & İzlenimler', text: d.summary || postData.content },
-          { key: 'detail_sec_sightseeing', defaultTitle: '🏛️ Gezilecek Yerler & Aktivite Rotaları', text: d.sightseeing },
-          { key: 'detail_sec_stay', defaultTitle: '🏨 Konaklama & Otel Tavsiyeleri', text: d.stay },
-          { key: 'detail_sec_food', defaultTitle: '🍕 Yeme & İçme Önerileri', text: d.food },
-          { key: 'detail_sec_tips', defaultTitle: '🚌 Ulaşım, Bütçe & Önemli Tüyolar', text: d.tips }
-        ];
-        sections.forEach(sec => { if (sec.text && sec.text.trim() !== '') { detailsCard.innerHTML += `<div class="section-block"><h4 class="section-title" data-i18n="${sec.key}">${sec.defaultTitle}</h4><div class="section-text">${sec.text}</div></div>`; } });
-
-        if (typeof applyLanguage === 'function') { applyLanguage(localStorage.getItem('sytraexLang') || 'tr'); }
-        renderRatings(); loadComments();
-      } catch (err) { console.error("Detay yükleme hatası:", err); }
-    }
-
-    function renderRatings() {
-      const ratings = postData.ratings || {};
-      const votes = Object.values(ratings);
-      const totalVotes = votes.length;
-      let avg = 0;
-      if (totalVotes > 0) { avg = (votes.reduce((a, b) => a + b, 0) / totalVotes).toFixed(1); }
-      document.getElementById('avgScoreText').innerText = `Ortalama Puan: ${avg > 0 ? avg : '-'} / 5`;
-      document.getElementById('totalVotesText').innerText = `(${totalVotes} Oy Kullanıldı)`;
-      if (currentUser && ratings[currentUser.username]) { highlightStars(ratings[currentUser.username]); }
-    }
-
-    function highlightStars(count) {
-      document.querySelectorAll('#starRating span').forEach((s, idx) => { idx < count ? s.classList.add('active') : s.classList.remove('active'); });
-    }
-
-    document.querySelectorAll('#starRating span').forEach(star => {
-      star.addEventListener('click', async () => {
-        if (!currentUser) { alert("Lütfen giriş yapınız."); window.location.href = "login.html"; return; }
-        const score = parseInt(star.getAttribute('data-star'));
-        highlightStars(score);
-        try {
-          const updateObj = {}; updateObj[`ratings.${currentUser.username}`] = score;
-          await updateDoc(doc(db, "posts", postId), updateObj);
-          postData.ratings[currentUser.username] = score;
-          renderRatings();
-        } catch (e) { console.error(e); }
-      });
-    });
-
-    async function loadComments() {
-      const container = document.getElementById('commentList');
-      const q = query(collection(db, "comments"), where("postId", "==", postId));
-      const querySnapshot = await getDocs(q);
-      document.getElementById('commentsCount').innerText = querySnapshot.size;
-      if (querySnapshot.empty) { container.innerHTML = '<p style="color:#aaa;">Henüz yorum yok.</p>'; return; }
-      container.innerHTML = '';
-      querySnapshot.forEach(docSnap => {
-        const c = docSnap.data();
-        container.innerHTML += `<div class="comment-item"><div class="comment-user"><img src="${c.avatarUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200'}" class="comment-avatar"><span class="comment-username">${c.authorName || c.username}</span></div><p class="comment-text">${c.text}</p></div>`;
-      });
-    }
-
-    window.submitComment = async function() {
-      if (!currentUser) { alert("Lütfen giriş yapınız."); window.location.href = "login.html"; return; }
-      const text = document.getElementById('commentText').value.trim();
-      if (!text) return;
-      await addDoc(collection(db, "comments"), { postId, username: currentUser.username, authorName: currentUser.name || currentUser.username, avatarUrl: currentUser.avatarUrl || '', text, createdAt: new Date().toISOString() });
-      document.getElementById('commentText').value = ''; loadComments();
-    };
-
-    loadPostDetail();
-  </script>
-</body>
-</html>
+async function loadComments() {
+  const { data, error } = await sb.from('comments').select('id,body,created_at,user_id,profiles(username,full_name,avatar_url)').eq('post_id', id).order('created_at', { ascending: true });
+  if (error) return;
+  $('#cCount').textContent = `(${data.length})`;
+  $('#comments').innerHTML = data.length ? data.map(c => {
+    const pr = c.profiles || {}, name = pr.full_name || pr.username || '?';
+    const canDel = state.user && (state.user.id === c.user_id || state.user.id === post.user_id);
+    const canReport = state.user && state.user.id !== c.user_id;
+    return `<div class="comment"><img class="avatar lg" style="width:36px;height:36px" src="${esc(avatarSrc(pr.avatar_url, name))}" alt="">
+      <div style="min-width:0"><b>${esc(name)}</b><small>${esc(fmtDate(c.created_at))}</small>
+      ${canDel ? `<button class="linkbtn" data-del="${esc(c.id)}">${esc(t('delete'))}</button>` : ''}${canReport ? `<button class="linkbtn" data-rep="${esc(c.id)}">${esc(t('report'))}</button>` : ''}
+      <p>${esc(c.body)}</p></div></div>`;
+  }).join('') : `<p class="hint">${esc(t('no_comments'))}</p>`;
+  $$('[data-del]').forEach(b => b.onclick = async () => {
+    const { error } = await sb.from('comments').delete().eq('id', b.dataset.del);
+    if (error) toast(friendlyError(error), 'err'); else loadComments();
+  });
+  $$('[data-rep]').forEach(b => b.onclick = () => report('comment', b.dataset.rep));
+}
+async function sendComment(e) {
+  e.preventDefault();
+  const body = $('#cBody').value.trim();
+  if (!body) return;
+  const { error } = await sb.from('comments').insert({ post_id: id, user_id: state.user.id, body });
+  if (error) return toast(friendlyError(error), 'err');
+  $('#cBody').value = ''; loadComments();
+}
+window.addEventListener('langchange', () => { if (post) { render(); loadComments(); } });
+</script>
+</body></html>

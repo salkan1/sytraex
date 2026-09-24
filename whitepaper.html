@@ -1,168 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SYTX | Travel-to-Earn Revolution</title>
-  <link rel="icon" type="image/png" href="logo.png">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background-color: #0a0a0a;
-      color: #eaeaea;
-      line-height: 1.6;
-    }
-    header {
-      background: linear-gradient(90deg, #ff6600, #ff9900);
-      padding: 15px 0;
-      text-align: center;
-    }
-    header h1 { font-size: 32px; letter-spacing: 2px; color: #fff; }
-    nav {
-      background: #111;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 10px 0;
-      text-align: center;
-    }
-    nav a {
-      color: #ff9900;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
-    nav a:hover { color: #fff; }
-
-    section {
-      padding: 60px 10%;
-      max-width: 1000px;
-      margin: auto;
-    }
-    h2 {
-      text-align: center;
-      color: #ff9900;
-      margin-bottom: 20px;
-      font-size: 28px;
-    }
-    p {
-      margin-bottom: 15px;
-      text-align: justify;
-    }
-    .tokenomics-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    .tokenomics-table th, .tokenomics-table td {
-      border: 1px solid #444;
-      padding: 10px;
-      text-align: center;
-    }
-    .tokenomics-table th {
-      background-color: #222;
-      color: #ff9900;
-    }
-    footer {
-      text-align: center;
-      padding: 30px 0;
-      background: #111;
-      color: #777;
-      font-size: 14px;
-    }
-    .btn {
-      background: #ff9900;
-      color: #000;
-      padding: 10px 25px;
-      border: none;
-      border-radius: 25px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-    .btn:hover {
-      background: #fff;
-      color: #000;
-    }
-  </style>
+<!doctype html>
+<html lang="tr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a0f1f"><link rel="icon" href="logo.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/app.css">
+<title>SYTX Whitepaper | Sytraex</title>
+<meta name="description" content="SYTX Travel-to-Earn: Sytraex sadakat ve ödül sistemi whitepaper v2.0 (taslak).">
 </head>
-<body>
+<body data-active="whitepaper">
+<div id="site-header"></div>
+<main>
+<article class="doc">
 
-<header>
-  <h1>SYTX COIN</h1>
-  <p>Travel-to-Earn Blockchain Ecosystem</p>
-</header>
+<!-- ===================== TÜRKÇE ===================== -->
+<div class="lang-block" lang="tr">
+  <h1>SYTX Whitepaper <span class="draft">v2.0 · Taslak</span></h1>
+  <p>Travel-to-Earn: Gerçek seyahat deneyimlerini paylaşanları ödüllendiren topluluk ekonomisi. Son güncelleme: Eylül 2026.</p>
+  <div class="callout warn"><p><strong>Önemli uyarı.</strong> Bu belge bilgilendirme amaçlıdır; yatırım tavsiyesi, satış teklifi veya getiri vaadi değildir. SYTX şu an <strong>zincir dışı (off-chain) bir platform sadakat puanıdır</strong>; bir kripto varlığı olarak dolaşımda değildir, alınıp satılamaz ve parasal değer taşımaz. Gelecekteki herhangi bir token planı, ilgili mevzuata (SPK, MASAK, MiCA vb.) uygunluk değerlendirmesine bağlıdır ve hiç hayata geçmeyebilir.</p></div>
 
-<nav>
-  <a href="#about">About</a>
-  <a href="#tokenomics">Tokenomics</a>
-  <a href="#roadmap">Roadmap</a>
-  <a href="#whitepaper">Whitepaper</a>
-  <a href="#contact">Contact</a>
-  <a href="index.html">--> Go to sytraex.com</a>
-</nav>
+  <div class="toc"><strong>İçindekiler</strong>
+    <a href="#tr-1">1. Özet</a><a href="#tr-2">2. Sorun</a><a href="#tr-3">3. Çözüm: Sytraex</a><a href="#tr-4">4. SYTX Puan Sistemi</a>
+    <a href="#tr-5">5. Taslak dağılım modeli</a><a href="#tr-6">6. Yol haritası</a><a href="#tr-7">7. Riskler ve sorumluluk reddi</a><a href="#tr-8">8. İletişim</a></div>
 
-<section id="about">
-  <h2>About SYTX</h2>
-  <p>
-    SYTX Coin is a next-generation <b>Travel-to-Earn</b> platform built to reward travelers, explorers, and digital nomads around the world.
-    Every trip, shared experience, and verified travel action turns into measurable rewards.
-  </p>
-  <p>
-    Our mission is to merge blockchain with real-world tourism, creating a circular economy where tokens gain real value through partnerships with hotels, restaurants, and global travel agencies.
-  </p>
-  <p>
-    With SYTX, traveling becomes not just an expense, but an investment in your experience, your community, and the planet.
-  </p>
-  <a href="#whitepaper" class="btn">Read Whitepaper</a>
-</section>
+  <h2 id="tr-1">1. Özet</h2>
+  <p>Sytraex, gezginlerin gerçek seyahat deneyimlerini fotoğraf, video ve ayrıntılı rotalarla paylaştığı ve toplulukça puanlandığı bir sosyal platformdur. SYTX, bu katkıları ölçülebilir hâle getiren ve zamanla ortaklıklarla gerçek faydaya dönüşmesi hedeflenen puan sistemidir.</p>
 
-<section id="tokenomics">
-  <h2>Tokenomics</h2>
-  <table class="tokenomics-table">
-    <tr><th>Allocation</th><th>Percentage</th><th>Details</th></tr>
-    <tr><td>Public Sale</td><td>25%</td><td>ICO / Launchpad</td></tr>
-    <tr><td>Team & Advisors</td><td>15%</td><td>12-Month Vesting</td></tr>
-    <tr><td>Reserve & Liquidity</td><td>10%</td><td>DEX/CEX Liquidity</td></tr>
-    <tr><td>Marketing & Community</td><td>15%</td><td>Campaigns, Rewards</td></tr>
-    <tr><td>Travel Rewards</td><td>25%</td><td>Travel-to-Earn Incentives</td></tr>
-    <tr><td>Partnerships</td><td>10%</td><td>Hotels, Airlines, Agencies</td></tr>
-  </table>
-</section>
+  <h2 id="tr-2">2. Sorun</h2>
+  <ul>
+    <li>Seyahat önerilerinin büyük bölümü reklam, sponsorlu içerik veya doğrulanmamış yorumlardan oluşuyor.</li>
+    <li>Değerli yerel bilgiyi üretenler (rota, konaklama, yeme-içme tavsiyesi) bu emeğin karşılığını almıyor.</li>
+    <li>Küçük işletmeler gerçek gezginlere ulaşmak için şeffaf ve düşük maliyetli kanallara sahip değil.</li>
+  </ul>
 
-<section id="roadmap">
-  <h2>Roadmap</h2>
-  <p><b>Q4 2025</b> — Smart contract deployment & token launch.</p>
-  <p><b>Q1 2026</b> — DEX listing, staking system, community expansion.</p>
-  <p><b>Q2 2026</b> — Mobile app beta, first global travel partnerships.</p>
-  <p><b>Q3 2026</b> — NFT travel badges & gamification launch.</p>
-  <p><b>Q4 2026</b> — CEX listings and international expansion.</p>
-</section>
+  <h2 id="tr-3">3. Çözüm: Sytraex</h2>
+  <ul>
+    <li><strong>Topluluk içeriği:</strong> Yapılandırılmış deneyimler (gezilecek yerler, konaklama, yeme-içme, ulaşım/bütçe ipuçları).</li>
+    <li><strong>Şeffaf puanlama:</strong> Her kullanıcı bir gönderiyi bir kez puanlar; kendi gönderisine puan veremez.</li>
+    <li><strong>Güvenlik:</strong> Google veya e-posta ile güvenli giriş, şifrelerin sunucuda hash'lenmesi, satır bazlı erişim kuralları, şikâyet mekanizması.</li>
+    <li><strong>Gizlilik:</strong> Kullanıcı hesabını ve verilerini istediği an silebilir (KVKK/GDPR uyumlu tasarım).</li>
+  </ul>
 
-<section id="whitepaper">
-  <h2>Whitepaper</h2>
-  <p>
-    You can download the official <b>SYTX Whitepaper v1.1</b> to explore our full vision, technology, and roadmap.
-  </p>
-  <a href="whitepaper.pdf" class="btn" target="_blank">Download Whitepaper (PDF)</a>
-</section>
+  <h2 id="tr-4">4. SYTX Puan Sistemi</h2>
+  <p>Bugün yürürlükte olan kurallar (sunucu tarafında uygulanır, tarayıcıdan değiştirilemez):</p>
+  <table><tr><th>Eylem</th><th>Ödül</th><th>Koşul</th></tr>
+    <tr><td>Kayıt (hoş geldin)</td><td>10 SYTX</td><td>Hesap başına bir kez</td></tr>
+    <tr><td>Seyahat deneyimi paylaşma</td><td>25 SYTX</td><td>En az 1 fotoğraf ve ≥100 karakterlik özet; 24 saatte en fazla 3 ödüllü gönderi</td></tr></table>
+  <p>Kötüye kullanım önlemleri: günlük ödül sınırı, içerik kalite eşiği, şikâyet ve moderasyon, hesap silindiğinde puanların iptali. Kurallar, topluluğu korumak için önceden duyurularak güncellenebilir.</p>
+  <h3>Faz yaklaşımı</h3>
+  <ol>
+    <li><strong>Faz 1 – Puan (bugün):</strong> Zincir dışı puan; yalnızca platform içi itibar ve sıralama.</li>
+    <li><strong>Faz 2 – Fayda:</strong> Ortak işletmelerde indirim/avantaj olarak kullanım (hukuki uygunluk şartıyla).</li>
+    <li><strong>Faz 3 – Token değerlendirmesi:</strong> Ancak hukuki görüş, lisans ve uyum gereklilikleri netleştikten sonra karar verilir.</li>
+  </ol>
 
-<section id="contact">
-  <h2>Contact</h2>
-  <p>
-    <a href="info@sytraex.com" style="color:#ff9900;">info@sytraex.com</a>  
-    <br>
-    <a href="https://sytraex.com" style="color:#ff9900;">www.sytraex.com</a>  
-    <br>
-    X: <a href="https://x.com/sytraex?s=11" style="color:#ff9900;">@sytraex</a>  
-    
-  </p>
-</section>
+  <h2 id="tr-5">5. Taslak dağılım modeli <span class="draft">bağlayıcı değil</span></h2>
+  <p>Aşağıdaki tablo bir token çıkarılması hâlinde <em>değerlendirilen</em> taslak dağılımı gösterir. Toplam arz, fiyat ve satış yöntemi belirlenmemiştir. Halka arz/ön satış kalemi, mevzuat incelemesi tamamlanmadan uygulanmayacaktır ve tablodan çıkarılabilir.</p>
+  <table><tr><th>Kalem</th><th>Oran</th><th>Açıklama</th></tr>
+    <tr><td>Seyahat ödülleri</td><td>%25</td><td>Travel-to-Earn teşvikleri</td></tr>
+    <tr><td>Halka arz / ön satış</td><td>%25</td><td>Hukuki inceleme şartına bağlı</td></tr>
+    <tr><td>Ekip ve danışmanlar</td><td>%15</td><td>12 ay vesting</td></tr>
+    <tr><td>Pazarlama ve topluluk</td><td>%15</td><td>Kampanyalar, ödüller</td></tr>
+    <tr><td>Rezerv ve likidite</td><td>%10</td><td>Piyasa derinliği</td></tr>
+    <tr><td>Ortaklıklar</td><td>%10</td><td>Otel, restoran, acente</td></tr></table>
 
-<footer>
-  © 2025 SYTX Coin | Powered by Sytraex Technologies
-</footer>
+  <h2 id="tr-6">6. Yol haritası</h2>
+  <table><tr><th>Aşama</th><th>Hedefler</th><th>Durum</th></tr>
+    <tr><td>Temel</td><td>Güvenli platform yeniden yapımı, Google girişi, gerçek kimlik doğrulama, fotoğraf depolama, KVKK metinleri</td><td>Devam ediyor</td></tr>
+    <tr><td>Topluluk</td><td>İlk gezgin topluluğu, moderasyon araçları, arama ve keşif iyileştirmeleri</td><td>Planlandı</td></tr>
+    <tr><td>Ortaklıklar</td><td>Yerel işletmelerle pilot avantaj programı</td><td>Planlandı</td></tr>
+    <tr><td>Mobil</td><td>Mobil uygulama / PWA, harita ve konum tabanlı keşif</td><td>Planlandı</td></tr>
+    <tr><td>Hukuki değerlendirme</td><td>Token ve staking seçenekleri için hukuki görüş ve uyum planı</td><td>Planlandı</td></tr></table>
 
-</body>
-</html>
+  <h2 id="tr-7">7. Riskler ve sorumluluk reddi</h2>
+  <ul>
+    <li><strong>Mevzuat riski:</strong> Kripto varlık düzenlemeleri (Türkiye'de SPK/MASAK, AB'de MiCA vb.) değişebilir ve planları kısıtlayabilir.</li>
+    <li><strong>Değer garantisi yoktur:</strong> SYTX puanlarının gelecekte bir değere, takasa veya token'a dönüşeceği garanti edilmez.</li>
+    <li><strong>Yürütme riski:</strong> Yol haritası hedefleri değişebilir veya ertelenebilir.</li>
+    <li><strong>Teknik riskler:</strong> Yazılım hataları, hizmet kesintileri ve siber saldırılar mümkündür.</li>
+  </ul>
+  <p>Bu belge hukuki, mali veya vergisel danışmanlık değildir. Bir karar vermeden önce yetkili bir profesyonele danışın.</p>
+
+  <h2 id="tr-8">8. İletişim</h2>
+  <p>E-posta: <a href="mailto:info@sytraex.com">info@sytraex.com</a> · Web: <a href="https://www.sytraex.com">www.sytraex.com</a> · X: @sytraex</p>
+</div>
+
+<!-- ===================== ENGLISH ===================== -->
+<div class="lang-block" lang="en">
+  <h1>SYTX Whitepaper <span class="draft">v2.0 · Draft</span></h1>
+  <p>Travel-to-Earn: a community economy that rewards people who share real travel experiences. Last updated: September 2026.</p>
+  <div class="callout warn"><p><strong>Important notice.</strong> This document is for information only and is not investment advice, an offer to sell, or a promise of returns. SYTX is currently an <strong>off-chain platform loyalty point</strong>; it is not a circulating crypto-asset, cannot be bought or sold, and has no monetary value. Any future token plan depends on a regulatory compliance assessment (e.g. SPK/MASAK in Türkiye, MiCA in the EU) and may never happen.</p></div>
+
+  <div class="toc"><strong>Contents</strong>
+    <a href="#en-1">1. Summary</a><a href="#en-2">2. Problem</a><a href="#en-3">3. Solution: Sytraex</a><a href="#en-4">4. SYTX points system</a>
+    <a href="#en-5">5. Draft allocation model</a><a href="#en-6">6. Roadmap</a><a href="#en-7">7. Risks and disclaimer</a><a href="#en-8">8. Contact</a></div>
+
+  <h2 id="en-1">1. Summary</h2>
+  <p>Sytraex is a social platform where travellers share real experiences with photos, video and detailed routes, rated by the community. SYTX is the points system that makes these contributions measurable and, over time, aims to become real-world utility through partnerships.</p>
+
+  <h2 id="en-2">2. Problem</h2>
+  <ul>
+    <li>Most travel advice is advertising, sponsored content or unverified reviews.</li>
+    <li>People who create valuable local knowledge (routes, stays, food tips) are not rewarded for it.</li>
+    <li>Small businesses lack transparent, low-cost channels to reach real travellers.</li>
+  </ul>
+
+  <h2 id="en-3">3. Solution: Sytraex</h2>
+  <ul>
+    <li><strong>Community content:</strong> Structured experiences (sights, stays, food, transport and budget tips).</li>
+    <li><strong>Transparent rating:</strong> One rating per user per post; you cannot rate your own post.</li>
+    <li><strong>Security:</strong> Google or email sign-in, server-side password hashing, row-level access rules, reporting tools.</li>
+    <li><strong>Privacy:</strong> Users can delete their account and data at any time (designed for KVKK/GDPR).</li>
+  </ul>
+
+  <h2 id="en-4">4. SYTX points system</h2>
+  <p>Rules in force today (enforced server-side, not editable from the browser):</p>
+  <table><tr><th>Action</th><th>Reward</th><th>Condition</th></tr>
+    <tr><td>Sign-up (welcome)</td><td>10 SYTX</td><td>Once per account</td></tr>
+    <tr><td>Sharing a travel experience</td><td>25 SYTX</td><td>At least 1 photo and a summary of ≥100 characters; max 3 rewarded posts per 24 hours</td></tr></table>
+  <p>Anti-abuse measures: daily reward cap, content quality threshold, reporting and moderation, points void when an account is deleted. Rules may be updated with prior notice to protect the community.</p>
+  <h3>Phased approach</h3>
+  <ol>
+    <li><strong>Phase 1 – Points (today):</strong> Off-chain points; in-platform reputation and ranking only.</li>
+    <li><strong>Phase 2 – Utility:</strong> Use as discounts/benefits at partner businesses (subject to legal compliance).</li>
+    <li><strong>Phase 3 – Token assessment:</strong> Considered only after legal opinion, licensing and compliance requirements are clear.</li>
+  </ol>
+
+  <h2 id="en-5">5. Draft allocation model <span class="draft">non-binding</span></h2>
+  <p>The table below shows the draft allocation <em>under consideration</em> should a token ever be issued. Total supply, price and sale method are not defined. The public-sale line will not be pursued before a regulatory review is completed and may be removed.</p>
+  <table><tr><th>Item</th><th>Share</th><th>Details</th></tr>
+    <tr><td>Travel rewards</td><td>25%</td><td>Travel-to-Earn incentives</td></tr>
+    <tr><td>Public / pre-sale</td><td>25%</td><td>Subject to legal review</td></tr>
+    <tr><td>Team &amp; advisors</td><td>15%</td><td>12-month vesting</td></tr>
+    <tr><td>Marketing &amp; community</td><td>15%</td><td>Campaigns, rewards</td></tr>
+    <tr><td>Reserve &amp; liquidity</td><td>10%</td><td>Market depth</td></tr>
+    <tr><td>Partnerships</td><td>10%</td><td>Hotels, restaurants, agencies</td></tr></table>
+
+  <h2 id="en-6">6. Roadmap</h2>
+  <table><tr><th>Stage</th><th>Goals</th><th>Status</th></tr>
+    <tr><td>Foundation</td><td>Secure platform rebuild, Google sign-in, real authentication, photo storage, KVKK documents</td><td>In progress</td></tr>
+    <tr><td>Community</td><td>First traveller community, moderation tools, better search and discovery</td><td>Planned</td></tr>
+    <tr><td>Partnerships</td><td>Pilot benefits programme with local businesses</td><td>Planned</td></tr>
+    <tr><td>Mobile</td><td>Mobile app / PWA, map and location-based discovery</td><td>Planned</td></tr>
+    <tr><td>Legal assessment</td><td>Legal opinion and compliance plan for token and staking options</td><td>Planned</td></tr></table>
+
+  <h2 id="en-7">7. Risks and disclaimer</h2>
+  <ul>
+    <li><strong>Regulatory risk:</strong> Crypto-asset rules (SPK/MASAK in Türkiye, MiCA in the EU, etc.) may change and limit these plans.</li>
+    <li><strong>No value guarantee:</strong> There is no guarantee SYTX points will ever convert into value, exchange or a token.</li>
+    <li><strong>Execution risk:</strong> Roadmap goals may change or be delayed.</li>
+    <li><strong>Technical risk:</strong> Software bugs, outages and cyber attacks are possible.</li>
+  </ul>
+  <p>This document is not legal, financial or tax advice. Consult a qualified professional before making any decision.</p>
+
+  <h2 id="en-8">8. Contact</h2>
+  <p>Email: <a href="mailto:info@sytraex.com">info@sytraex.com</a> · Web: <a href="https://www.sytraex.com">www.sytraex.com</a> · X: @sytraex</p>
+</div>
+
+</article>
+</main>
+<div id="site-footer"></div>
+<script type="module">
+import { initPage, applyI18n } from './js/app.js';
+await initPage(); applyI18n(); document.title = 'SYTX Whitepaper | Sytraex';
+</script>
+</body></html>

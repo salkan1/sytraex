@@ -1,337 +1,107 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kayıt Ol | Sytraex</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="logo.png">
-
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #0f172a;
-      color: #ffffff;
-      font-family: Arial, sans-serif;
-    }
-
-    header {
-      background: rgba(15, 23, 42, 0.95);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-img { width: 45px; height: 45px; }
-    .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
-    .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
-
-    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; align-items: center; }
-    nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
-    nav ul li a:hover { color: #ffcc00; }
-
-    .lang-switcher {
-      font-size: 13px;
-      font-weight: bold;
-      color: #ffcc00;
-      margin-left: 10px;
-    }
-
-    .register-container {
-      max-width: 500px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    .register-card {
-      background: rgba(30, 41, 59, 0.85);
-      border: 1px solid rgba(255, 204, 0, 0.3);
-      border-radius: 16px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    .register-card h2 {
-      color: #ffcc00;
-      margin-top: 0;
-      margin-bottom: 20px;
-      font-size: 24px;
-      text-align: center;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-      position: relative;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 12px;
-      color: #ffcc00;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 11px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      background: #0f172a;
-      color: #fff;
-      font-size: 13px;
-      outline: none;
-      box-sizing: border-box;
-    }
-
-    .autocomplete-items {
-      position: absolute;
-      border: 1px solid #ffcc00;
-      border-top: none;
-      z-index: 9999;
-      top: 100%;
-      left: 0; right: 0;
-      background-color: #1e293b;
-      border-radius: 0 0 8px 8px;
-      max-height: 200px;
-      overflow-y: auto;
-      display: none;
-    }
-
-    .autocomplete-items div {
-      padding: 10px 12px;
-      cursor: pointer;
-      font-size: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .autocomplete-items div:hover {
-      background-color: #ffcc00;
-      color: #000;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 13px;
-      background: #ffcc00;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 15px;
-      cursor: pointer;
-      transition: 0.3s;
-      margin-top: 10px;
-    }
-
-    .submit-btn:hover { background: #e6b800; }
-
-    footer { text-align: center; padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #888; font-size: 13px; margin-top: 40px; }
-  </style>
-
-  <!-- Dil Kütüphanesi Entegrasyonu -->
-  <script src="lang.js"></script>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a0f1f"><link rel="icon" href="logo.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/app.css">
+<title>Kayıt Ol | Sytraex</title>
+<meta name="robots" content="noindex">
 </head>
-<body>
+<body data-active="register" data-title="reg_title">
+<div id="site-header"></div>
+<main class="container auth-wrap">
+  <div class="card narrow" style="max-width:520px">
+    <h1 data-i18n="reg_title"></h1>
+    <p class="sub" data-i18n="reg_sub"></p>
 
-  <header>
-    <div class="logo">
-      <img src="logo.png" alt="Sytraex Logo" class="logo-img">
-      <div class="logo-text">
-        <h1>sytraex</h1>
-        <p>Share Your Travel Experience</p>
-      </div>
-    </div>
+    <div id="msg" class="alert hidden" role="alert"></div>
 
-    <nav>
-      <ul>
-        <li><a href="index.html" data-i18n="nav_home">Ana Sayfa</a></li>
-        <li><a href="login.html" data-i18n="nav_login">Giriş Yap</a></li>
-        <li class="lang-switcher">TR / EN</li>
-      </ul>
-    </nav>
-  </header>
+    <div id="formArea">
+      <button class="btn btn-google" id="googleBtn" type="button">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        <span data-i18n="btn_google_register"></span>
+      </button>
+      <p class="hint center mt" data-i18n="google_terms_note"></p>
 
-  <div class="register-container">
-    <div class="register-card">
-      <h2 data-i18n="reg_title">📝 Sytraex'e Kayıt Ol</h2>
+      <div class="divider" data-i18n="or_email"></div>
 
-      <form id="registerForm" autocomplete="off">
-        <div class="form-group">
-          <label for="regUsername" data-i18n="reg_label_username">Kullanıcı Adı:</label>
-          <input type="text" id="regUsername" data-i18n-ph="reg_ph_username" placeholder="Örn: selcukalkan" required>
+      <form id="regForm" novalidate>
+        <div class="row">
+          <div class="field"><label for="fullName" data-i18n="label_fullname"></label><input id="fullName" type="text" maxlength="80" autocomplete="name" required></div>
+          <div class="field"><label for="username" data-i18n="label_username"></label><input id="username" type="text" maxlength="24" autocomplete="username" autocapitalize="none" spellcheck="false" required><span class="hint" id="unameHint" data-i18n="username_rule"></span></div>
         </div>
-
-        <div class="form-group">
-          <label for="regName" data-i18n="reg_label_fullname">Ad Soyad:</label>
-          <input type="text" id="regName" data-i18n-ph="reg_ph_fullname" placeholder="Örn: Selçuk Alkan" required>
+        <div class="field"><label for="email" data-i18n="label_email"></label><input id="email" type="email" autocomplete="email" required placeholder="ornek@gmail.com"></div>
+        <div class="row">
+          <div class="field"><label for="password" data-i18n="label_password"></label><input id="password" type="password" autocomplete="new-password" minlength="8" required placeholder="••••••••"><span class="hint" data-i18n="password_rule"></span></div>
+          <div class="field"><label for="password2" data-i18n="label_password2"></label><input id="password2" type="password" autocomplete="new-password" required placeholder="••••••••"></div>
         </div>
-
-        <div class="form-group">
-          <label for="regEmail" data-i18n="reg_label_email">E-Posta Adresi:</label>
-          <input type="email" id="regEmail" data-i18n-ph="reg_ph_email" placeholder="ornek@gmail.com" required>
+        <div class="row">
+          <div class="field"><label for="city" data-i18n="label_city"></label><input id="city" type="text" maxlength="80" autocomplete="address-level2" data-i18n-ph="ph_city"></div>
+          <div class="field"><label for="country" data-i18n="label_country"></label><input id="country" type="text" maxlength="80" autocomplete="country-name" data-i18n-ph="ph_country"></div>
         </div>
-
-        <div class="form-group">
-          <label for="regPassword" data-i18n="reg_label_password">Şifre:</label>
-          <input type="password" id="regPassword" data-i18n-ph="reg_ph_password" placeholder="••••••••" required>
-        </div>
-
-        <!-- Tek Kutu: Şehir ve Ülke -->
-        <div class="form-group">
-          <label for="regLocation" data-i18n="reg_label_location">Yaşadığınız Şehir ve Ülke:</label>
-          <input type="text" id="regLocation" data-i18n-ph="reg_ph_location" placeholder="Şehir adı yazın (Örn: Tekirdağ, Türkiye)..." required>
-          <div id="locationAutocompleteList" class="autocomplete-items"></div>
-        </div>
-
-        <div class="form-group">
-          <label for="regBirth" data-i18n="reg_label_birth">Doğum Tarihi:</label>
-          <input type="date" id="regBirth" required>
-        </div>
-
-        <div class="form-group">
-          <label for="regSecretQuestion" data-i18n="reg_label_secret_q">Gizli Soru (Şifre Kurtarma İçin):</label>
-          <select id="regSecretQuestion" required>
-            <option value="pet" data-i18n="reg_opt_pet">İlk evcil hayvanınızın adı nedir?</option>
-            <option value="school" data-i18n="reg_opt_school">İlkokul öğretmeninizin adı nedir?</option>
-            <option value="city" data-i18n="reg_opt_city">Annenizin doğduğu şehir neresidir?</option>
-            <option value="car" data-i18n="reg_opt_car">İlk sahip olduğunuz arabanın markası nedir?</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="regSecretAnswer" data-i18n="reg_label_secret_a">Gizli Soru Cevabı:</label>
-          <input type="text" id="regSecretAnswer" data-i18n-ph="reg_ph_secret_a" placeholder="Cevabınız..." required>
-        </div>
-
-        <button type="submit" id="regBtn" class="submit-btn" data-i18n="reg_btn_submit">Kayıt Ol ve Katıl</button>
+        <label class="check"><input type="checkbox" id="terms" required><span data-i18n-html="terms_accept"></span></label>
+        <button class="btn btn-primary btn-block" id="submitBtn" type="submit" data-i18n="reg_btn_submit"></button>
       </form>
+      <p class="center muted mt" style="font-size:.9rem"><span data-i18n="reg_have_account"></span> <a href="login.html" data-i18n="nav_login"></a></p>
     </div>
   </div>
+</main>
+<div id="site-footer"></div>
+<script type="module">
+import { sb, initPage, state, $, t, nextTarget, setBusy, showAlert, hideAlert, friendlyError, applyI18n } from './js/app.js';
 
-  <footer>
-    <p data-i18n="footer_text">© 2026 Sytraex | Share Your Travel Experience</p>
-  </footer>
+await initPage();
+if (state.user) location.replace(nextTarget());
+const msg = $('#msg');
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+$('#googleBtn').onclick = async () => {
+  hideAlert(msg);
+  const { error } = await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.origin + '/login.html' } });
+  if (error) showAlert(msg, friendlyError(error));
+};
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
-      authDomain: "sytraex-462b0.firebaseapp.com",
-      projectId: "sytraex-462b0",
-      storageBucket: "sytraex-462b0.firebasestorage.app",
-      messagingSenderId: "379245018695",
-      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62"
-    };
+// kullanıcı adı: canlı kontrol
+const uname = $('#username'), hint = $('#unameHint');
+let timer, unameOk = false;
+const RULE = /^[a-z0-9_.]{3,24}$/;
+uname.addEventListener('input', () => {
+  uname.value = uname.value.toLowerCase().replace(/[^a-z0-9_.]/g, '');
+  clearTimeout(timer); unameOk = false; hint.className = 'hint';
+  if (!RULE.test(uname.value)) { hint.textContent = t('username_rule'); return; }
+  hint.textContent = '…';
+  timer = setTimeout(async () => {
+    const { data, error } = await sb.rpc('username_available', { u: uname.value });
+    if (error) { hint.textContent = ''; unameOk = true; return; }
+    unameOk = !!data;
+    hint.className = unameOk ? 'field-ok' : 'field-error';
+    hint.textContent = unameOk ? t('username_ok') : t('username_taken');
+  }, 350);
+});
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+$('#regForm').addEventListener('submit', async (e) => {
+  e.preventDefault(); hideAlert(msg);
+  const v = id => $('#' + id).value.trim();
+  if (!v('fullName') || !v('username') || !v('email') || !$('#password').value) return showAlert(msg, t('err_fill_all'));
+  if (!RULE.test(v('username'))) return showAlert(msg, t('username_rule'));
+  if (!unameOk) return showAlert(msg, t('username_taken'));
+  if ($('#password').value.length < 8) return showAlert(msg, t('err_pw_short'));
+  if ($('#password').value !== $('#password2').value) return showAlert(msg, t('err_pw_match'));
+  if (!$('#terms').checked) return showAlert(msg, t('err_terms'));
 
-    // Canlı Lokasyon Arama
-    const regLocation = document.getElementById("regLocation");
-    const locList = document.getElementById("locationAutocompleteList");
-    let debounceTimer;
-
-    regLocation.addEventListener("input", function() {
-      const query = this.value.trim();
-      locList.innerHTML = "";
-      if (query.length < 2) { locList.style.display = "none"; return; }
-
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=6`)
-          .then(res => res.json())
-          .then(data => {
-            locList.innerHTML = "";
-            if (data && data.length > 0) {
-              data.forEach(item => {
-                const div = document.createElement("div");
-                const city = item.address.city || item.address.town || item.address.province || item.display_name.split(',')[0];
-                const country = item.address.country || '';
-                const locText = `${city}${country ? ', ' + country : ''}`;
-
-                div.innerHTML = `📍 <strong>${city}</strong> <small style="color:#aaa;">(${country})</small>`;
-                div.addEventListener("click", () => {
-                  regLocation.value = locText;
-                  locList.style.display = "none";
-                });
-                locList.appendChild(div);
-              });
-              locList.style.display = "block";
-            }
-          });
-      }, 250);
-    });
-
-    document.addEventListener("click", (e) => {
-      if (e.target !== regLocation) locList.style.display = "none";
-    });
-
-    // Kayıt Formu
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('regBtn');
-      btn.innerText = "Kaydediliyor...";
-      btn.disabled = true;
-
-      const username = document.getElementById('regUsername').value.trim().toLowerCase();
-      const name = document.getElementById('regName').value.trim();
-      const email = document.getElementById('regEmail').value.trim();
-      const password = document.getElementById('regPassword').value.trim();
-      const locationVal = regLocation.value.trim();
-      const birth = document.getElementById('regBirth').value;
-      const secretQuestion = document.getElementById('regSecretQuestion').value;
-      const secretAnswer = document.getElementById('regSecretAnswer').value.trim();
-
-      try {
-        const userRef = doc(db, "users", username);
-        const userSnap = await getDoc(userRef);
-
-        if (userSnap.exists()) {
-          alert("Bu kullanıcı adı zaten alınmış. Lütfen başka bir kullanıcı adı seçin.");
-          btn.innerText = "Kayıt Ol ve Katıl";
-          btn.disabled = false;
-          return;
-        }
-
-        const newUser = {
-          username: username,
-          name: name,
-          email: email,
-          password: password,
-          city: locationVal,
-          country: locationVal.includes(',') ? locationVal.split(',')[1].trim() : '',
-          birth: birth,
-          secretQuestion: secretQuestion,
-          secretAnswer: secretAnswer,
-          avatarUrl: '',
-          createdAt: new Date().toISOString()
-        };
-
-        await setDoc(userRef, newUser);
-
-        localStorage.setItem('loggedIn', 'true');
-        localStorage.setItem('sytraexUser', JSON.stringify(newUser));
-
-        alert("Kayıt işlemi başarılı! Profile yönlendiriliyorsunuz.");
-        window.location.href = "profile.html";
-
-      } catch (err) {
-        alert("Kayıt hatası: " + err.message);
-        btn.innerText = "Kayıt Ol ve Katıl";
-        btn.disabled = false;
-      }
-    });
-  </script>
-
-</body>
-</html>
+  const btn = $('#submitBtn'); setBusy(btn, true, t('please_wait'));
+  const { data, error } = await sb.auth.signUp({
+    email: v('email'), password: $('#password').value,
+    options: {
+      emailRedirectTo: location.origin + '/login.html',
+      data: { full_name: v('fullName'), username: v('username'), city: v('city'), country: v('country') }
+    }
+  });
+  if (error) { setBusy(btn, false); return showAlert(msg, friendlyError(error)); }
+  // Aynı e-posta zaten kayıtlıysa Supabase sahte başarı döner (identities boş)
+  if (data.user && data.user.identities && data.user.identities.length === 0) {
+    setBusy(btn, false); return showAlert(msg, t('err_email_taken'));
+  }
+  if (data.session) { location.href = 'profile.html'; return; }
+  $('#formArea').innerHTML = `<div class="alert alert-ok"><b>${t('reg_check_email_t')}</b><br>${t('reg_check_email_d')}</div>
+    <a class="btn btn-soft btn-block" href="login.html">${t('nav_login')}</a>`;
+});
+applyI18n();
+</script>
+</body></html>

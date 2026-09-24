@@ -1,1187 +1,141 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="tr">
-
-<head>
-
-  <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Deneyim Paylaş | Sytraex</title>
-
-  <link rel="stylesheet" href="style.css">
-
-  <link rel="icon" type="image/png" href="logo.png">
-
-
-
-  <style>
-
-    body {
-
-      margin: 0;
-
-      padding: 0;
-
-      background-color: #0f172a;
-
-      color: #ffffff;
-
-      font-family: Arial, sans-serif;
-
-    }
-
-
-
-    header {
-
-      background: rgba(15, 23, 42, 0.95);
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-      padding: 15px 30px;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      position: sticky;
-
-      top: 0;
-
-      z-index: 1000;
-
-    }
-
-
-
-    .logo { display: flex; align-items: center; gap: 12px; }
-
-    .logo-img { width: 45px; height: 45px; }
-
-
-
-    .logo-text h1 {
-
-      margin: 0;
-
-      font-size: 22px;
-
-      color: #ffcc00;
-
-      text-transform: lowercase;
-
-    }
-
-
-
-    .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
-
-
-
-    nav ul {
-
-      list-style: none;
-
-      margin: 0;
-
-      padding: 0;
-
-      display: flex;
-
-      gap: 20px;
-
-      align-items: center;
-
-    }
-
-
-
-    nav ul li a {
-
-      color: #fff;
-
-      text-decoration: none;
-
-      font-weight: 500;
-
-      transition: color 0.3s;
-
-    }
-
-
-
-    nav ul li a:hover { color: #ffcc00; }
-
-
-
-    .lang-switcher {
-
-      font-size: 13px;
-
-      font-weight: bold;
-
-      color: #ffcc00;
-
-      margin-left: 10px;
-
-    }
-
-
-
-    .share-container {
-
-      max-width: 800px;
-
-      margin: 40px auto;
-
-      padding: 0 20px;
-
-    }
-
-
-
-    .share-card {
-
-      background: rgba(30, 41, 59, 0.85);
-
-      border: 1px solid rgba(255, 204, 0, 0.3);
-
-      border-radius: 16px;
-
-      padding: 35px;
-
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-
-      backdrop-filter: blur(10px);
-
-    }
-
-
-
-    .share-card h2 {
-
-      color: #ffcc00;
-
-      margin-top: 0;
-
-      margin-bottom: 25px;
-
-      font-size: 26px;
-
-      text-align: center;
-
-    }
-
-
-
-    .form-group {
-
-      margin-bottom: 22px;
-
-      position: relative;
-
-    }
-
-
-
-    .form-group label {
-
-      display: block;
-
-      font-size: 13px;
-
-      color: #ffcc00;
-
-      margin-bottom: 8px;
-
-      font-weight: bold;
-
-    }
-
-
-
-    .form-group input, .form-group select, .form-group textarea {
-
-      width: 100%;
-
-      padding: 12px;
-
-      border: 1px solid rgba(255, 255, 255, 0.2);
-
-      border-radius: 8px;
-
-      background: #0f172a;
-
-      color: #fff;
-
-      font-size: 14px;
-
-      outline: none;
-
-      box-sizing: border-box;
-
-    }
-
-
-
-    .form-group textarea {
-
-      resize: vertical;
-
-      min-height: 90px;
-
-    }
-
-
-
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-
-      border-color: #ffcc00;
-
-    }
-
-
-
-    .autocomplete-items {
-
-      position: absolute;
-
-      border: 1px solid #ffcc00;
-
-      border-top: none;
-
-      z-index: 9999;
-
-      top: 100%;
-
-      left: 0; right: 0;
-
-      background-color: #1e293b;
-
-      border-radius: 0 0 8px 8px;
-
-      max-height: 220px;
-
-      overflow-y: auto;
-
-      display: none;
-
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-
-    }
-
-
-
-    .autocomplete-items div {
-
-      padding: 12px 15px;
-
-      cursor: pointer;
-
-      font-size: 13px;
-
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-    }
-
-
-
-    .autocomplete-items div:hover {
-
-      background-color: #ffcc00;
-
-      color: #000;
-
-    }
-
-
-
-    .image-preview-grid {
-
-      display: grid;
-
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-
-      gap: 12px;
-
-      margin-top: 12px;
-
-    }
-
-
-
-    .preview-item {
-
-      position: relative;
-
-      width: 100%;
-
-      height: 90px;
-
-      border-radius: 8px;
-
-      overflow: hidden;
-
-      border: 2px solid rgba(255, 204, 0, 0.4);
-
-    }
-
-
-
-    .preview-item img {
-
-      width: 100%;
-
-      height: 100%;
-
-      object-fit: cover;
-
-    }
-
-
-
-    .preview-item .remove-btn {
-
-      position: absolute;
-
-      top: 4px;
-
-      right: 4px;
-
-      background: rgba(239, 68, 68, 0.85);
-
-      color: #fff;
-
-      border: none;
-
-      border-radius: 50%;
-
-      width: 22px;
-
-      height: 22px;
-
-      cursor: pointer;
-
-      font-size: 12px;
-
-      display: flex;
-
-      justify-content: center;
-
-      align-items: center;
-
-      font-weight: bold;
-
-    }
-
-
-
-    .preview-item .cover-badge {
-
-      position: absolute;
-
-      bottom: 0;
-
-      left: 0;
-
-      right: 0;
-
-      background: rgba(255, 204, 0, 0.9);
-
-      color: #000;
-
-      font-size: 9px;
-
-      font-weight: bold;
-
-      text-align: center;
-
-      padding: 2px 0;
-
-    }
-
-
-
-    .btn-upload-photos {
-
-      display: inline-block;
-
-      padding: 12px 20px;
-
-      background: rgba(255, 204, 0, 0.15);
-
-      border: 1px dashed #ffcc00;
-
-      color: #ffcc00;
-
-      border-radius: 8px;
-
-      cursor: pointer;
-
-      font-weight: bold;
-
-      font-size: 14px;
-
-      transition: 0.3s;
-
-      text-align: center;
-
-      width: 100%;
-
-      box-sizing: border-box;
-
-    }
-
-
-
-    .btn-upload-photos:hover {
-
-      background: rgba(255, 204, 0, 0.25);
-
-    }
-
-
-
-    .section-divider {
-
-      border-top: 1px dashed rgba(255, 204, 0, 0.3);
-
-      margin: 30px 0 25px 0;
-
-      position: relative;
-
-    }
-
-
-
-    .section-divider-title {
-
-      position: absolute;
-
-      top: -12px;
-
-      left: 50%;
-
-      transform: translateX(-50%);
-
-      background: #1e293b;
-
-      padding: 0 15px;
-
-      color: #ffcc00;
-
-      font-size: 14px;
-
-      font-weight: bold;
-
-    }
-
-
-
-    .submit-btn {
-
-      width: 100%;
-
-      padding: 15px;
-
-      background: #ffcc00;
-
-      color: #000;
-
-      border: none;
-
-      border-radius: 8px;
-
-      font-weight: bold;
-
-      font-size: 16px;
-
-      cursor: pointer;
-
-      transition: 0.3s;
-
-      margin-top: 10px;
-
-    }
-
-
-
-    .submit-btn:hover { background: #e6b800; }
-
-
-
-    footer {
-
-      text-align: center;
-
-      padding: 20px;
-
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-
-      color: #888;
-
-      font-size: 13px;
-
-      margin-top: 60px;
-
-    }
-
-  </style>
-
-
-
-  <!-- Dil Kütüphanesi Entegrasyonu -->
-
-  <script src="lang.js"></script>
-
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a0f1f"><link rel="icon" href="logo.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/app.css">
+<title>Deneyimini Paylaş | Sytraex</title>
+<meta name="robots" content="noindex">
 </head>
+<body data-active="share" data-title="share_title">
+<div id="site-header"></div>
+<main class="container section">
+  <div class="card form-card">
+    <h1 style="font-size:1.8rem" id="pageTitle" data-i18n="share_title"></h1>
+    <p class="mt" data-i18n="share_sub"></p>
+    <div id="msg" class="alert hidden mt" role="alert"></div>
 
-<body>
-
-
-
-  <header>
-
-    <div class="logo">
-
-      <img src="logo.png" alt="Sytraex Logo" class="logo-img">
-
-      <div class="logo-text">
-
-        <h1>sytraex</h1>
-
-        <p>Share Your Travel Experience</p>
-
+    <form id="f" novalidate class="mt-lg">
+      <div class="field"><label for="title" data-i18n="f_title"></label><input id="title" type="text" maxlength="140" required data-i18n-ph="f_title_ph"></div>
+      <div class="field"><label for="location" data-i18n="f_location"></label><input id="location" type="text" maxlength="120" required data-i18n-ph="f_location_ph"></div>
+      <div class="row">
+        <div class="field"><label for="duration" data-i18n="search_label_duration"></label><select id="duration"></select></div>
+        <div class="field"><label for="mode" data-i18n="search_label_mode"></label><select id="mode"></select></div>
       </div>
 
-    </div>
-
-
-
-    <nav>
-
-      <ul>
-
-        <li><a href="index.html" data-i18n="nav_home">Ana Sayfa</a></li>
-
-        <li><a href="profile.html" style="color:#ffcc00; font-weight:bold;" data-i18n="nav_profile">Profilim</a></li>
-
-        <li><a href="whitepaper.html" data-i18n="nav_whitepaper">White Paper (Stake SYTX)</a></li>
-
-        <li class="lang-switcher">TR / EN</li>
-
-      </ul>
-
-    </nav>
-
-  </header>
-
-
-
-  <div class="share-container">
-
-    <div class="share-card">
-
-      <h2 data-i18n="share_title">✈️ Seyahat Deneyimini Paylaş</h2>
-
-
-
-      <form id="shareForm" autocomplete="off">
-
-        
-
-        <!-- Deneyim Başlığı -->
-
-        <div class="form-group">
-
-          <label for="postTitle" data-i18n="share_label_post_title">Deneyim / Rota Başlığı:</label>
-
-          <input type="text" id="postTitle" data-i18n-ph="share_ph_post_title" placeholder="Örn: Bodrum Kalesi, Bitez Sahili ve Tekne Turu Deneyimi" required>
-
-        </div>
-
-
-
-        <!-- Lokasyon Arama Kutusu -->
-
-        <div class="form-group">
-
-          <label for="locationInput" data-i18n="share_label_loc">Nereye Seyahat Edildi? (İl, İlçe veya Belde):</label>
-
-          <input type="text" id="locationInput" data-i18n-ph="share_ph_loc" placeholder="İlçe veya il adı yazın (Örn: Bodrum, Fethiye, Kadıköy)..." required>
-
-          <div id="cityAutocompleteList" class="autocomplete-items"></div>
-
-        </div>
-
-
-
-        <!-- Süre & Mod -->
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-
-          <div class="form-group">
-
-            <label for="postDuration" data-i18n="share_label_duration">Süre / Zaman Dilimi:</label>
-
-            <select id="postDuration" required>
-
-              <option value="3 Saatlik Tur" data-i18n="search_opt_dur_3h">3 Saatlik Hızlı Tur</option>
-
-              <option value="Günübirlik (6-12 Saat)" data-i18n="search_opt_dur_day">Günübirlik (6-12 Saat)</option>
-
-              <option value="1 Gün" data-i18n="search_opt_dur_1d">Tam 1 Gün</option>
-
-              <option value="Hafta Sonu (2-3 Gün)" data-i18n="search_opt_dur_weekend">Hafta Sonu (2-3 Gün)</option>
-
-              <option value="1 Hafta veya Daha Uzun" data-i18n="search_opt_dur_1w">1 Hafta veya Daha Uzun</option>
-
-            </select>
-
-          </div>
-
-
-
-          <div class="form-group">
-
-            <label for="postMode" data-i18n="share_label_mode">Seyahat Modu:</label>
-
-            <select id="postMode" required>
-
-              <option value="🌙 Gece Hayatı & Eğlence" data-i18n="search_opt_mode_night">🌙 Gece Hayatı & Eğlence</option>
-
-              <option value="☀️ Gündüz Gezi & Şehir" data-i18n="search_opt_mode_day">☀️ Gündüz Gezi & Şehir</option>
-
-              <option value="🏛️ Tarihsel & Kültür" data-i18n="search_opt_mode_history">🏛️ Tarihsel & Kültür</option>
-
-              <option value="🌿 Doğa & Sakinlik" data-i18n="search_opt_mode_nature">🌿 Doğa & Sakinlik</option>
-
-              <option value="🍕 Yemek & Gastronomi" data-i18n="search_opt_mode_food">🍕 Yemek & Gastronomi</option>
-
-              <option value="🏄 Macera & Spor" data-i18n="search_opt_mode_adventure">🏄 Macera & Spor</option>
-
-              <option value="💰 Bütçe Dostu" data-i18n="search_opt_mode_budget">💰 Bütçe Dostu</option>
-
-            </select>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- Medya Bölümü -->
-
-        <div class="section-divider">
-
-          <span class="section-divider-title" data-i18n="share_divider_media">🖼️ Medya Bağlantıları</span>
-
-        </div>
-
-
-
-        <!-- Fotoğraf Seçme -->
-
-        <div class="form-group">
-
-          <label data-i18n="share_label_photos">Cihazınızdan Fotoğraflar Seçin (Maksimum 10 Fotoğraf):</label>
-
-          
-
-          <label for="filePhotoInput" class="btn-upload-photos" data-i18n="share_btn_upload">
-
-            📷 Bilgisayardan / Telefondan Fotoğraf Seç
-
-          </label>
-
-          <input type="file" id="filePhotoInput" accept="image/*" multiple style="display:none;">
-
-
-
-          <div id="imagePreviewGrid" class="image-preview-grid"></div>
-
-        </div>
-
-
-
-        <!-- YouTube Video Linki -->
-
-        <div class="form-group">
-
-          <label for="youtubeUrl" data-i18n="share_label_youtube">🎥 YouTube Video Bağlantısı (İsteğe Bağlı):</label>
-
-          <input type="url" id="youtubeUrl" data-i18n-ph="share_ph_youtube" placeholder="https://www.youtube.com/watch?v=... veya https://youtu.be/...">
-
-        </div>
-
-
-
-        <!-- Yapılandırılmış Detay Alanları -->
-
-        <div class="section-divider">
-
-          <span class="section-divider-title" data-i18n="share_divider_details">📝 Seyahat Detayları & Öneriler</span>
-
-        </div>
-
-
-
-        <!-- 1. Kısa Özet -->
-
-        <div class="form-group">
-
-          <label for="summaryContent" data-i18n="share_label_summary">📌 Genel Özet & İzlenimleriniz:</label>
-
-          <textarea id="summaryContent" data-i18n-ph="share_ph_summary" placeholder="Bu rotanın genel atmosferi, kimlere uygun olduğu ve kısa deneyim özetiniz..." required></textarea>
-
-        </div>
-
-
-
-        <!-- 2. Gezilecek Yerler -->
-
-        <div class="form-group">
-
-          <label for="sightseeingContent" data-i18n="share_label_sightseeing">🏛️ Gezilecek Yerler & Aktivite Rotaları:</label>
-
-          <textarea id="sightseeingContent" data-i18n-ph="share_ph_sightseeing" placeholder="Mutlaka görülmesi gereken noktalar, tarihi mekanlar, plajlar veya yürüyüş yolları..."></textarea>
-
-        </div>
-
-
-
-        <!-- 3. Konaklama -->
-
-        <div class="form-group">
-
-          <label for="stayContent" data-i18n="share_label_stay">🏨 Konaklama & Otel Tavsiyeleri:</label>
-
-          <textarea id="stayContent" data-i18n-ph="share_ph_stay" placeholder="Kaldığınız veya önereceğiniz otel, pansiyon, kamp alanı bilgileri..."></textarea>
-
-        </div>
-
-
-
-        <!-- 4. Yeme & İçme -->
-
-        <div class="form-group">
-
-          <label for="foodContent" data-i18n="share_label_food">🍕 Yeme & İçme Önerileri (Mekanlar & Lezzetler):</label>
-
-          <textarea id="foodContent" data-i18n-ph="share_ph_food" placeholder="Denenmesi gereken yerel lezzetler, restaurant veya kafe tavsiyeleri..."></textarea>
-
-        </div>
-
-
-
-        <!-- 5. Ulaşım & Tüyolar -->
-
-        <div class="form-group">
-
-          <label for="tipsContent" data-i18n="share_label_tips">🚌 Ulaşım, Bütçe & Önemli Tüyolar:</label>
-
-          <textarea id="tipsContent" data-i18n-ph="share_ph_tips" placeholder="Ulaşım önerileri (araç kiralama, otobüs vs.), ortalama bütçe veya dikkat edilmesi gereken detaylar..."></textarea>
-
-        </div>
-
-
-
-        <button type="submit" id="submitBtn" class="submit-btn" data-i18n="share_btn_publish">🚀 Deneyimi Yayınla</button>
-
-      </form>
-
-    </div>
-
+      <div class="form-section" data-i18n="f_media"></div>
+      <div class="field">
+        <span class="label" data-i18n="f_photos"></span>
+        <div class="dropzone" id="drop" tabindex="0" role="button"><span data-i18n="f_photos_pick"></span><br><small class="faint" data-i18n="f_photos_hint"></small></div>
+        <input id="file" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+        <div class="previews" id="previews"></div>
+      </div>
+      <div class="field"><label for="youtube" data-i18n="f_youtube"></label><input id="youtube" type="url" maxlength="200" placeholder="https://www.youtube.com/watch?v=..."></div>
+
+      <div class="form-section" data-i18n="f_details"></div>
+      <div class="field"><label for="summary" data-i18n="detail_sec_summary"></label><textarea id="summary" maxlength="4000" required data-i18n-ph="ph_summary"></textarea><span class="hint" data-i18n="f_summary_hint"></span></div>
+      <div class="field"><label for="sightseeing" data-i18n="detail_sec_sightseeing"></label><textarea id="sightseeing" maxlength="4000" data-i18n-ph="ph_sightseeing"></textarea></div>
+      <div class="field"><label for="stay" data-i18n="detail_sec_stay"></label><textarea id="stay" maxlength="4000" data-i18n-ph="ph_stay"></textarea></div>
+      <div class="field"><label for="food" data-i18n="detail_sec_food"></label><textarea id="food" maxlength="4000" data-i18n-ph="ph_food"></textarea></div>
+      <div class="field"><label for="tips" data-i18n="detail_sec_tips"></label><textarea id="tips" maxlength="4000" data-i18n-ph="ph_tips"></textarea></div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+        <button class="btn btn-primary" id="submitBtn" type="submit" data-i18n="btn_publish"></button>
+        <a class="btn btn-soft" href="profile.html?tab=posts" data-i18n="cancel"></a>
+      </div>
+    </form>
   </div>
+</main>
+<div id="site-footer"></div>
+<script type="module">
+import { sb, state, initPage, $, $$, t, qs, esc, applyI18n, setBusy, showAlert, hideAlert, friendlyError, toast, DURATIONS, MODES, durLabel, modeLabel, compressImage, uploadImage, removeImages, youtubeEmbed, safeImg } from './js/app.js';
 
+const MAX = 10;
+const editId = qs.get('edit');
+let items = [];          // { url } (mevcut)  |  { blob, preview } (yeni)
+let originalImages = [];
 
+await initPage({ requireLogin: true });
+if (!state.user) await new Promise(() => {});
 
-  <footer>
+function fillSelects() {
+  const d = $('#duration'), m = $('#mode'), dv = d.value, mv = m.value;
+  d.innerHTML = DURATIONS.map(k => `<option value="${k}">${esc(durLabel(k))}</option>`).join('');
+  m.innerHTML = MODES.map(k => `<option value="${k}">${esc(modeLabel(k))}</option>`).join('');
+  if (dv) d.value = dv; if (mv) m.value = mv;
+}
+fillSelects();
 
-    <p data-i18n="footer_text">© 2026 Sytraex | Share Your Travel Experience</p>
+function renderPreviews() {
+  $('#previews').innerHTML = items.map((it, i) => `<div class="preview"><img src="${esc(it.url || it.preview)}" alt="">
+    <button type="button" data-rm="${i}" aria-label="remove">×</button>${i === 0 ? `<span class="cover">${esc(t('cover'))}</span>` : ''}</div>`).join('');
+  $$('[data-rm]').forEach(b => b.onclick = () => { const it = items.splice(+b.dataset.rm, 1)[0]; if (it.preview) URL.revokeObjectURL(it.preview); renderPreviews(); });
+  $('#drop').classList.toggle('hidden', items.length >= MAX);
+}
+async function addFiles(files) {
+  hideAlert($('#msg'));
+  for (const f of files) {
+    if (items.length >= MAX) { toast(t('err_max_photos'), 'err'); break; }
+    if (!/^image\/(jpeg|png|webp)$/.test(f.type)) { toast(t('err_photo_type'), 'err'); continue; }
+    try { const blob = await compressImage(f); items.push({ blob, preview: URL.createObjectURL(blob) }); }
+    catch { toast(t('err_photo_type'), 'err'); }
+  }
+  renderPreviews();
+}
+$('#drop').onclick = () => $('#file').click();
+$('#drop').onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('#file').click(); } };
+$('#file').onchange = (e) => { addFiles([...e.target.files]); e.target.value = ''; };
+['dragover', 'dragenter'].forEach(ev => $('#drop').addEventListener(ev, e => { e.preventDefault(); $('#drop').classList.add('drag'); }));
+['dragleave', 'drop'].forEach(ev => $('#drop').addEventListener(ev, e => { e.preventDefault(); $('#drop').classList.remove('drag'); }));
+$('#drop').addEventListener('drop', e => addFiles([...e.dataTransfer.files]));
 
-  </footer>
+// düzenleme modu
+if (editId) {
+  const { data, error } = await sb.from('posts').select('*').eq('id', editId).maybeSingle();
+  if (error || !data || data.user_id !== state.user.id) { location.replace('profile.html?tab=posts'); await new Promise(() => {}); }
+  $('#pageTitle').dataset.i18n = 'edit_title'; $('#submitBtn').dataset.i18n = 'btn_save';
+  ['title', 'location', 'duration', 'mode', 'summary', 'sightseeing', 'stay', 'food', 'tips'].forEach(k => { $('#' + k).value = data[k] || ''; });
+  $('#youtube').value = data.youtube_url || '';
+  originalImages = data.images || [];
+  items = originalImages.map(url => ({ url }));
+  renderPreviews();
+}
+applyI18n();
+window.addEventListener('langchange', () => { fillSelects(); renderPreviews(); });
 
+$('#f').addEventListener('submit', async (e) => {
+  e.preventDefault(); hideAlert($('#msg'));
+  const v = id => $('#' + id).value.trim();
+  const fail = (m) => { showAlert($('#msg'), m); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  if (v('title').length < 5) return fail(t('err_title_short'));
+  if (v('location').length < 2) return fail(t('err_location'));
+  if (!items.length) return fail(t('err_min_photo'));
+  if (v('summary').length < 20) return fail(t('err_summary_short'));
+  if (v('youtube') && !youtubeEmbed(v('youtube'))) return fail(t('err_youtube'));
 
-
-  <script type="module">
-
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-
-
-    const firebaseConfig = {
-
-      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
-
-      authDomain: "sytraex-462b0.firebaseapp.com",
-
-      projectId: "sytraex-462b0",
-
-      storageBucket: "sytraex-462b0.firebasestorage.app",
-
-      messagingSenderId: "379245018695",
-
-      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62"
-
+  const btn = $('#submitBtn'); setBusy(btn, true, t('publishing'));
+  try {
+    const urls = [];
+    for (const it of items) urls.push(it.url ? it.url : await uploadImage('post-images', it.blob));
+    const row = {
+      title: v('title'), location: v('location'), duration: $('#duration').value, mode: $('#mode').value,
+      images: urls, youtube_url: v('youtube') || null, summary: v('summary'),
+      sightseeing: v('sightseeing') || null, stay: v('stay') || null, food: v('food') || null, tips: v('tips') || null
     };
-
-
-
-    const app = initializeApp(firebaseConfig);
-
-    const db = getFirestore(app);
-
-
-
-    const loggedIn = localStorage.getItem('loggedIn');
-
-    const userData = JSON.parse(localStorage.getItem('sytraexUser'));
-
-
-
-    if (loggedIn !== "true" || !userData) {
-
-      alert("Gönderi paylaşabilmek için lütfen önce giriş yapınız.");
-
-      window.location.href = "login.html";
-
+    let postId = editId;
+    if (editId) {
+      const { error } = await sb.from('posts').update(row).eq('id', editId);
+      if (error) throw error;
+      const removed = originalImages.filter(u => !urls.includes(u));
+      if (removed.length) removeImages('post-images', removed).catch(() => {});
+    } else {
+      const { data, error } = await sb.from('posts').insert({ ...row, user_id: state.user.id }).select('id').single();
+      if (error) throw error;
+      postId = data.id;
     }
-
-
-
-    let uploadedBase64Images = [];
-
-
-
-    document.getElementById('filePhotoInput').addEventListener('change', function(e) {
-
-      const files = Array.from(e.target.files);
-
-      
-
-      if (uploadedBase64Images.length + files.length > 10) {
-
-        alert("En fazla 10 adet fotoğraf yükleyebilirsiniz.");
-
-        return;
-
-      }
-
-
-
-      files.forEach(file => {
-
-        const reader = new FileReader();
-
-        reader.onload = function(event) {
-
-          const img = new Image();
-
-          img.onload = function() {
-
-            const canvas = document.createElement('canvas');
-
-            const ctx = canvas.getContext('2d');
-
-
-
-            let maxWidth = 1000;
-
-            let scale = maxWidth / img.width;
-
-            if (scale > 1) scale = 1;
-
-
-
-            canvas.width = img.width * scale;
-
-            canvas.height = img.height * scale;
-
-
-
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
-
-
-
-            uploadedBase64Images.push(compressedBase64);
-
-            renderPreviews();
-
-          };
-
-          img.src = event.target.result;
-
-        };
-
-        reader.readAsDataURL(file);
-
-      });
-
-
-
-      this.value = '';
-
-    });
-
-
-
-    function renderPreviews() {
-
-      const grid = document.getElementById('imagePreviewGrid');
-
-      grid.innerHTML = '';
-
-      const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-
-      const badgeText = currentLang === 'en' ? 'COVER' : 'KAPAK';
-
-
-
-      uploadedBase64Images.forEach((base64, idx) => {
-
-        const item = document.createElement('div');
-
-        item.className = 'preview-item';
-
-        
-
-        item.innerHTML = `
-
-          <img src="${base64}">
-
-          <button type="button" class="remove-btn" onclick="removeImage(${idx})">✕</button>
-
-          ${idx === 0 ? `<span class="cover-badge">${badgeText}</span>` : ''}
-
-        `;
-
-        grid.appendChild(item);
-
-      });
-
-    }
-
-
-
-    window.removeImage = function(index) {
-
-      uploadedBase64Images.splice(index, 1);
-
-      renderPreviews();
-
-    };
-
-
-
-    const locationInput = document.getElementById("locationInput");
-
-    const cityList = document.getElementById("cityAutocompleteList");
-
-    let debounceTimer;
-
-
-
-    locationInput.addEventListener("input", function() {
-
-      const query = this.value.trim();
-
-      cityList.innerHTML = "";
-
-      if (query.length < 2) { cityList.style.display = "none"; return; }
-
-
-
-      clearTimeout(debounceTimer);
-
-      debounceTimer = setTimeout(() => {
-
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=8`)
-
-          .then(res => res.json())
-
-          .then(data => {
-
-            cityList.innerHTML = "";
-
-            if (data && data.length > 0) {
-
-              data.forEach(item => {
-
-                const div = document.createElement("div");
-
-                const districtOrCity = item.address.suburb || item.address.district || item.address.town || item.address.city || item.display_name.split(',')[0];
-
-                const state = item.address.state || item.address.province || '';
-
-                const country = item.address.country || '';
-
-
-
-                let locationParts = [districtOrCity];
-
-                if (state && state !== districtOrCity) locationParts.push(state);
-
-                if (country) locationParts.push(country);
-
-
-
-                const fullLocationText = locationParts.join(', ');
-
-
-
-                div.innerHTML = `<span>📍 <strong>${districtOrCity}</strong> ${state ? `<small style="color:#aaa;">(${state})</small>` : ''}</span> <span style="font-size:11px; opacity:0.7;">${country}</span>`;
-
-                
-
-                div.addEventListener("click", () => {
-
-                  locationInput.value = fullLocationText;
-
-                  cityList.style.display = "none";
-
-                });
-
-                cityList.appendChild(div);
-
-              });
-
-              cityList.style.display = "block";
-
-            }
-
-          });
-
-      }, 250);
-
-    });
-
-
-
-    document.addEventListener("click", (e) => {
-
-      if (e.target !== locationInput) cityList.style.display = "none";
-
-    });
-
-
-
-    document.getElementById('shareForm').addEventListener('submit', async (e) => {
-
-      e.preventDefault();
-
-      
-
-      if (uploadedBase64Images.length === 0) {
-
-        alert("Lütfen en az 1 adet fotoğraf seçiniz.");
-
-        return;
-
-      }
-
-
-
-      const submitBtn = document.getElementById('submitBtn');
-
-      submitBtn.innerText = "Yayınlanıyor...";
-
-      submitBtn.disabled = true;
-
-
-
-      try {
-
-        const newPost = {
-
-          username: userData.username,
-
-          authorName: userData.name || userData.username,
-
-          title: document.getElementById('postTitle').value.trim(),
-
-          location: locationInput.value.trim(),
-
-          duration: document.getElementById('postDuration').value,
-
-          mode: document.getElementById('postMode').value,
-
-          
-
-          imageUrl: uploadedBase64Images[0],
-
-          images: uploadedBase64Images,
-
-          youtubeUrl: document.getElementById('youtubeUrl').value.trim(),
-
-
-
-          details: {
-
-            summary: document.getElementById('summaryContent').value.trim(),
-
-            sightseeing: document.getElementById('sightseeingContent').value.trim(),
-
-            stay: document.getElementById('stayContent').value.trim(),
-
-            food: document.getElementById('foodContent').value.trim(),
-
-            tips: document.getElementById('tipsContent').value.trim()
-
-          },
-
-
-
-          ratings: {},
-
-          createdAt: new Date().toISOString()
-
-        };
-
-
-
-        await addDoc(collection(db, "posts"), newPost);
-
-
-
-        alert("Tebrikler! Seyahat deneyiminiz başarıyla yayınlandı.");
-
-        window.location.href = "profile.html?tab=posts";
-
-
-
-      } catch (err) {
-
-        console.error("Gönderi paylaşım hatası:", err);
-
-        alert("Bir hata oluştu: " + err.message);
-
-        submitBtn.innerText = "🚀 Deneyimi Yayınla";
-
-        submitBtn.disabled = false;
-
-      }
-
-    });
-
-  </script>
-
-
-
-</body>
-
-</html> 
+    toast(t(editId ? 'saved' : 'published'), 'ok');
+    setTimeout(() => location.href = `post-detail.html?id=${postId}`, 600);
+  } catch (err) {
+    console.error(err);
+    setBusy(btn, false); fail(friendlyError(err));
+  }
+});
+</script>
+</body></html>

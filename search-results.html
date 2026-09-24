@@ -1,283 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arama Sonuçları | Sytraex</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="logo.png">
-
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #0f172a;
-      color: #ffffff;
-      font-family: Arial, sans-serif;
-    }
-
-    header {
-      background: rgba(15, 23, 42, 0.95);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-img { width: 45px; height: 45px; }
-    .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
-    .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
-
-    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; align-items: center; }
-    nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
-    nav ul li a:hover { color: #ffcc00; }
-
-    .lang-switcher {
-      font-size: 13px;
-      font-weight: bold;
-      color: #ffcc00;
-      margin-left: 10px;
-    }
-
-    .results-container {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    .search-summary-card {
-      background: #1e293b;
-      border-radius: 16px;
-      padding: 25px;
-      border: 1px solid rgba(255, 204, 0, 0.3);
-      margin-bottom: 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .filter-tags { display: flex; gap: 10px; flex-wrap: wrap; }
-    .filter-badge {
-      background: rgba(255,204,0,0.15);
-      color: #ffcc00;
-      border: 1px solid #ffcc00;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 13px;
-    }
-
-    .btn-new-search {
-      padding: 8px 18px;
-      background: transparent;
-      border: 1px solid #ffcc00;
-      color: #ffcc00;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 13px;
-    }
-
-    .btn-new-search:hover { background: #ffcc00; color: #000; }
-
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .post-card {
-      background: #1e293b;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      cursor: pointer;
-      transition: transform 0.3s, border-color 0.3s;
-    }
-
-    .post-card:hover {
-      transform: translateY(-5px);
-      border-color: #ffcc00;
-    }
-
-    .post-card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-    }
-
-    .post-card-body { padding: 18px; }
-    .post-card-tag { font-size: 11px; background: rgba(255,204,0,0.15); color: #ffcc00; padding: 3px 8px; border-radius: 4px; }
-    .post-card-title { font-size: 16px; font-weight: bold; margin: 10px 0 6px 0; color: #fff; }
-    .post-card-author { font-size: 12px; color: #ffcc00; margin-bottom: 6px; }
-    .post-card-loc { font-size: 12px; color: #aaa; }
-
-    .no-results {
-      text-align: center;
-      padding: 50px 20px;
-      background: #1e293b;
-      border-radius: 16px;
-      border: 1px dashed rgba(255,255,255,0.1);
-    }
-
-    footer { text-align: center; padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #888; font-size: 13px; margin-top: 60px; }
-  </style>
-
-  <!-- Dil Kütüphanesi Entegrasyonu -->
-  <script src="lang.js"></script>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a0f1f"><link rel="icon" href="logo.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/app.css">
+<title>Keşfet | Sytraex</title>
+<meta name="description" content="Sytraex topluluğunun seyahat deneyimlerini keşfet.">
 </head>
-<body>
+<body data-active="explore" data-title="nav_explore">
+<div id="site-header"></div>
+<main class="container section">
+  <div class="section-head"><div><h1 style="font-size:2rem" data-i18n="explore_title"></h1><p id="resultInfo"></p></div></div>
+  <form class="searchbar" id="searchForm" style="margin-bottom:28px">
+    <div class="field" style="margin:0"><label for="q" data-i18n="search_label_loc"></label><input id="q" type="search" data-i18n-ph="search_ph_loc" autocomplete="off"></div>
+    <div class="field" style="margin:0"><label for="dur" data-i18n="search_label_duration"></label><select id="dur"></select></div>
+    <div class="field" style="margin:0"><label for="mode" data-i18n="search_label_mode"></label><select id="mode"></select></div>
+    <button class="btn btn-primary" type="submit" data-i18n="search_btn_submit"></button>
+  </form>
+  <div class="grid" id="grid"></div>
+  <div class="center mt-lg"><button class="btn btn-soft hidden" id="moreBtn" data-i18n="load_more"></button></div>
+</main>
+<div id="site-footer"></div>
+<script type="module">
+import { sb, initPage, $, t, qs, applyI18n, DURATIONS, MODES, durLabel, modeLabel, postCardHTML, skeletons, esc } from './js/app.js';
 
-  <header>
-    <div class="logo">
-      <img src="logo.png" alt="Sytraex Logo" class="logo-img">
-      <div class="logo-text">
-        <h1>sytraex</h1>
-        <p>Share Your Travel Experience</p>
-      </div>
-    </div>
+const PAGE = 12;
+let page = 0, total = 0;
 
-    <nav>
-      <ul>
-        <li><a href="index.html" data-i18n="nav_home">Ana Sayfa</a></li>
-        <li><a href="profile.html" data-i18n="nav_profile">Profilim</a></li>
-        <li><a href="whitepaper.html" data-i18n="nav_whitepaper">White Paper (Stake SYTX)</a></li>
-        <li class="lang-switcher">TR / EN</li>
-      </ul>
-    </nav>
-  </header>
+function fillFilters() {
+  const d = $('#dur'), m = $('#mode'), dv = d.value || qs.get('dur') || '', mv = m.value || qs.get('mode') || '';
+  d.innerHTML = `<option value="">${esc(t('search_opt_dur_all'))}</option>` + DURATIONS.map(k => `<option value="${k}">${esc(durLabel(k))}</option>`).join('');
+  m.innerHTML = `<option value="">${esc(t('search_opt_mode_all'))}</option>` + MODES.map(k => `<option value="${k}">${esc(modeLabel(k))}</option>`).join('');
+  d.value = dv; m.value = mv;
+}
 
-  <div class="results-container">
-    <div class="search-summary-card">
-      <div>
-        <h3 style="margin:0 0 10px 0; color:#ffcc00;" data-i18n="results_title">Arama Sonuçları</h3>
-        <div class="filter-tags" id="filterTagsContainer"></div>
-      </div>
-      <a href="index.html" class="btn-new-search" data-i18n="results_btn_new">← Yeni Arama Yap</a>
-    </div>
+async function run(reset = true) {
+  if (reset) { page = 0; $('#grid').innerHTML = skeletons(6); }
+  const q = $('#q').value.trim().replace(/[%,()]/g, ' ');
+  let query = sb.from('posts_feed').select('*', { count: 'exact' });
+  if (q) query = query.or(`location.ilike.%${q}%,title.ilike.%${q}%`);
+  if ($('#dur').value) query = query.eq('duration', $('#dur').value);
+  if ($('#mode').value) query = query.eq('mode', $('#mode').value);
+  const { data, count, error } = await query.order('created_at', { ascending: false }).range(page * PAGE, page * PAGE + PAGE - 1);
+  if (error) { $('#grid').innerHTML = `<div class="empty" style="grid-column:1/-1"><h3>${esc(t('load_error'))}</h3></div>`; return; }
+  total = count || 0;
+  if (reset) $('#grid').innerHTML = '';
+  if (!data.length && reset) {
+    $('#grid').innerHTML = `<div class="empty" style="grid-column:1/-1"><h3>${esc(t('no_results_t'))}</h3><p>${esc(t('no_results_d'))}</p><a class="btn btn-primary" href="share-experience.html">${esc(t('hero_btn_share'))}</a></div>`;
+  } else {
+    $('#grid').insertAdjacentHTML('beforeend', data.map(postCardHTML).join(''));
+  }
+  $('#resultInfo').textContent = t('results_count', { n: total });
+  $('#moreBtn').classList.toggle('hidden', (page + 1) * PAGE >= total);
+}
 
-    <div id="resultsGrid" class="posts-grid">
-      <p style="color:#aaa;">Arama yapılıyor...</p>
-    </div>
-  </div>
+$('#searchForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const p = new URLSearchParams();
+  if ($('#q').value.trim()) p.set('q', $('#q').value.trim());
+  if ($('#dur').value) p.set('dur', $('#dur').value);
+  if ($('#mode').value) p.set('mode', $('#mode').value);
+  history.replaceState(null, '', '?' + p);
+  run();
+});
+$('#moreBtn').onclick = () => { page++; run(false); };
 
-  <footer>
-    <p data-i18n="footer_text">© 2026 Sytraex | Share Your Travel Experience</p>
-  </footer>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
-      authDomain: "sytraex-462b0.firebaseapp.com",
-      projectId: "sytraex-462b0",
-      storageBucket: "sytraex-462b0.firebasestorage.app",
-      messagingSenderId: "379245018695",
-      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const rawLocation = (urlParams.get('location') || '').trim();
-    const searchDuration = (urlParams.get('duration') || '').trim();
-    const searchMode = (urlParams.get('mode') || '').trim();
-
-    // Filtre Etiketleri
-    const tagsContainer = document.getElementById('filterTagsContainer');
-    if (rawLocation) tagsContainer.innerHTML += `<span class="filter-badge">📍 ${rawLocation}</span>`;
-    if (searchDuration && searchDuration !== 'hepsi') tagsContainer.innerHTML += `<span class="filter-badge" data-i18n="results_dur_filtered">⏱️ Süre Filtreli</span>`;
-    if (searchMode && searchMode !== 'hepsi') tagsContainer.innerHTML += `<span class="filter-badge" data-i18n="results_mode_filtered">🎯 Mod Filtreli</span>`;
-    if (!tagsContainer.innerHTML) tagsContainer.innerHTML = '<span class="filter-badge" data-i18n="results_all_posts">Tüm Gönderiler</span>';
-
-    // Arama Kelimelerini Hazırla
-    const searchKeywords = rawLocation
-      .toLowerCase()
-      .split(/[\s,]+/)
-      .filter(k => k.length > 1);
-
-    async function fetchSearchPosts() {
-      const resultsGrid = document.getElementById('resultsGrid');
-
-      try {
-        const querySnapshot = await getDocs(collection(db, "posts"));
-        const matchedPosts = [];
-
-        querySnapshot.forEach((docSnap) => {
-          const post = docSnap.data();
-          const pLoc = (post.location || '').toLowerCase();
-          const pTitle = (post.title || '').toLowerCase();
-          const pDur = (post.duration || '').toLowerCase();
-          const pMode = (post.mode || '').toLowerCase();
-
-          let locMatch = false;
-          if (searchKeywords.length === 0) {
-            locMatch = true;
-          } else {
-            locMatch = searchKeywords.some(kw => pLoc.includes(kw) || pTitle.includes(kw));
-          }
-
-          let durMatch = !searchDuration || searchDuration === 'hepsi' || pDur.includes(searchDuration.toLowerCase());
-          let modeMatch = !searchMode || searchMode === 'hepsi' || pMode.includes(searchMode.toLowerCase());
-
-          if (locMatch && durMatch && modeMatch) {
-            matchedPosts.push({ id: docSnap.id, ...post });
-          }
-        });
-
-        if (matchedPosts.length === 0) {
-          resultsGrid.innerHTML = `
-            <div class="no-results" style="grid-column: 1/-1;">
-              <h3 style="color:#ffcc00; margin-bottom:10px;" data-i18n="results_no_match_title">Henüz Uygun Bir Seyahat Rotası Bulunamadı</h3>
-              <p style="color:#aaa; margin-bottom:20px;" data-i18n="results_no_match_desc">Aradığınız kriterlere uygun herhangi bir kullanıcı paylaşımı bulunamadı.</p>
-              <a href="share-experience.html" style="text-decoration:none;">
-                <button style="padding:12px 24px; background:#ffcc00; border:none; border-radius:8px; font-weight:bold; cursor:pointer;" data-i18n="results_btn_first_share">+ İlk Deneyimi Sen Paylaş!</button>
-              </a>
-            </div>
-          `;
-          const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-          if (typeof applyLanguage === 'function') applyLanguage(currentLang);
-          return;
-        }
-
-        resultsGrid.innerHTML = '';
-        matchedPosts.forEach((post) => {
-          const card = document.createElement('div');
-          card.className = 'post-card';
-          card.onclick = () => window.location.href = `post-detail.html?id=${post.id}`;
-
-          card.innerHTML = `
-            <img src="${post.imageUrl}" alt="${post.title}" onerror="this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=500'">
-            <div class="post-card-body">
-              <span class="post-card-tag">${post.mode || 'Seyahat'}</span>
-              <div class="post-card-title">${post.title}</div>
-              <div class="post-card-author">👤 @${post.username}</div>
-              <div class="post-card-loc">📍 ${post.location} • ⏱️ ${post.duration}</div>
-            </div>
-          `;
-          resultsGrid.appendChild(card);
-        });
-
-        const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-        if (typeof applyLanguage === 'function') applyLanguage(currentLang);
-
-      } catch (err) {
-        console.error("Arama hatası:", err);
-        resultsGrid.innerHTML = '<p style="color:#ff4d4d; grid-column: 1/-1;">Arama sonuçları getirilirken bir hata oluştu.</p>';
-      }
-    }
-
-    fetchSearchPosts();
-  </script>
-
-</body>
-</html>
+await initPage();
+$('#q').value = qs.get('q') || '';
+fillFilters(); applyI18n(); run();
+window.addEventListener('langchange', () => { fillFilters(); run(); });
+</script>
+</body></html>

@@ -1,1160 +1,286 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profilim | Sytraex</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="logo.png">
-
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #0f172a;
-      color: #ffffff;
-      font-family: Arial, sans-serif;
-    }
-
-    header {
-      background: rgba(15, 23, 42, 0.95);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-img { width: 45px; height: 45px; }
-    .logo-text h1 { margin: 0; font-size: 22px; color: #ffcc00; text-transform: lowercase; }
-    .logo-text p { margin: 0; font-size: 11px; color: #aaa; }
-
-    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; align-items: center; }
-    nav ul li a { color: #fff; text-decoration: none; font-weight: 500; }
-    nav ul li a:hover { color: #ffcc00; }
-
-    .lang-switcher {
-      font-size: 13px;
-      font-weight: bold;
-      color: #ffcc00;
-      margin-left: 10px;
-    }
-
-    .profile-layout {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 30px;
-    }
-
-    @media (max-width: 800px) {
-      .profile-layout { grid-template-columns: 1fr; }
-    }
-
-    /* Sol Profil Paneli */
-    .sidebar-card {
-      background: #1e293b;
-      border-radius: 16px;
-      padding: 25px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-    }
-
-    .avatar-wrapper {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 10px;
-      cursor: pointer;
-    }
-
-    .avatar-img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #ffcc00;
-      background-color: #0f172a;
-      transition: filter 0.3s;
-    }
-
-    .avatar-wrapper:hover .avatar-img { filter: brightness(0.7); }
-
-    .avatar-overlay {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #ffcc00;
-      font-size: 22px;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .avatar-wrapper:hover .avatar-overlay { opacity: 1; }
-
-    .change-photo-btn {
-      background: rgba(255, 204, 0, 0.15);
-      border: 1px solid #ffcc00;
-      color: #ffcc00;
-      font-size: 12px;
-      padding: 5px 12px;
-      border-radius: 20px;
-      cursor: pointer;
-      margin-bottom: 15px;
-      display: inline-block;
-      transition: 0.3s;
-    }
-
-    .change-photo-btn:hover { background: #ffcc00; color: #000; }
-
-    .username-tag { color: #aaa; font-size: 14px; margin-bottom: 25px; }
-
-    .menu-btn {
-      width: 100%;
-      padding: 12px 15px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #fff;
-      border-radius: 8px;
-      text-align: left;
-      font-size: 14px;
-      cursor: pointer;
-      margin-bottom: 10px;
-      transition: 0.3s;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .menu-btn.active, .menu-btn:hover {
-      background: rgba(255, 204, 0, 0.15);
-      border-color: #ffcc00;
-      color: #ffcc00;
-      font-weight: bold;
-    }
-
-    .badge-count {
-      background: #ef4444;
-      color: #fff;
-      font-size: 11px;
-      padding: 2px 7px;
-      border-radius: 10px;
-    }
-
-    .btn-logout {
-      width: 100%;
-      padding: 12px;
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid #ef4444;
-      color: #ef4444;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: 0.3s;
-    }
-
-    .btn-logout:hover { background: #ef4444; color: #fff; }
-
-    /* Sağ İçerik */
-    .content-card {
-      background: #1e293b;
-      border-radius: 16px;
-      padding: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .header-title-flex {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-    }
-
-    .header-title-flex h2 { color: #ffcc00; margin: 0; font-size: 22px; }
-
-    .btn-edit {
-      padding: 8px 16px;
-      background: rgba(255, 204, 0, 0.15);
-      border: 1px solid #ffcc00;
-      color: #ffcc00;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 13px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn-edit:hover { background: #ffcc00; color: #000; }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 15px;
-    }
-
-    .info-box {
-      background: #0f172a;
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .info-box label { display: block; font-size: 11px; color: #aaa; text-transform: uppercase; margin-bottom: 4px; }
-    .info-box span { font-size: 14px; font-weight: bold; color: #fff; word-break: break-all; }
-
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .post-card {
-      background: #0f172a;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    .post-card:hover { transform: translateY(-3px); }
-
-    .post-card img { width: 100%; height: 140px; object-fit: cover; }
-    .post-card-body { padding: 15px; }
-    .post-card-tag { font-size: 10px; background: rgba(255,204,0,0.2); color: #ffcc00; padding: 2px 6px; border-radius: 4px; }
-    .post-card-title { font-size: 15px; font-weight: bold; margin: 8px 0 4px 0; color: #fff; }
-    .post-card-loc { font-size: 12px; color: #aaa; margin-bottom: 10px; }
-
-    /* Cüzdan Paneli Stilleri */
-    .wallet-banner {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      border: 1px solid rgba(255, 204, 0, 0.4);
-      border-radius: 16px;
-      padding: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-
-    .wallet-balance-group {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .sytx-icon-large {
-      width: 60px;
-      height: 60px;
-      filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.4));
-    }
-
-    .balance-amount {
-      font-size: 36px;
-      font-weight: 800;
-      color: #ffcc00;
-      line-height: 1;
-    }
-
-    .balance-label {
-      font-size: 13px;
-      color: #aaa;
-      margin-top: 5px;
-    }
-
-    .tx-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-
-    .tx-table th, .tx-table td {
-      padding: 12px 15px;
-      text-align: left;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      font-size: 13px;
-    }
-
-    .tx-table th { color: #ffcc00; font-size: 12px; text-transform: uppercase; }
-    .tx-amount { font-weight: bold; color: #22c55e; }
-
-    /* Mesajlar Paneli Stilleri */
-    .messages-layout {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 15px;
-      min-height: 400px;
-    }
-
-    @media (max-width: 650px) {
-      .messages-layout { grid-template-columns: 1fr; }
-    }
-
-    .chat-users-list {
-      background: #0f172a;
-      border-radius: 10px;
-      padding: 10px;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .chat-user-item {
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      transition: background 0.2s;
-      margin-bottom: 5px;
-    }
-
-    .chat-user-item:hover, .chat-user-item.active {
-      background: rgba(255, 204, 0, 0.15);
-      color: #ffcc00;
-    }
-
-    .chat-box {
-      background: #0f172a;
-      border-radius: 10px;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      max-height: 320px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding-right: 5px;
-    }
-
-    .msg-bubble {
-      max-width: 75%;
-      padding: 8px 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      line-height: 1.4;
-    }
-
-    .msg-bubble.sent {
-      align-self: flex-end;
-      background: #ffcc00;
-      color: #000;
-    }
-
-    .msg-bubble.received {
-      align-self: flex-start;
-      background: #1e293b;
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .chat-input-area {
-      display: flex;
-      gap: 8px;
-      margin-top: 15px;
-    }
-
-    .chat-input-area input {
-      flex: 1;
-      padding: 10px;
-      background: #1e293b;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 6px;
-      color: #fff;
-      outline: none;
-    }
-
-    .chat-input-area button {
-      padding: 10px 18px;
-      background: #ffcc00;
-      color: #000;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* Mesaj İstek Kartı */
-    .req-card {
-      background: #0f172a;
-      border: 1px solid rgba(255,204,0,0.3);
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .req-user { display: flex; align-items: center; gap: 10px; }
-    .req-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
-    .req-actions { display: flex; gap: 8px; }
-
-    .btn-acc { background: #22c55e; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-    .btn-rej { background: #ef4444; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-
-    /* Modal Stilleri */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(6px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      padding: 20px;
-    }
-
-    .modal-card {
-      background: #1e293b;
-      border: 1px solid rgba(255, 204, 0, 0.4);
-      border-radius: 16px;
-      padding: 30px;
-      width: 100%;
-      max-width: 520px;
-      max-height: 85vh;
-      overflow-y: auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-    }
-
-    .modal-card h3 { color: #ffcc00; margin-top: 0; margin-bottom: 20px; font-size: 20px; text-align: center; }
-
-    .form-group { margin-bottom: 15px; }
-    .form-group label { display: block; font-size: 12px; color: #ffcc00; margin-bottom: 5px; font-weight: bold; }
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 8px;
-      background: #0f172a;
-      color: #fff;
-      box-sizing: border-box;
-      outline: none;
-      font-size: 13px;
-    }
-
-    .modal-actions { display: flex; gap: 10px; margin-top: 25px; }
-    .btn-save { flex: 1; padding: 12px; background: #ffcc00; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-    .btn-cancel { flex: 1; padding: 12px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ccc; border-radius: 8px; cursor: pointer; }
-
-    footer { text-align: center; padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #888; font-size: 13px; }
-  </style>
-
-  <!-- Dil Kütüphanesi Entegrasyonu -->
-  <script src="lang.js"></script>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a0f1f"><link rel="icon" href="logo.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/app.css">
+<title>Profilim | Sytraex</title>
+<meta name="robots" content="noindex">
 </head>
-<body>
-
-  <header>
-    <div class="logo">
-      <img src="logo.png" alt="Sytraex Logo" class="logo-img">
-      <div class="logo-text">
-        <h1>sytraex</h1>
-        <p>Share Your Travel Experience</p>
-      </div>
-    </div>
-
-    <nav>
-      <ul>
-        <li><a href="index.html" data-i18n="nav_home">Ana Sayfa</a></li>
-        <li><a href="profile.html" style="color:#ffcc00; font-weight:bold;" data-i18n="nav_profile">Profilim</a></li>
-        <li><a href="whitepaper.html" data-i18n="nav_whitepaper">White Paper (Stake SYTX)</a></li>
-        <li class="lang-switcher">TR / EN</li>
-      </ul>
-    </nav>
-  </header>
-
+<body data-active="profile" data-title="nav_profile">
+<div id="site-header"></div>
+<main class="container">
   <div class="profile-layout">
-    <div class="sidebar-card">
-      
-      <div class="avatar-wrapper" onclick="triggerPhotoUpload()">
-        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200" alt="Profil Fotoğrafı" class="avatar-img" id="userAvatar">
-        <div class="avatar-overlay">📷</div>
-      </div>
-      
-      <div class="change-photo-btn" onclick="triggerPhotoUpload()" data-i18n="profile_change_photo">📷 Fotoğraf Değiştir</div>
-      <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
+    <aside class="side">
+      <label style="cursor:pointer;display:block" title="">
+        <img class="avatar-xl" id="avatarImg" alt="">
+        <input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+        <span class="btn btn-soft btn-sm btn-block" data-i18n="change_photo"></span>
+      </label>
+      <h2 id="sideName" class="mt"></h2>
+      <div class="handle" id="sideHandle"></div>
+      <a class="btn btn-ghost btn-sm btn-block" id="publicLink" href="#" data-i18n="view_public"></a>
+      <nav class="tabs" role="tablist">
+        <button class="tab" data-tab="info" role="tab">👤 <span data-i18n="tab_info"></span></button>
+        <button class="tab" data-tab="wallet" role="tab">🪙 <span data-i18n="tab_wallet"></span></button>
+        <button class="tab" data-tab="posts" role="tab">📝 <span data-i18n="tab_posts"></span></button>
+        <button class="tab" data-tab="messages" role="tab">💬 <span data-i18n="tab_messages"></span><span class="count hidden" id="reqBadge"></span></button>
+        <a class="tab" href="share-experience.html" style="border-color:var(--gold);color:var(--gold)">➕ <span data-i18n="tab_new"></span></a>
+        <button class="tab" id="logoutBtn" style="color:var(--err);border-color:rgba(255,107,107,.4)">⎋ <span data-i18n="nav_logout"></span></button>
+      </nav>
+    </aside>
 
-      <h3 id="sidebarName" style="margin:0; color:#fff;">Yükleniyor...</h3>
-      <div class="username-tag" id="sidebarUsername">@...</div>
-
-      <button class="menu-btn active" id="btnInfo" onclick="switchTab('info')">
-        <span data-i18n="profile_menu_info">👤 Profil Bilgileri</span>
-      </button>
-
-      <button class="menu-btn" id="btnWallet" onclick="switchTab('wallet')">
-        <span data-i18n="profile_menu_wallet">💰 Cüzdanım (SYTX)</span>
-      </button>
-
-      <button class="menu-btn" id="btnPosts" onclick="switchTab('posts')">
-        <span data-i18n="profile_menu_posts">📝 Gönderilerim</span>
-      </button>
-
-      <button class="menu-btn" id="btnMessages" onclick="switchTab('messages')">
-        <span data-i18n="profile_menu_messages">💬 Mesajlar / İstekler</span>
-        <span class="badge-count" id="pendingBadge" style="display:none;">0</span>
-      </button>
-
-      <a href="share-experience.html" style="text-decoration:none;">
-        <button class="menu-btn" style="border-color:#ffcc00; color:#ffcc00; margin-top:10px;" data-i18n="profile_menu_share">➕ Yeni Deneyim Paylaş</button>
-      </a>
-
-      <button class="btn-logout" onclick="logout()" data-i18n="profile_btn_logout">Çıkış Yap</button>
-    </div>
-
-    <div class="content-card">
-      
-      <!-- TAB 1: Profil Bilgileri -->
-      <div id="tabInfo">
-        <div class="header-title-flex">
-          <h2 data-i18n="profile_title">Profil Bilgilerim</h2>
-          <button class="btn-edit" onclick="openEditModal()" data-i18n="profile_edit_btn">✏️ Bilgileri Düzenle</button>
-        </div>
-
-        <div class="info-grid">
-          <div class="info-box"><label data-i18n="profile_lbl_username">Kullanıcı Adı</label><span id="infoUsername">-</span></div>
-          <div class="info-box"><label data-i18n="profile_lbl_fullname">Ad Soyad</label><span id="infoName">-</span></div>
-          <div class="info-box"><label data-i18n="profile_lbl_email">E-Posta Adresi</label><span id="infoEmail">-</span></div>
-          <div class="info-box"><label data-i18n="profile_lbl_password">Şifre</label><span>••••••••</span></div>
-          <div class="info-box"><label data-i18n="profile_lbl_country">Ülke</label><span id="infoCountry">-</span></div>
-          <div class="info-box"><label data-i18n="profile_lbl_city">İl / Şehir</label><span id="infoCity">-</span></div>
-          <div class="info-box"><label data-i18n="profile_lbl_birth">Doğum Tarihi</label><span id="infoBirth">-</span></div>
-          <div class="info-box"><label data-i18n="profile_lbl_secret_q">Gizli Soru</label><span id="infoSecretQuestion">-</span></div>
-          <div class="info-box"><label data-i18n="profile_lbl_secret_a">Gizli Soru Cevabı</label><span id="infoSecretAnswer">••••••</span></div>
-        </div>
-      </div>
-
-      <!-- TAB 2: Cüzdanım (SYTX Coin) -->
-      <div id="tabWallet" style="display:none;">
-        <h2 data-i18n="wallet_title">💰 Sytraex Cüzdanı & Ödüller</h2>
-
-        <div class="wallet-banner">
-          <div class="wallet-balance-group">
-            <img src="logo.png" alt="SYTX Logo" class="sytx-icon-large">
-            <div>
-              <div class="balance-amount"><span id="sytxBalanceText">0</span> <small style="font-size:20px;">SYTX</small></div>
-              <div class="balance-label" data-i18n="wallet_sub_label">Toplam Kazandığınız Sytraex Coin Bakiyesi</div>
-            </div>
+    <section>
+      <!-- BİLGİLER -->
+      <div class="panel" id="p-info">
+        <div class="panel-head"><h2 data-i18n="info_title"></h2><button class="btn btn-ghost btn-sm" id="editToggle" data-i18n="edit_info"></button></div>
+        <div id="infoMsg" class="alert hidden" role="alert"></div>
+        <div id="infoView" class="info-grid"></div>
+        <form id="infoForm" class="hidden" novalidate>
+          <div class="row">
+            <div class="field"><label for="fFull" data-i18n="label_fullname"></label><input id="fFull" type="text" maxlength="80"></div>
+            <div class="field"><label for="fUser" data-i18n="label_username"></label><input id="fUser" type="text" maxlength="24" autocapitalize="none"><span class="hint" data-i18n="username_rule"></span></div>
           </div>
-          <a href="whitepaper.html" style="text-decoration:none;">
-            <button style="padding:10px 20px; background:#ffcc00; color:#000; border:none; border-radius:8px; font-weight:bold; cursor:pointer;" data-i18n="wallet_stake_btn">Stake Et (SYTX)</button>
-          </a>
-        </div>
+          <div class="row">
+            <div class="field"><label for="fCity" data-i18n="label_city"></label><input id="fCity" type="text" maxlength="80"></div>
+            <div class="field"><label for="fCountry" data-i18n="label_country"></label><input id="fCountry" type="text" maxlength="80"></div>
+          </div>
+          <div class="field"><label for="fBio" data-i18n="label_bio"></label><textarea id="fBio" maxlength="300" style="min-height:80px" data-i18n-ph="ph_bio"></textarea></div>
+          <div style="display:flex;gap:10px"><button class="btn btn-primary" id="saveInfo" type="submit" data-i18n="btn_save"></button><button type="button" class="btn btn-soft" id="cancelEdit" data-i18n="cancel"></button></div>
+        </form>
 
-        <h4 style="color:#ffcc00; margin-bottom:12px;" data-i18n="wallet_history_title">📊 Coin Kazanç Geçmişi</h4>
-        <table class="tx-table">
-          <thead>
-            <tr>
-              <th data-i18n="wallet_th_type">İşlem Türü</th>
-              <th data-i18n="wallet_th_desc">Açıklama</th>
-              <th data-i18n="wallet_th_amount">Miktar</th>
-            </tr>
-          </thead>
-          <tbody id="walletTxBody">
-            <!-- Dinamik dolacak -->
-          </tbody>
-        </table>
-      </div>
+        <div class="form-section" data-i18n="security_title"></div>
+        <div class="info-grid" id="secInfo"></div>
+        <form id="pwForm" class="mt" novalidate>
+          <div class="row">
+            <div class="field"><label for="pw1" data-i18n="label_new_password"></label><input id="pw1" type="password" autocomplete="new-password" minlength="8"></div>
+            <div class="field"><label for="pw2" data-i18n="label_password2"></label><input id="pw2" type="password" autocomplete="new-password"></div>
+          </div>
+          <button class="btn btn-soft btn-sm" id="pwBtn" type="submit" data-i18n="change_password"></button>
+        </form>
 
-      <!-- TAB 3: Paylaşılan Gönderiler -->
-      <div id="tabPosts" style="display:none;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-          <h2 style="margin:0;" data-i18n="my_posts_title">Paylaştığım Seyahat Deneyimleri</h2>
-          <a href="share-experience.html" style="text-decoration:none;"><button style="padding:8px 16px; background:#ffcc00; border:none; border-radius:6px; font-weight:bold; cursor:pointer;" data-i18n="my_posts_add_new">+ Yeni Ekle</button></a>
-        </div>
-
-        <div id="userPostsContainer" class="posts-grid">
-          <p style="color:#aaa;" data-i18n="my_posts_loading">Gönderileriniz yükleniyor...</p>
+        <div class="danger-zone">
+          <h3 data-i18n="danger_title"></h3>
+          <p data-i18n="danger_desc"></p>
+          <button class="btn btn-danger btn-sm mt" id="delAccount" data-i18n="delete_account"></button>
         </div>
       </div>
 
-      <!-- TAB 4: Mesajlar & Gelen İstekler -->
-      <div id="tabMessages" style="display:none;">
-        <h2 data-i18n="messages_title">💬 Mesajlar ve Bağlantı İstekleri</h2>
-
-        <div style="margin-bottom: 25px;">
-          <h4 style="color:#ffcc00; margin-bottom:12px;" data-i18n="messages_incoming_title">📩 Gelen İstekler</h4>
-          <div id="requestsListContainer">
-            <p style="color:#aaa; font-size:13px;" data-i18n="messages_no_incoming">Gelen mesaj isteği bulunmuyor.</p>
-          </div>
+      <!-- CÜZDAN -->
+      <div class="panel hidden" id="p-wallet">
+        <h2 data-i18n="wallet_title"></h2>
+        <div class="wallet">
+          <div><div class="bal"><span id="balance">0</span> <small>SYTX</small></div><p data-i18n="wallet_sub_label"></p></div>
+          <button class="btn btn-primary" disabled data-i18n="wallet_stake_soon"></button>
         </div>
-
-        <h4 style="color:#ffcc00; margin-bottom:12px;" data-i18n="messages_active_title">💬 Aktif Sohbetler</h4>
-        <div class="messages-layout">
-          <div class="chat-users-list" id="activeChatUsersList">
-            <p style="color:#aaa; font-size:12px;" data-i18n="messages_no_active">Sohbet edilebilir kullanıcı yok.</p>
-          </div>
-
-          <div class="chat-box" id="chatBoxArea" style="display:none;">
-            <div style="font-weight:bold; color:#ffcc00; margin-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px;" id="chatTargetHeader">Sohbet</div>
-            <div class="chat-messages" id="chatMessagesContainer"></div>
-
-            <div class="chat-input-area">
-              <input type="text" id="msgInputText" data-i18n-ph="messages_ph_input" placeholder="Mesajınızı yazınız...">
-              <button onclick="sendChatMessage()" data-i18n="messages_btn_send">Gönder</button>
-            </div>
-          </div>
-        </div>
-
+        <div class="alert alert-info" data-i18n="wallet_disclaimer"></div>
+        <h3 class="mt" data-i18n="wallet_history_title"></h3>
+        <table class="tx"><thead><tr><th data-i18n="tx_type"></th><th data-i18n="tx_desc"></th><th data-i18n="tx_amount"></th></tr></thead><tbody id="txBody"></tbody></table>
+        <p class="hint mt" data-i18n="wallet_rules"></p>
       </div>
 
-    </div>
+      <!-- GÖNDERİLERİM -->
+      <div class="panel hidden" id="p-posts">
+        <div class="panel-head"><h2 data-i18n="my_posts_title"></h2><a class="btn btn-primary btn-sm" href="share-experience.html" data-i18n="tab_new"></a></div>
+        <div id="myPosts"></div>
+      </div>
+
+      <!-- MESAJLAR -->
+      <div class="panel hidden" id="p-messages">
+        <h2 data-i18n="msg_title"></h2>
+        <h3 data-i18n="msg_requests"></h3>
+        <div id="reqList" class="mt"></div>
+        <h3 class="mt-lg" data-i18n="msg_active"></h3>
+        <div class="msg-grid mt">
+          <div class="chat-list" id="chatList"></div>
+          <div class="chat-box" id="chatBox"><div class="empty" style="border:0"><p data-i18n="msg_select"></p></div></div>
+        </div>
+      </div>
+    </section>
   </div>
+</main>
+<div id="site-footer"></div>
+<script type="module">
+import { sb, state, initPage, $, $$, t, qs, esc, applyI18n, setBusy, showAlert, hideAlert, friendlyError, toast, modal, signOut, avatarSrc, safeImg, fmtDate, fmtTime, compressImage, uploadImage, removeImages, postCardHTML, modeLabel, durLabel } from './js/app.js';
 
-  <!-- Düzenleme Modalı -->
-  <div class="modal-overlay" id="editModal">
-    <div class="modal-card">
-      <h3 data-i18n="edit_modal_title">✏️ Profil Bilgilerini Düzenle</h3>
-      <form id="editForm">
-        <div class="form-group">
-          <label for="editName" data-i18n="reg_label_fullname">Ad Soyad:</label>
-          <input type="text" id="editName" required>
-        </div>
+await initPage({ requireLogin: true });
+if (!state.user) await new Promise(() => {});
+const uid = state.user.id;
+let profile = state.profile;
+let activeTab = 'info';
+let chats = [], activeChat = null, channel = null;
 
-        <div class="form-group">
-          <label for="editPassword" data-i18n="edit_lbl_new_pass">Yeni Şifre (Değiştirmeyecekseniz boş bırakın):</label>
-          <input type="password" id="editPassword" data-i18n-ph="edit_ph_new_pass" placeholder="Yeni şifrenizi yazınız...">
-        </div>
+// ---------- sekmeler ----------
+function switchTab(tab) {
+  activeTab = tab;
+  ['info', 'wallet', 'posts', 'messages'].forEach(k => $('#p-' + k).classList.toggle('hidden', k !== tab));
+  $$('.tab[data-tab]').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+  history.replaceState(null, '', '?tab=' + tab);
+  if (tab === 'wallet') loadWallet();
+  if (tab === 'posts') loadMyPosts();
+  if (tab === 'messages') loadMessages();
+}
+$$('.tab[data-tab]').forEach(b => b.onclick = () => switchTab(b.dataset.tab));
+$('#logoutBtn').onclick = signOut;
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-          <div class="form-group">
-            <label for="editCountry" data-i18n="profile_lbl_country">Ülke:</label>
-            <input type="text" id="editCountry" required>
-          </div>
-          <div class="form-group">
-            <label for="editCity" data-i18n="profile_lbl_city">İl / Şehir:</label>
-            <input type="text" id="editCity" required>
-          </div>
-        </div>
+// ---------- bilgiler ----------
+function paintSide() {
+  const name = profile?.full_name || profile?.username || '';
+  $('#avatarImg').src = avatarSrc(profile?.avatar_url, name);
+  $('#sideName').textContent = name;
+  $('#sideHandle').textContent = '@' + (profile?.username || '');
+  $('#publicLink').href = 'public-profile.html?u=' + encodeURIComponent(profile?.username || '');
+}
+function paintInfo() {
+  const p = profile || {};
+  const item = (k, v) => `<div class="info-item"><small>${esc(t(k))}</small><b>${esc(v || '—')}</b></div>`;
+  $('#infoView').innerHTML = item('label_fullname', p.full_name) + item('label_username', '@' + p.username) + item('label_city', p.city) + item('label_country', p.country) + item('label_bio', p.bio);
+  const providers = (state.user.app_metadata?.providers || [state.user.app_metadata?.provider]).filter(Boolean).map(x => x === 'email' ? t('prov_email') : x[0].toUpperCase() + x.slice(1)).join(', ');
+  $('#secInfo').innerHTML = item('label_email', state.user.email) + item('login_method', providers) + item('member_since', fmtDate(state.user.created_at));
+}
+function setEditing(on) {
+  $('#infoView').classList.toggle('hidden', on); $('#infoForm').classList.toggle('hidden', !on); $('#editToggle').classList.toggle('hidden', on);
+  if (on) { $('#fFull').value = profile.full_name || ''; $('#fUser').value = profile.username || ''; $('#fCity').value = profile.city || ''; $('#fCountry').value = profile.country || ''; $('#fBio').value = profile.bio || ''; }
+}
+$('#editToggle').onclick = () => setEditing(true);
+$('#cancelEdit').onclick = () => { setEditing(false); hideAlert($('#infoMsg')); };
+$('#fUser').addEventListener('input', e => e.target.value = e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, ''));
+$('#infoForm').addEventListener('submit', async (e) => {
+  e.preventDefault(); hideAlert($('#infoMsg'));
+  const username = $('#fUser').value.trim();
+  if (!/^[a-z0-9_.]{3,24}$/.test(username)) return showAlert($('#infoMsg'), t('username_rule'));
+  const btn = $('#saveInfo'); setBusy(btn, true, t('please_wait'));
+  const upd = { full_name: $('#fFull').value.trim() || null, username, city: $('#fCity').value.trim() || null, country: $('#fCountry').value.trim() || null, bio: $('#fBio').value.trim() || null };
+  const { data, error } = await sb.from('profiles').update(upd).eq('id', uid).select().single();
+  setBusy(btn, false);
+  if (error) return showAlert($('#infoMsg'), error.code === '23505' ? t('username_taken') : friendlyError(error));
+  profile = data; setEditing(false); paintInfo(); paintSide(); toast(t('saved'), 'ok');
+});
 
-        <div class="form-group">
-          <label for="editBirth" data-i18n="profile_lbl_birth">Doğum Tarihi:</label>
-          <input type="date" id="editBirth" required>
-        </div>
+$('#avatarFile').onchange = async (e) => {
+  const f = e.target.files[0]; e.target.value = '';
+  if (!f) return;
+  try {
+    const blob = await compressImage(f, 512, 0.85, true);
+    const url = await uploadImage('avatars', blob);
+    const old = profile.avatar_url;
+    const { data, error } = await sb.from('profiles').update({ avatar_url: url }).eq('id', uid).select().single();
+    if (error) throw error;
+    profile = data; paintSide(); toast(t('saved'), 'ok');
+    if (old) removeImages('avatars', [old]).catch(() => {});
+  } catch (err) { toast(friendlyError(err), 'err'); }
+};
 
-        <div class="form-group">
-          <label for="editSecretQuestion" data-i18n="profile_lbl_secret_q">Gizli Soru:</label>
-          <select id="editSecretQuestion" required>
-            <option value="pet" data-i18n="reg_opt_pet">İlk evcil hayvanınızın adı nedir?</option>
-            <option value="school" data-i18n="reg_opt_school">İlkokul öğretmeninizin adı nedir?</option>
-            <option value="city" data-i18n="reg_opt_city">Annenizin doğduğu şehir neresidir?</option>
-            <option value="car" data-i18n="reg_opt_car">İlk sahip olduğunuz arabanın markası nedir?</option>
-          </select>
-        </div>
+$('#pwForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const a = $('#pw1').value, b = $('#pw2').value;
+  if (a.length < 8) return toast(t('err_pw_short'), 'err');
+  if (a !== b) return toast(t('err_pw_match'), 'err');
+  setBusy($('#pwBtn'), true, t('please_wait'));
+  const { error } = await sb.auth.updateUser({ password: a });
+  setBusy($('#pwBtn'), false);
+  if (error) return toast(friendlyError(error), 'err');
+  $('#pw1').value = $('#pw2').value = ''; toast(t('password_changed'), 'ok');
+});
 
-        <div class="form-group">
-          <label for="editSecretAnswer" data-i18n="profile_lbl_secret_a">Gizli Soru Cevabı:</label>
-          <input type="text" id="editSecretAnswer" required>
-        </div>
-
-        <div class="modal-actions">
-          <button type="button" class="btn-cancel" onclick="closeEditModal()" data-i18n="edit_btn_cancel">İptal</button>
-          <button type="submit" class="btn-save" id="btnSaveEdit" data-i18n="edit_btn_save">Kaydet ve Güncelle</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <footer>
-    <p data-i18n="footer_text">© 2026 Sytraex | Share Your Travel Experience</p>
-  </footer>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, updateDoc, collection, query, where, getDocs, addDoc, onSnapshot, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyA3pn_ZBSVVxperBuDSMJMrZ-bEt391J6E",
-      authDomain: "sytraex-462b0.firebaseapp.com",
-      projectId: "sytraex-462b0",
-      storageBucket: "sytraex-462b0.firebasestorage.app",
-      messagingSenderId: "379245018695",
-      appId: "1:379245018695:web:0beff2afb3210a2f6cbb62"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    let userData = JSON.parse(localStorage.getItem('sytraexUser'));
-    if (!userData) {
-      window.location.href = "login.html";
+$('#delAccount').onclick = async () => {
+  const ok = await modal({ title: t('delete_account_t'), body: t('delete_account_d'), confirmText: t('delete_account_confirm'), danger: true });
+  if (!ok) return;
+  try {
+    for (const bucket of ['avatars', 'post-images']) {
+      const { data } = await sb.storage.from(bucket).list(uid, { limit: 1000 });
+      if (data?.length) await sb.storage.from(bucket).remove(data.map(o => `${uid}/${o.name}`));
     }
-
-    let activeChatUser = null;
-
-    const secretQuestionTextMap = {
-      "pet": "İlk evcil hayvanınızın adı nedir?",
-      "school": "İlkokul öğretmeninizin adı nedir?",
-      "city": "Annenizin doğduğu şehir neresidir?",
-      "car": "İlk sahip olduğunuz arabanın markası nedir?"
-    };
-
-    function renderUserInfo() {
-      document.getElementById('sidebarName').innerText = userData.name || userData.username;
-      document.getElementById('sidebarUsername').innerText = `@${userData.username}`;
-      document.getElementById('infoUsername').innerText = userData.username;
-      document.getElementById('infoName').innerText = userData.name || '-';
-      document.getElementById('infoEmail').innerText = userData.email;
-      document.getElementById('infoCountry').innerText = userData.country || '-';
-      document.getElementById('infoCity').innerText = userData.city || '-';
-      document.getElementById('infoBirth').innerText = userData.birth || '-';
-      
-      const qText = secretQuestionTextMap[userData.secretQuestion] || userData.secretQuestion || '-';
-      document.getElementById('infoSecretQuestion').innerText = qText;
-
-      if (userData.secretAnswer) {
-        const ans = userData.secretAnswer;
-        document.getElementById('infoSecretAnswer').innerText = ans.charAt(0) + "***" + (ans.length > 3 ? ans.charAt(ans.length - 1) : '');
-      } else {
-        document.getElementById('infoSecretAnswer').innerText = '••••••';
-      }
-
-      if (userData.avatarUrl) {
-        document.getElementById('userAvatar').src = userData.avatarUrl;
-      }
-    }
-
-    renderUserInfo();
-    checkPendingRequests();
-
-    window.triggerPhotoUpload = function() {
-      document.getElementById('avatarFileInput').click();
-    };
-
-    document.getElementById('avatarFileInput').addEventListener('change', async function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const img = new Image();
-        img.onload = async function() {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          
-          const maxWidth = 300;
-          const scaleSize = maxWidth / img.width;
-          canvas.width = maxWidth;
-          canvas.height = img.height * scaleSize;
-
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
-
-          try {
-            const userRef = doc(db, "users", userData.username);
-            await updateDoc(userRef, { avatarUrl: compressedBase64 });
-
-            userData.avatarUrl = compressedBase64;
-            localStorage.setItem('sytraexUser', JSON.stringify(userData));
-
-            document.getElementById('userAvatar').src = compressedBase64;
-            alert("Profil fotoğrafınız başarıyla güncellendi!");
-          } catch (err) {
-            alert("Fotoğraf kaydedilirken hata oluştu: " + err.message);
-          }
-        };
-        img.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
-
-    window.switchTab = function(tabName) {
-      const tabInfo = document.getElementById('tabInfo');
-      const tabWallet = document.getElementById('tabWallet');
-      const tabPosts = document.getElementById('tabPosts');
-      const tabMessages = document.getElementById('tabMessages');
-      
-      const btnInfo = document.getElementById('btnInfo');
-      const btnWallet = document.getElementById('btnWallet');
-      const btnPosts = document.getElementById('btnPosts');
-      const btnMessages = document.getElementById('btnMessages');
-
-      tabInfo.style.display = 'none';
-      tabWallet.style.display = 'none';
-      tabPosts.style.display = 'none';
-      tabMessages.style.display = 'none';
-
-      btnInfo.classList.remove('active');
-      btnWallet.classList.remove('active');
-      btnPosts.classList.remove('active');
-      btnMessages.classList.remove('active');
-
-      if (tabName === 'posts') {
-        tabPosts.style.display = 'block';
-        btnPosts.classList.add('active');
-        loadUserPosts();
-      } else if (tabName === 'wallet') {
-        tabWallet.style.display = 'block';
-        btnWallet.classList.add('active');
-        loadWalletData();
-      } else if (tabName === 'messages') {
-        tabMessages.style.display = 'block';
-        btnMessages.classList.add('active');
-        loadIncomingRequests();
-        loadActiveChats();
-      } else {
-        tabInfo.style.display = 'block';
-        btnInfo.classList.add('active');
-      }
-
-      const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-      if (typeof applyLanguage === 'function') applyLanguage(currentLang);
-    };
-
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('tab') === 'posts') switchTab('posts');
-    if (urlParams.get('tab') === 'wallet') switchTab('wallet');
-    if (urlParams.get('tab') === 'messages') switchTab('messages');
-
-    async function loadWalletData() {
-      const balanceText = document.getElementById('sytxBalanceText');
-      const txBody = document.getElementById('walletTxBody');
-      const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-
-      try {
-        const q = query(collection(db, "posts"), where("username", "==", userData.username));
-        const querySnapshot = await getDocs(q);
-        const postCount = querySnapshot.size;
-
-        const welcomeBonus = 10;
-        const postBonus = postCount * 25;
-        const totalBalance = welcomeBonus + postBonus;
-
-        balanceText.innerText = totalBalance;
-
-        const wTitle = currentLang === 'en' ? '🎁 Welcome Bonus' : '🎁 Hoş Geldin Bonusu';
-        const wDesc = currentLang === 'en' ? 'Registration reward for joining Sytraex' : 'Sytraex platformuna kayıt ödülü';
-        const pTitle = currentLang === 'en' ? '📝 Route Share Reward' : '📝 Rota Paylaşım Ödülü';
-
-        let html = `
-          <tr>
-            <td>${wTitle}</td>
-            <td>${wDesc}</td>
-            <td class="tx-amount">+10 SYTX</td>
-          </tr>
-        `;
-
-        querySnapshot.forEach(docSnap => {
-          const p = docSnap.data();
-          html += `
-            <tr>
-              <td>${pTitle}</td>
-              <td>${p.title}</td>
-              <td class="tx-amount">+25 SYTX</td>
-            </tr>
-          `;
-        });
-
-        txBody.innerHTML = html;
-
-      } catch (e) {
-        console.error("Cüzdan verisi yüklenemedi:", e);
-      }
-    }
-
-    async function checkPendingRequests() {
-      try {
-        const q = query(
-          collection(db, "message_requests"),
-          where("receiver", "==", userData.username),
-          where("status", "==", "pending")
-        );
-        const querySnapshot = await getDocs(q);
-        const count = querySnapshot.size;
-
-        const badge = document.getElementById('pendingBadge');
-        if (count > 0) {
-          badge.innerText = count;
-          badge.style.display = 'inline-block';
-        } else {
-          badge.style.display = 'none';
-        }
-      } catch (e) {}
-    }
-
-    async function loadIncomingRequests() {
-      const container = document.getElementById('requestsListContainer');
-      try {
-        const q = query(
-          collection(db, "message_requests"),
-          where("receiver", "==", userData.username),
-          where("status", "==", "pending")
-        );
-        const querySnapshot = await getDocs(q);
-
-        if (querySnapshot.empty) {
-          container.innerHTML = '<p style="color:#aaa; font-size:13px;" data-i18n="messages_no_incoming">Gelen mesaj isteği bulunmuyor.</p>';
-          const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-          if (typeof applyLanguage === 'function') applyLanguage(currentLang);
-          return;
-        }
-
-        container.innerHTML = '';
-        querySnapshot.forEach(docSnap => {
-          const req = docSnap.data();
-          const reqId = docSnap.id;
-
-          const card = document.createElement('div');
-          card.className = 'req-card';
-          card.innerHTML = `
-            <div class="req-user">
-              <img src="${req.senderAvatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200'}" class="req-avatar">
-              <div>
-                <strong style="color:#fff;">${req.senderName}</strong> <small style="color:#aaa;">(@${req.sender})</small>
-                <div style="font-size:12px; color:#ccc; margin-top:2px;">"${req.note || 'Mesajlaşmak istiyor.'}"</div>
-              </div>
-            </div>
-            <div class="req-actions">
-              <button class="btn-acc" onclick="handleRequestAction('${reqId}', 'accepted')" data-i18n="messages_btn_accept">✅ Kabul Et</button>
-              <button class="btn-rej" onclick="handleRequestAction('${reqId}', 'rejected')" data-i18n="messages_btn_reject">❌ Reddet</button>
-            </div>
-          `;
-          container.appendChild(card);
-        });
-
-        const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-        if (typeof applyLanguage === 'function') applyLanguage(currentLang);
-
-      } catch (e) {
-        console.error("İstek yükleme hatası:", e);
-      }
-    }
-
-    window.handleRequestAction = async function(reqId, action) {
-      try {
-        const reqRef = doc(db, "message_requests", reqId);
-        await updateDoc(reqRef, { status: action });
-
-        alert(action === 'accepted' ? "İstek kabul edildi!" : "İstek reddedildi.");
-        checkPendingRequests();
-        loadIncomingRequests();
-        loadActiveChats();
-      } catch (e) {
-        alert("İşlem yapılırken hata oluştu: " + e.message);
-      }
-    };
-
-    async function loadActiveChats() {
-      const container = document.getElementById('activeChatUsersList');
-      try {
-        const q1 = query(collection(db, "message_requests"), where("sender", "==", userData.username), where("status", "==", "accepted"));
-        const q2 = query(collection(db, "message_requests"), where("receiver", "==", userData.username), where("status", "==", "accepted"));
-
-        const [snap1, snap2] = await Promise.all([getDocs(q1), getDocs(q2)]);
-
-        const partners = new Set();
-        snap1.forEach(d => partners.add(d.data().receiver));
-        snap2.forEach(d => partners.add(d.data().sender));
-
-        if (partners.size === 0) {
-          container.innerHTML = '<p style="color:#aaa; font-size:12px;" data-i18n="messages_no_active">Sohbet edilebilir onaylı bağlantınız yok.</p>';
-          const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-          if (typeof applyLanguage === 'function') applyLanguage(currentLang);
-          return;
-        }
-
-        container.innerHTML = '';
-        partners.forEach(partnerUser => {
-          const div = document.createElement('div');
-          div.className = 'chat-user-item';
-          div.innerText = `@${partnerUser}`;
-          div.onclick = () => openChatWith(partnerUser, div);
-          container.appendChild(div);
-        });
-
-      } catch (e) {
-        console.error("Aktif sohbet yükleme hatası:", e);
-      }
-    }
-
-    let unsubscribeChat = null;
-
-    function openChatWith(partnerUser, element) {
-      activeChatUser = partnerUser;
-      document.querySelectorAll('.chat-user-item').forEach(el => el.classList.remove('active'));
-      if (element) element.classList.add('active');
-
-      const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-      const chatWithText = currentLang === 'en' ? 'Chat with' : 'ile Sohbet';
-
-      document.getElementById('chatBoxArea').style.display = 'flex';
-      document.getElementById('chatTargetHeader').innerText = `@${partnerUser} ${chatWithText}`;
-
-      const msgContainer = document.getElementById('chatMessagesContainer');
-      msgContainer.innerHTML = '<p style="color:#aaa; font-size:12px;" data-i18n="messages_chat_loading">Mesajlar yükleniyor...</p>';
-      if (typeof applyLanguage === 'function') applyLanguage(currentLang);
-
-      if (unsubscribeChat) unsubscribeChat();
-
-      const chatId = [userData.username, partnerUser].sort().join('_');
-      const q = query(collection(db, "chats", chatId, "messages"), orderBy("createdAt", "asc"));
-
-      unsubscribeChat = onSnapshot(q, (snapshot) => {
-        msgContainer.innerHTML = '';
-        snapshot.forEach((docSnap) => {
-          const m = docSnap.data();
-          const bubble = document.createElement('div');
-          const isMe = m.sender === userData.username;
-          bubble.className = `msg-bubble ${isMe ? 'sent' : 'received'}`;
-          bubble.innerText = m.text;
-          msgContainer.appendChild(bubble);
-        });
-        msgContainer.scrollTop = msgContainer.scrollHeight;
-      });
-    }
-
-    window.sendChatMessage = async function() {
-      const input = document.getElementById('msgInputText');
-      const text = input.value.trim();
-      if (!text || !activeChatUser) return;
-
-      const chatId = [userData.username, activeChatUser].sort().join('_');
-      input.value = '';
-
-      try {
-        await addDoc(collection(db, "chats", chatId, "messages"), {
-          sender: userData.username,
-          receiver: activeChatUser,
-          text: text,
-          createdAt: new Date().toISOString()
-        });
-      } catch (e) {
-        console.error("Mesaj gönderilemedi:", e);
-      }
-    };
-
-    window.openEditModal = function() {
-      document.getElementById('editName').value = userData.name || '';
-      document.getElementById('editCountry').value = userData.country || '';
-      document.getElementById('editCity').value = userData.city || '';
-      document.getElementById('editBirth').value = userData.birth || '';
-      document.getElementById('editSecretQuestion').value = userData.secretQuestion || 'pet';
-      document.getElementById('editSecretAnswer').value = userData.secretAnswer || '';
-      document.getElementById('editPassword').value = '';
-      document.getElementById('editModal').style.display = 'flex';
-    };
-
-    window.closeEditModal = function() {
-      document.getElementById('editModal').style.display = 'none';
-    };
-
-    document.getElementById('editForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btnSave = document.getElementById('btnSaveEdit');
-      btnSave.innerText = "Kaydediliyor...";
-      btnSave.disabled = true;
-
-      const updatedName = document.getElementById('editName').value.trim();
-      const updatedCountry = document.getElementById('editCountry').value.trim();
-      const updatedCity = document.getElementById('editCity').value.trim();
-      const updatedBirth = document.getElementById('editBirth').value;
-      const updatedSecretQuestion = document.getElementById('editSecretQuestion').value;
-      const updatedSecretAnswer = document.getElementById('editSecretAnswer').value.trim();
-      const newPassword = document.getElementById('editPassword').value.trim();
-
-      try {
-        const updateData = {
-          name: updatedName,
-          country: updatedCountry,
-          city: updatedCity,
-          birth: updatedBirth,
-          secretQuestion: updatedSecretQuestion,
-          secretAnswer: updatedSecretAnswer
-        };
-
-        if (newPassword) {
-          updateData.password = newPassword;
-        }
-
-        const userRef = doc(db, "users", userData.username);
-        await updateDoc(userRef, updateData);
-
-        Object.assign(userData, updateData);
-        localStorage.setItem('sytraexUser', JSON.stringify(userData));
-
-        renderUserInfo();
-        closeEditModal();
-        alert("Profil bilgileriniz başarıyla güncellendi!");
-
-      } catch (err) {
-        console.error("Profil güncelleme hatası:", err);
-        alert("Güncelleme hatası: " + err.message);
-      } finally {
-        btnSave.innerText = "Kaydet ve Güncelle";
-        btnSave.disabled = false;
-      }
-    });
-
-    async function loadUserPosts() {
-      const container = document.getElementById('userPostsContainer');
-      const currentLang = localStorage.getItem('sytraexLang') || 'tr';
-
-      try {
-        const q = query(collection(db, "posts"), where("username", "==", userData.username));
-        const querySnapshot = await getDocs(q);
-
-        if (querySnapshot.empty) {
-          container.innerHTML = `
-            <div style="grid-column: 1/-1; text-align:center; padding:30px; background:#0f172a; border-radius:12px; border:1px dashed rgba(255,255,255,0.1);">
-              <p style="color:#aaa; margin-bottom:15px;" data-i18n="my_posts_empty">Henüz paylaştığınız bir seyahat deneyimi bulunmuyor.</p>
-              <a href="share-experience.html" style="text-decoration:none;"><button style="padding:10px 20px; background:#ffcc00; color:#000; border:none; border-radius:8px; font-weight:bold; cursor:pointer;" data-i18n="my_posts_empty_btn">➕ İlk Deneyimi Paylaş</button></a>
-            </div>
-          `;
-          if (typeof applyLanguage === 'function') applyLanguage(currentLang);
-          return;
-        }
-
-        container.innerHTML = '';
-        querySnapshot.forEach((docSnap) => {
-          const post = docSnap.data();
-          const card = document.createElement('div');
-          card.className = 'post-card';
-          card.onclick = () => window.location.href = `post-detail.html?id=${docSnap.id}`;
-
-          card.innerHTML = `
-            <img src="${post.imageUrl}" alt="${post.title}" onerror="this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=500'">
-            <div class="post-card-body">
-              <span class="post-card-tag">${post.mode || 'Seyahat'}</span>
-              <div class="post-card-title">${post.title}</div>
-              <div class="post-card-loc">📍 ${post.location} • ⏱️ ${post.duration}</div>
-            </div>
-          `;
-          container.appendChild(card);
-        });
-
-      } catch (err) {
-        console.error("Gönderiler yüklenirken hata:", err);
-        container.innerHTML = '<p style="color:#ff4d4d;">Gönderiler çekilirken bir hata oluştu.</p>';
-      }
-    }
-
-    window.logout = function() {
-      localStorage.removeItem('loggedIn');
-      localStorage.removeItem('sytraexUser');
-      window.location.href = "login.html";
-    };
-  </script>
-
-</body>
-</html>
+    const { error } = await sb.rpc('delete_my_account');
+    if (error) throw error;
+    await sb.auth.signOut(); location.href = 'index.html?deleted=1';
+  } catch (err) { toast(friendlyError(err), 'err'); }
+};
+
+// ---------- cüzdan ----------
+async function loadWallet() {
+  const { data, error } = await sb.from('sytx_ledger').select('*').eq('user_id', uid).order('created_at', { ascending: false });
+  if (error) return ($('#txBody').innerHTML = `<tr><td colspan="3">${esc(t('load_error'))}</td></tr>`);
+  $('#balance').textContent = data.reduce((s, r) => s + r.amount, 0).toLocaleString();
+  $('#txBody').innerHTML = data.length ? data.map(r => `<tr><td>${esc(t('tx_' + r.kind))}</td><td>${esc(r.kind === 'welcome' ? t('tx_welcome_desc') : r.description)}<br><small class="faint">${esc(fmtDate(r.created_at))}</small></td><td class="amt">+${r.amount} SYTX</td></tr>`).join('')
+    : `<tr><td colspan="3" class="muted">${esc(t('no_tx'))}</td></tr>`;
+}
+
+// ---------- gönderilerim ----------
+async function loadMyPosts() {
+  const box = $('#myPosts'); box.innerHTML = '<div class="skeleton" style="min-height:90px"></div>';
+  const { data, error } = await sb.from('posts_feed').select('*').eq('user_id', uid).order('created_at', { ascending: false });
+  if (error) return (box.innerHTML = `<div class="alert alert-err">${esc(t('load_error'))}</div>`);
+  if (!data.length) return (box.innerHTML = `<div class="empty"><h3>${esc(t('no_my_posts_t'))}</h3><p>${esc(t('no_my_posts_d'))}</p><a class="btn btn-primary" href="share-experience.html">${esc(t('hero_btn_share'))}</a></div>`);
+  box.innerHTML = data.map(p => `<div class="mypost"><img src="${esc(safeImg(p.images?.[0]))}" alt="">
+    <div class="info"><b>${esc(p.title)}</b><small class="muted">📍 ${esc(p.location)} · ${esc(fmtDate(p.created_at))} · ${p.votes > 0 ? '★ ' + Number(p.avg_score).toFixed(1) + ' (' + p.votes + ')' : esc(t('no_votes'))}</small></div>
+    <div class="acts"><a class="btn btn-soft btn-sm" href="post-detail.html?id=${esc(p.id)}">${esc(t('view'))}</a><a class="btn btn-ghost btn-sm" href="share-experience.html?edit=${esc(p.id)}">${esc(t('edit'))}</a><button class="btn btn-danger btn-sm" data-del="${esc(p.id)}">${esc(t('delete'))}</button></div></div>`).join('');
+  $$('[data-del]', box).forEach(b => b.onclick = async () => {
+    const post = data.find(x => x.id === b.dataset.del);
+    const ok = await modal({ title: t('delete_post_t'), body: t('delete_post_d'), confirmText: t('delete'), danger: true });
+    if (!ok) return;
+    const { error } = await sb.from('posts').delete().eq('id', post.id);
+    if (error) return toast(friendlyError(error), 'err');
+    removeImages('post-images', post.images).catch(() => {});
+    loadMyPosts();
+  });
+}
+
+// ---------- mesajlar ----------
+const PJOIN = 'id,intro,status,created_at,sender_id,receiver_id,sender:profiles!message_requests_sender_id_fkey(username,full_name,avatar_url),receiver:profiles!message_requests_receiver_id_fkey(username,full_name,avatar_url)';
+async function loadMessages() {
+  const { data, error } = await sb.from('message_requests').select(PJOIN).in('status', ['pending', 'accepted']).order('created_at', { ascending: false });
+  if (error) return toast(t('load_error'), 'err');
+  const pending = data.filter(r => r.status === 'pending' && r.receiver_id === uid);
+  chats = data.filter(r => r.status === 'accepted');
+  $('#reqList').innerHTML = pending.length ? pending.map(r => `<div class="req"><div class="author"><img class="avatar lg" src="${esc(avatarSrc(r.sender?.avatar_url, r.sender?.full_name))}" alt=""><div><b>${esc(r.sender?.full_name || r.sender?.username)}</b> <small>@${esc(r.sender?.username)}</small><small>${esc(r.intro || '')}</small></div></div>
+    <div style="display:flex;gap:8px"><button class="btn btn-primary btn-sm" data-ans="accepted" data-id="${esc(r.id)}">${esc(t('accept'))}</button><button class="btn btn-soft btn-sm" data-ans="rejected" data-id="${esc(r.id)}">${esc(t('reject'))}</button></div></div>`).join('')
+    : `<p class="muted">${esc(t('msg_no_requests'))}</p>`;
+  $$('[data-ans]').forEach(b => b.onclick = async () => {
+    const { error } = await sb.from('message_requests').update({ status: b.dataset.ans }).eq('id', b.dataset.id);
+    if (error) return toast(friendlyError(error), 'err');
+    loadMessages(); refreshBadge();
+  });
+  $('#chatList').innerHTML = chats.length ? chats.map(c => { const o = other(c); return `<button class="chat-item ${activeChat?.id === c.id ? 'on' : ''}" data-chat="${esc(c.id)}"><img class="avatar lg" style="width:34px;height:34px" src="${esc(avatarSrc(o.avatar_url, o.full_name || o.username))}" alt=""><span>${esc(o.full_name || o.username)}</span></button>`; }).join('')
+    : `<p class="muted">${esc(t('msg_no_chats'))}</p>`;
+  $$('[data-chat]').forEach(b => b.onclick = () => openChat(chats.find(c => c.id === b.dataset.chat)));
+  refreshBadge();
+}
+const other = (c) => (c.sender_id === uid ? c.receiver : c.sender) || {};
+async function refreshBadge() {
+  const { count } = await sb.from('message_requests').select('id', { count: 'exact', head: true }).eq('receiver_id', uid).eq('status', 'pending');
+  const b = $('#reqBadge'); b.textContent = count || ''; b.classList.toggle('hidden', !count);
+}
+function bubble(m) {
+  return `<div class="bubble ${m.sender_id === uid ? 'me' : ''}" data-mid="${esc(m.id)}">${esc(m.body)}<time>${esc(fmtTime(m.created_at))}</time></div>`;
+}
+async function openChat(c) {
+  activeChat = c;
+  $$('.chat-item').forEach(x => x.classList.toggle('on', x.dataset.chat === c.id));
+  const o = other(c);
+  $('#chatBox').innerHTML = `<div class="chat-head">${esc(o.full_name || o.username)} <small class="muted">@${esc(o.username)}</small></div>
+    <div class="chat-msgs" id="msgs"></div>
+    <form class="chat-form" id="chatForm"><input id="chatInput" type="text" maxlength="2000" autocomplete="off" placeholder="${esc(t('msg_write'))}"><button class="btn btn-primary" type="submit">${esc(t('send'))}</button></form>`;
+  const { data } = await sb.from('messages').select('*').eq('request_id', c.id).order('created_at', { ascending: true }).limit(300);
+  const box = $('#msgs'); box.innerHTML = (data || []).map(bubble).join(''); box.scrollTop = box.scrollHeight;
+  $('#chatForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const body = $('#chatInput').value.trim(); if (!body) return;
+    $('#chatInput').value = '';
+    const { data: m, error } = await sb.from('messages').insert({ request_id: c.id, sender_id: uid, body }).select().single();
+    if (error) { $('#chatInput').value = body; return toast(friendlyError(error), 'err'); }
+    append(m);
+  };
+  if (channel) sb.removeChannel(channel);
+  channel = sb.channel('chat-' + c.id).on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `request_id=eq.${c.id}` }, (p) => append(p.new)).subscribe();
+}
+function append(m) {
+  const box = $('#msgs'); if (!box || box.querySelector(`[data-mid="${m.id}"]`)) return;
+  box.insertAdjacentHTML('beforeend', bubble(m)); box.scrollTop = box.scrollHeight;
+}
+
+// ---------- başlat ----------
+paintSide(); paintInfo(); refreshBadge();
+switchTab(['info', 'wallet', 'posts', 'messages'].includes(qs.get('tab')) ? qs.get('tab') : 'info');
+applyI18n();
+window.addEventListener('langchange', () => { paintInfo(); switchTab(activeTab); });
+window.addEventListener('beforeunload', () => { if (channel) sb.removeChannel(channel); });
+</script>
+</body></html>
