@@ -233,8 +233,8 @@ export async function removeImages(bucket, urls) {
   if (paths.length) await sb.storage.from(bucket).remove(paths);
 }
 
-// ---------- şehir / konum otomatik tamamlama (OpenStreetMap Nominatim, ücretsiz) ----------
-export function attachCityAutocomplete(input, { onSelect, fillMode = 'full' } = {}) {
+// ---------- genel otomatik tamamlama iskeleti ----------
+function bindAutocomplete(input, { search, minLen = 1, delay = 320 }) {
   if (!input || input.dataset.acBound) return;
   input.dataset.acBound = '1';
   input.setAttribute('autocomplete', 'off');
@@ -245,7 +245,7 @@ export function attachCityAutocomplete(input, { onSelect, fillMode = 'full' } = 
   list.setAttribute('role', 'listbox');
   (wrap || input.parentNode).appendChild(list);
 
-  let items = [], active = -1, timer = null, ctrl = null, myId = 0;
+  let items = [], active = -1, timer = null, seq = 0;
 
   function close() { list.classList.add('hidden'); list.innerHTML = ''; items = []; active = -1; }
   function render() {
@@ -254,40 +254,25 @@ export function attachCityAutocomplete(input, { onSelect, fillMode = 'full' } = 
   }
   function pick(i) {
     const it = items[i]; if (!it) return;
-    input.value = fillMode === 'short' ? (it.short || it.label) : it.label;
+    input.value = it.value;
     close();
     input.dispatchEvent(new Event('change', { bubbles: true }));
-    if (onSelect) onSelect(it);
+    if (it.onPick) it.onPick(it);
   }
-  function formatItem(r) {
-    const a = r.address || {};
-    const city = a.city || a.town || a.village || a.municipality || a.county || r.name || '';
-    const region = a.state || a.province || '';
-    const country = a.country || '';
-    const label = [city, region && region !== city ? region : '', country].filter(Boolean).join(', ');
-    return { label: label || r.display_name, short: city || r.display_name.split(',')[0].trim(), lat: r.lat, lon: r.lon };
-  }
-  async function search(q) {
-    const id = ++myId;
-    if (ctrl) ctrl.abort();
-    ctrl = new AbortController();
-    try {
-      const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&featureType=settlement&accept-language=${getLang()}&q=${encodeURIComponent(q)}`;
-      const res = await fetch(url, { signal: ctrl.signal, headers: { Accept: 'application/json' } });
-      if (!res.ok || id !== myId) return;
-      const data = await res.json();
-      if (id !== myId) return;
-      const seen = new Set();
-      items = data.map(formatItem).filter(it => { const k = it.label.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; });
-      active = -1;
-      render();
-    } catch { /* iptal edildi ya da ağ hatası - sessiz geç */ }
+  async function run(q) {
+    const id = ++seq;
+    let res = [];
+    try { res = (await search(q)) || []; } catch { res = []; }
+    if (id !== seq) return;
+    items = res;
+    active = -1;
+    render();
   }
   input.addEventListener('input', () => {
     const q = input.value.trim();
     clearTimeout(timer);
-    if (q.length < 2) { close(); return; }
-    timer = setTimeout(() => search(q), 380);
+    if (q.length < minLen) { close(); return; }
+    timer = setTimeout(() => run(q), delay);
   });
   input.addEventListener('keydown', (e) => {
     if (list.classList.contains('hidden') || !items.length) return;
@@ -302,6 +287,90 @@ export function attachCityAutocomplete(input, { onSelect, fillMode = 'full' } = 
   });
   document.addEventListener('click', (e) => { if (e.target !== input && !list.contains(e.target)) close(); });
   input.addEventListener('blur', () => setTimeout(close, 150));
+}
+
+// ---------- şehir / konum otomatik tamamlama (OpenStreetMap Nominatim, ücretsiz) ----------
+export function attachCityAutocomplete(input, { onSelect, fillMode = 'full' } = {}) {
+  bindAutocomplete(input, {
+    minLen: 2, delay: 380,
+    search: async (q) => {
+      const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&featureType=settlement&accept-language=${getLang()}&q=${encodeURIComponent(q)}`;
+      const res = await fetch(url, { headers: { Accept: 'application/json' } });
+      if (!res.ok) return [];
+      const data = await res.json();
+      const seen = new Set();
+      return data.map(r => {
+        const a = r.address || {};
+        const city = a.city || a.town || a.village || a.municipality || a.county || r.name || '';
+        const region = a.state || a.province || '';
+        const country = a.country || '';
+        const label = [city, region && region !== city ? region : '', country].filter(Boolean).join(', ') || r.display_name;
+        const short = city || r.display_name.split(',')[0].trim();
+        return { label, value: fillMode === 'short' ? short : label, lat: r.lat, lon: r.lon, onPick: onSelect };
+      }).filter(it => { const k = it.label.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; });
+    }
+  });
+}
+
+// ---------- ülke otomatik tamamlama (yerleşik liste, ağ gerektirmez) ----------
+export const COUNTRIES = [
+  ['Afghanistan','Afganistan'],['Albania','Arnavutluk'],['Algeria','Cezayir'],['Andorra','Andorra'],['Angola','Angola'],
+  ['Antigua and Barbuda','Antigua ve Barbuda'],['Argentina','Arjantin'],['Armenia','Ermenistan'],['Australia','Avustralya'],['Austria','Avusturya'],
+  ['Azerbaijan','Azerbaycan'],['Bahamas','Bahamalar'],['Bahrain','Bahreyn'],['Bangladesh','Bangladeş'],['Barbados','Barbados'],
+  ['Belarus','Belarus'],['Belgium','Belçika'],['Belize','Belize'],['Benin','Benin'],['Bhutan','Bhutan'],
+  ['Bolivia','Bolivya'],['Bosnia and Herzegovina','Bosna Hersek'],['Botswana','Botsvana'],['Brazil','Brezilya'],['Brunei','Brunei'],
+  ['Bulgaria','Bulgaristan'],['Burkina Faso','Burkina Faso'],['Burundi','Burundi'],['Cabo Verde','Yeşil Burun Adaları'],['Cambodia','Kamboçya'],
+  ['Cameroon','Kamerun'],['Canada','Kanada'],['Central African Republic','Orta Afrika Cumhuriyeti'],['Chad','Çad'],['Chile','Şili'],
+  ['China','Çin'],['Colombia','Kolombiya'],['Comoros','Komorlar'],['Congo (Republic of the)','Kongo Cumhuriyeti'],['Congo (DR)','Demokratik Kongo Cumhuriyeti'],
+  ['Costa Rica','Kosta Rika'],['Croatia','Hırvatistan'],['Cuba','Küba'],['Cyprus','Kıbrıs'],['Czechia','Çekya'],
+  ['Denmark','Danimarka'],['Djibouti','Cibuti'],['Dominica','Dominika'],['Dominican Republic','Dominik Cumhuriyeti'],['Ecuador','Ekvador'],
+  ['Egypt','Mısır'],['El Salvador','El Salvador'],['Equatorial Guinea','Ekvator Ginesi'],['Eritrea','Eritre'],['Estonia','Estonya'],
+  ['Eswatini','Esvatini'],['Ethiopia','Etiyopya'],['Fiji','Fiji'],['Finland','Finlandiya'],['France','Fransa'],
+  ['Gabon','Gabon'],['Gambia','Gambiya'],['Georgia','Gürcistan'],['Germany','Almanya'],['Ghana','Gana'],
+  ['Greece','Yunanistan'],['Grenada','Grenada'],['Guatemala','Guatemala'],['Guinea','Gine'],['Guinea-Bissau','Gine-Bissau'],
+  ['Guyana','Guyana'],['Haiti','Haiti'],['Honduras','Honduras'],['Hungary','Macaristan'],['Iceland','İzlanda'],
+  ['India','Hindistan'],['Indonesia','Endonezya'],['Iran','İran'],['Iraq','Irak'],['Ireland','İrlanda'],
+  ['Israel','İsrail'],['Italy','İtalya'],['Jamaica','Jamaika'],['Japan','Japonya'],['Jordan','Ürdün'],
+  ['Kazakhstan','Kazakistan'],['Kenya','Kenya'],['Kiribati','Kiribati'],['Kosovo','Kosova'],['Kuwait','Kuveyt'],
+  ['Kyrgyzstan','Kırgızistan'],['Laos','Laos'],['Latvia','Letonya'],['Lebanon','Lübnan'],['Lesotho','Lesotho'],
+  ['Liberia','Liberya'],['Libya','Libya'],['Liechtenstein','Liechtenstein'],['Lithuania','Litvanya'],['Luxembourg','Lüksemburg'],
+  ['Madagascar','Madagaskar'],['Malawi','Malavi'],['Malaysia','Malezya'],['Maldives','Maldivler'],['Mali','Mali'],
+  ['Malta','Malta'],['Marshall Islands','Marshall Adaları'],['Mauritania','Moritanya'],['Mauritius','Mauritius'],['Mexico','Meksika'],
+  ['Micronesia','Mikronezya'],['Moldova','Moldova'],['Monaco','Monako'],['Mongolia','Moğolistan'],['Montenegro','Karadağ'],
+  ['Morocco','Fas'],['Mozambique','Mozambik'],['Myanmar','Myanmar'],['Namibia','Namibya'],['Nauru','Nauru'],
+  ['Nepal','Nepal'],['Netherlands','Hollanda'],['New Zealand','Yeni Zelanda'],['Nicaragua','Nikaragua'],['Niger','Nijer'],
+  ['Nigeria','Nijerya'],['North Korea','Kuzey Kore'],['North Macedonia','Kuzey Makedonya'],['Norway','Norveç'],['Oman','Umman'],
+  ['Pakistan','Pakistan'],['Palau','Palau'],['Palestine','Filistin'],['Panama','Panama'],['Papua New Guinea','Papua Yeni Gine'],
+  ['Paraguay','Paraguay'],['Peru','Peru'],['Philippines','Filipinler'],['Poland','Polonya'],['Portugal','Portekiz'],
+  ['Qatar','Katar'],['Romania','Romanya'],['Russia','Rusya'],['Rwanda','Ruanda'],['Saint Kitts and Nevis','Saint Kitts ve Nevis'],
+  ['Saint Lucia','Saint Lucia'],['Saint Vincent and the Grenadines','Saint Vincent ve Grenadinler'],['Samoa','Samoa'],['San Marino','San Marino'],['Sao Tome and Principe','Sao Tome ve Principe'],
+  ['Saudi Arabia','Suudi Arabistan'],['Senegal','Senegal'],['Serbia','Sırbistan'],['Seychelles','Seyşeller'],['Sierra Leone','Sierra Leone'],
+  ['Singapore','Singapur'],['Slovakia','Slovakya'],['Slovenia','Slovenya'],['Solomon Islands','Solomon Adaları'],['Somalia','Somali'],
+  ['South Africa','Güney Afrika'],['South Korea','Güney Kore'],['South Sudan','Güney Sudan'],['Spain','İspanya'],['Sri Lanka','Sri Lanka'],
+  ['Sudan','Sudan'],['Suriname','Surinam'],['Sweden','İsveç'],['Switzerland','İsviçre'],['Syria','Suriye'],
+  ['Taiwan','Tayvan'],['Tajikistan','Tacikistan'],['Tanzania','Tanzanya'],['Thailand','Tayland'],['Timor-Leste','Doğu Timor'],
+  ['Togo','Togo'],['Tonga','Tonga'],['Trinidad and Tobago','Trinidad ve Tobago'],['Tunisia','Tunus'],['Turkey','Türkiye'],
+  ['Turkmenistan','Türkmenistan'],['Tuvalu','Tuvalu'],['Uganda','Uganda'],['Ukraine','Ukrayna'],['United Arab Emirates','Birleşik Arap Emirlikleri'],
+  ['United Kingdom','Birleşik Krallık'],['United States','Amerika Birleşik Devletleri'],['Uruguay','Uruguay'],['Uzbekistan','Özbekistan'],['Vanuatu','Vanuatu'],
+  ['Vatican City','Vatikan'],['Venezuela','Venezuela'],['Vietnam','Vietnam'],['Yemen','Yemen'],['Zambia','Zambiya'],['Zimbabwe','Zimbabve']
+];
+export function attachCountryAutocomplete(input) {
+  bindAutocomplete(input, {
+    minLen: 1, delay: 120,
+    search: (q) => {
+      const idx = getLang() === 'tr' ? 1 : 0;
+      const locale = getLang() === 'tr' ? 'tr' : 'en';
+      const ql = q.toLocaleLowerCase(locale);
+      return COUNTRIES.map(c => c[idx]).filter(name => name.toLocaleLowerCase(locale).includes(ql)).slice(0, 8).map(name => ({ label: name, value: name }));
+    }
+  });
+}
+
+// ---------- e-posta kayıtlı mı (canlı kontrol) ----------
+export async function isEmailRegistered(email) {
+  const { data, error } = await sb.rpc('email_registered', { e: email });
+  if (error) return null; // bilinmiyor - engelleme
+  return !!data;
 }
 
 export function friendlyError(err) {
