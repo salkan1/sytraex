@@ -89,6 +89,12 @@ p{color:var(--muted)}
 .searchbar{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:12px;align-items:end;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow)}
 @media(max-width:860px){.searchbar{grid-template-columns:1fr}}
 
+/* ---------- Konum otomatik tamamlama ---------- */
+.ac-list{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:60;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow);max-height:260px;overflow-y:auto;list-style:none;padding:6px;margin:0}
+.ac-list li{padding:9px 12px;border-radius:8px;cursor:pointer;font-size:.9rem;color:var(--text)}
+.ac-list li:hover,.ac-list li.on{background:var(--surface-3);color:var(--gold)}
+.ac-list.hidden{display:none}
+
 /* ---------- Forms ---------- */
 .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;text-align:left}
 .field>label,.label{font-size:.85rem;font-weight:600;color:var(--text)}
