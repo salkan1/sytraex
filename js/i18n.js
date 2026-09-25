@@ -53,6 +53,7 @@ export const dict = {
     err_email_taken: 'Bu e-posta ile zaten bir hesap var. Giriş yapmayı dene.', err_rate_limit: 'Çok fazla deneme yapıldı. Lütfen biraz sonra tekrar dene.',
     err_pw_short: 'Şifre en az 8 karakter olmalı.', err_pw_match: 'Şifreler eşleşmiyor.', err_terms: 'Devam etmek için şartları kabul etmelisin.',
     err_duplicate: 'Bu kayıt zaten mevcut.', err_network: 'Bağlantı hatası. İnternetini kontrol edip tekrar dene.', err_generic: 'Bir hata oluştu. Lütfen tekrar dene.',
+    err_message_cooldown: 'Bu kullanıcı isteğini reddetti. Yeniden istek gönderebilmek için bir süre beklemen gerekiyor.',
     // gönderi formu
     share_title: '✈️ Seyahat Deneyimini Paylaş', edit_title: '✏️ Deneyimi Düzenle', share_sub: 'Ne kadar ayrıntılı yazarsan topluluk için o kadar değerli olur.',
     f_title: 'Deneyim / Rota Başlığı', f_title_ph: 'Örn: Bodrum Kalesi, Bitez Sahili ve Tekne Turu', f_location: 'Nereye seyahat edildi?', f_location_ph: 'İlçe veya il adı (Örn: Bodrum, Fethiye)',
@@ -86,7 +87,7 @@ export const dict = {
     // herkese açık profil
     user_not_found: 'Kullanıcı bulunamadı.', user_no_posts: 'Bu gezgin henüz bir deneyim paylaşmadı.', msg_send_request: 'Mesaj isteği gönder', msg_request_desc: 'Karşı taraf kabul ederse mesajlaşabilirsiniz.',
     msg_intro_ph: 'Kendini kısaca tanıt (isteğe bağlı)…', msg_request_sent: 'İstek gönderildi.', msg_request_exists: 'Bu kullanıcıyla zaten bir istek var.', msg_login_to_send: 'Mesaj göndermek için giriş yap',
-    msg_open_chat: 'Sohbeti aç', msg_request_pending: 'İstek beklemede', msg_request_incoming: 'Sana istek gönderdi — profilinden yanıtla', msg_request_rejected: 'İstek reddedildi'
+    msg_open_chat: 'Sohbeti aç', msg_request_pending: 'İstek beklemede', msg_request_incoming: 'Sana istek gönderdi — profilinden yanıtla', msg_request_rejected: 'İstek reddedildi. Bir süre sonra tekrar deneyebilirsin.'
   },
 
   en: {
@@ -136,6 +137,7 @@ export const dict = {
     err_email_taken: 'An account with this email already exists. Try logging in.', err_rate_limit: 'Too many attempts. Please try again shortly.',
     err_pw_short: 'Password must be at least 8 characters.', err_pw_match: 'Passwords do not match.', err_terms: 'You must accept the terms to continue.',
     err_duplicate: 'This record already exists.', err_network: 'Connection error. Check your internet and try again.', err_generic: 'Something went wrong. Please try again.',
+    err_message_cooldown: 'This user declined your request. You need to wait a while before you can send another one.',
     share_title: '✈️ Share Your Travel Experience', edit_title: '✏️ Edit Experience', share_sub: 'The more detail you give, the more valuable it is for the community.',
     f_title: 'Experience / route title', f_title_ph: 'e.g. Bodrum Castle, Bitez Beach and boat tour', f_location: 'Where did you travel?', f_location_ph: 'District or city (e.g. Bodrum, Fethiye)',
     f_media: '🖼️ Media', f_photos: 'Photos (up to 10)', f_photos_pick: '📷 Choose photos from computer / phone', f_photos_hint: 'JPG, PNG or WebP · auto-resized · first photo is the cover',
@@ -165,6 +167,6 @@ export const dict = {
     msg_select: 'Select a chat on the left to start messaging.', msg_write: 'Write a message…', accept: 'Accept', reject: 'Decline',
     user_not_found: 'User not found.', user_no_posts: 'This traveller has not shared any experience yet.', msg_send_request: 'Send message request', msg_request_desc: 'You can chat if the other person accepts.',
     msg_intro_ph: 'Briefly introduce yourself (optional)…', msg_request_sent: 'Request sent.', msg_request_exists: 'A request with this user already exists.', msg_login_to_send: 'Log in to send a message',
-    msg_open_chat: 'Open chat', msg_request_pending: 'Request pending', msg_request_incoming: 'They sent you a request — answer it in your profile', msg_request_rejected: 'Request declined'
+    msg_open_chat: 'Open chat', msg_request_pending: 'Request pending', msg_request_incoming: 'They sent you a request — answer it in your profile', msg_request_rejected: 'Request declined. You can try again after some time.'
   }
 };
