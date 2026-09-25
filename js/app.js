@@ -233,6 +233,77 @@ export async function removeImages(bucket, urls) {
   if (paths.length) await sb.storage.from(bucket).remove(paths);
 }
 
+// ---------- şehir / konum otomatik tamamlama (OpenStreetMap Nominatim, ücretsiz) ----------
+export function attachCityAutocomplete(input, { onSelect, fillMode = 'full' } = {}) {
+  if (!input || input.dataset.acBound) return;
+  input.dataset.acBound = '1';
+  input.setAttribute('autocomplete', 'off');
+  const wrap = input.parentElement;
+  if (wrap && getComputedStyle(wrap).position === 'static') wrap.style.position = 'relative';
+  const list = document.createElement('ul');
+  list.className = 'ac-list hidden';
+  list.setAttribute('role', 'listbox');
+  (wrap || input.parentNode).appendChild(list);
+
+  let items = [], active = -1, timer = null, ctrl = null, myId = 0;
+
+  function close() { list.classList.add('hidden'); list.innerHTML = ''; items = []; active = -1; }
+  function render() {
+    list.innerHTML = items.map((it, i) => `<li role="option" data-i="${i}" class="${i === active ? 'on' : ''}">${esc(it.label)}</li>`).join('');
+    list.classList.toggle('hidden', !items.length);
+  }
+  function pick(i) {
+    const it = items[i]; if (!it) return;
+    input.value = fillMode === 'short' ? (it.short || it.label) : it.label;
+    close();
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    if (onSelect) onSelect(it);
+  }
+  function formatItem(r) {
+    const a = r.address || {};
+    const city = a.city || a.town || a.village || a.municipality || a.county || r.name || '';
+    const region = a.state || a.province || '';
+    const country = a.country || '';
+    const label = [city, region && region !== city ? region : '', country].filter(Boolean).join(', ');
+    return { label: label || r.display_name, short: city || r.display_name.split(',')[0].trim(), lat: r.lat, lon: r.lon };
+  }
+  async function search(q) {
+    const id = ++myId;
+    if (ctrl) ctrl.abort();
+    ctrl = new AbortController();
+    try {
+      const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&featureType=settlement&accept-language=${getLang()}&q=${encodeURIComponent(q)}`;
+      const res = await fetch(url, { signal: ctrl.signal, headers: { Accept: 'application/json' } });
+      if (!res.ok || id !== myId) return;
+      const data = await res.json();
+      if (id !== myId) return;
+      const seen = new Set();
+      items = data.map(formatItem).filter(it => { const k = it.label.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; });
+      active = -1;
+      render();
+    } catch { /* iptal edildi ya da ağ hatası - sessiz geç */ }
+  }
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    clearTimeout(timer);
+    if (q.length < 2) { close(); return; }
+    timer = setTimeout(() => search(q), 380);
+  });
+  input.addEventListener('keydown', (e) => {
+    if (list.classList.contains('hidden') || !items.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); active = (active + 1) % items.length; render(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); active = (active - 1 + items.length) % items.length; render(); }
+    else if (e.key === 'Enter') { if (active > -1) { e.preventDefault(); pick(active); } }
+    else if (e.key === 'Escape') { close(); }
+  });
+  list.addEventListener('mousedown', (e) => {
+    const li = e.target.closest('li'); if (!li) return;
+    e.preventDefault(); pick(+li.dataset.i);
+  });
+  document.addEventListener('click', (e) => { if (e.target !== input && !list.contains(e.target)) close(); });
+  input.addEventListener('blur', () => setTimeout(close, 150));
+}
+
 export function friendlyError(err) {
   const m = (err?.message || String(err || '')).toLowerCase();
   if (m.includes('invalid login')) return t('err_invalid_login');
