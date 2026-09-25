@@ -378,6 +378,7 @@ export function friendlyError(err) {
   if (m.includes('invalid login')) return t('err_invalid_login');
   if (m.includes('email not confirmed')) return t('err_email_unconfirmed');
   if (m.includes('already registered') || m.includes('already been registered')) return t('err_email_taken');
+  if (m.includes('message_request_cooldown')) return t('err_message_cooldown');
   if (m.includes('rate limit') || m.includes('too many')) return t('err_rate_limit');
   if (m.includes('password') && m.includes('characters')) return t('err_pw_short');
   if (m.includes('duplicate') || m.includes('unique')) return t('err_duplicate');
