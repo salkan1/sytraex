@@ -24,7 +24,7 @@ async function load() {
   prof = data;
   document.title = `${prof.full_name || prof.username} | Sytraex`;
   if (state.user && state.user.id !== prof.id) {
-    const { data: r } = await sb.from('message_requests').select('id,status,sender_id')
+    const { data: r } = await sb.from('message_requests').select('id,status,sender_id,created_at')
       .or(`and(sender_id.eq.${state.user.id},receiver_id.eq.${prof.id}),and(sender_id.eq.${prof.id},receiver_id.eq.${state.user.id})`).order('created_at',{ascending:false}).limit(1).maybeSingle();
     reqRow = r;
   }
@@ -39,7 +39,12 @@ function actionHTML() {
   if (!reqRow) return `<button class="btn btn-primary" id="reqBtn">💬 ${esc(t('msg_send_request'))}</button>`;
   if (reqRow.status === 'accepted') return `<a class="btn btn-primary" href="profile.html?tab=messages">💬 ${esc(t('msg_open_chat'))}</a>`;
   if (reqRow.status === 'pending') return `<button class="btn btn-soft" disabled>⏳ ${esc(reqRow.sender_id === state.user.id ? t('msg_request_pending') : t('msg_request_incoming'))}</button>`;
-  return `<button class="btn btn-soft" disabled>${esc(t('msg_request_rejected'))}</button>`;
+  // reddedilen istek: yalnızca BEN gönderip reddedildiysem ve 30 gün dolmadıysa engelli kalır
+  const COOLDOWN_MS = 30 * 24 * 60 * 60 * 1000;
+  const iWasSender = reqRow.sender_id === state.user.id;
+  const stillCoolingDown = iWasSender && (Date.now() - new Date(reqRow.created_at).getTime()) < COOLDOWN_MS;
+  if (stillCoolingDown) return `<button class="btn btn-soft" disabled>${esc(t('msg_request_rejected'))}</button>`;
+  return `<button class="btn btn-primary" id="reqBtn">💬 ${esc(t('msg_send_request'))}</button>`;
 }
 function render() {
   const name = prof.full_name || prof.username;
