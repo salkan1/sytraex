@@ -45,7 +45,7 @@
 </main>
 <div id="site-footer"></div>
 <script type="module">
-import { sb, state, initPage, $, $$, t, qs, esc, applyI18n, setBusy, showAlert, hideAlert, friendlyError, toast, DURATIONS, MODES, durLabel, modeLabel, compressImage, uploadImage, removeImages, youtubeEmbed, safeImg } from './js/app.js';
+import { sb, state, initPage, $, $$, t, qs, esc, applyI18n, setBusy, showAlert, hideAlert, friendlyError, toast, DURATIONS, MODES, durLabel, modeLabel, compressImage, uploadImage, removeImages, youtubeEmbed, safeImg, attachCityAutocomplete } from './js/app.js';
 
 const MAX = 10;
 const editId = qs.get('edit');
@@ -62,6 +62,7 @@ function fillSelects() {
   if (dv) d.value = dv; if (mv) m.value = mv;
 }
 fillSelects();
+attachCityAutocomplete($('#location'));
 
 function renderPreviews() {
   $('#previews').innerHTML = items.map((it, i) => `<div class="preview"><img src="${esc(it.url || it.preview)}" alt="">

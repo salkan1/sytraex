@@ -54,7 +54,7 @@
 </main>
 <div id="site-footer"></div>
 <script type="module">
-import { sb, initPage, state, $, t, applyI18n, DURATIONS, MODES, durLabel, modeLabel, postCardHTML, skeletons, esc } from './js/app.js';
+import { sb, initPage, state, $, t, applyI18n, DURATIONS, MODES, durLabel, modeLabel, postCardHTML, skeletons, esc, attachCityAutocomplete } from './js/app.js';
 
 function fillFilters(){
   const d=$('#dur'), m=$('#mode'), dv=d.value, mv=m.value;
@@ -78,6 +78,7 @@ $('#searchForm').addEventListener('submit', e=>{ e.preventDefault();
   location.href='search-results.html?'+p; });
 await initPage();
 if(state.user){ const c=$('#ctaBtn'); c.href='share-experience.html'; c.textContent=t('hero_btn_share'); c.removeAttribute('data-i18n'); }
+attachCityAutocomplete($('#q'), { fillMode: 'short' });
 fillFilters(); applyI18n(); load();
 window.addEventListener('langchange', ()=>{ fillFilters(); load(); if(state.user){ const c=$('#ctaBtn'); c.textContent=t('hero_btn_share'); } });
 </script>

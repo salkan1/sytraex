@@ -19,7 +19,7 @@
 </main>
 <div id="site-footer"></div>
 <script type="module">
-import { sb, initPage, $, t, qs, applyI18n, DURATIONS, MODES, durLabel, modeLabel, postCardHTML, skeletons, esc } from './js/app.js';
+import { sb, initPage, $, t, qs, applyI18n, DURATIONS, MODES, durLabel, modeLabel, postCardHTML, skeletons, esc, attachCityAutocomplete } from './js/app.js';
 
 const PAGE = 12;
 let page = 0, total = 0;
@@ -64,6 +64,7 @@ $('#moreBtn').onclick = () => { page++; run(false); };
 
 await initPage();
 $('#q').value = qs.get('q') || '';
+attachCityAutocomplete($('#q'), { fillMode: 'short' });
 fillFilters(); applyI18n(); run();
 window.addEventListener('langchange', () => { fillFilters(); run(); });
 </script>
