@@ -98,10 +98,12 @@
 </main>
 <div id="site-footer"></div>
 <script type="module">
-import { sb, state, initPage, $, $$, t, qs, esc, applyI18n, setBusy, showAlert, hideAlert, friendlyError, toast, modal, signOut, avatarSrc, safeImg, fmtDate, fmtTime, compressImage, uploadImage, removeImages, postCardHTML, modeLabel, durLabel } from './js/app.js';
+import { sb, state, initPage, $, $$, t, qs, esc, applyI18n, setBusy, showAlert, hideAlert, friendlyError, toast, modal, signOut, avatarSrc, safeImg, fmtDate, fmtTime, compressImage, uploadImage, removeImages, postCardHTML, modeLabel, durLabel, attachCityAutocomplete, attachCountryAutocomplete } from './js/app.js';
 
 await initPage({ requireLogin: true });
 if (!state.user) await new Promise(() => {});
+attachCityAutocomplete($('#fCity'), { fillMode: 'short' });
+attachCountryAutocomplete($('#fCountry'));
 const uid = state.user.id;
 let profile = state.profile;
 let activeTab = 'info';

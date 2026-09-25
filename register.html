@@ -27,7 +27,7 @@
           <div class="field"><label for="fullName" data-i18n="label_fullname"></label><input id="fullName" type="text" maxlength="80" autocomplete="name" required></div>
           <div class="field"><label for="username" data-i18n="label_username"></label><input id="username" type="text" maxlength="24" autocomplete="username" autocapitalize="none" spellcheck="false" required><span class="hint" id="unameHint" data-i18n="username_rule"></span></div>
         </div>
-        <div class="field"><label for="email" data-i18n="label_email"></label><input id="email" type="email" autocomplete="email" required placeholder="ornek@gmail.com"></div>
+        <div class="field"><label for="email" data-i18n="label_email"></label><input id="email" type="email" autocomplete="email" required placeholder="ornek@gmail.com"><span class="hint" id="emailHint"></span></div>
         <div class="row">
           <div class="field"><label for="password" data-i18n="label_password"></label><input id="password" type="password" autocomplete="new-password" minlength="8" required placeholder="••••••••"><span class="hint" data-i18n="password_rule"></span></div>
           <div class="field"><label for="password2" data-i18n="label_password2"></label><input id="password2" type="password" autocomplete="new-password" required placeholder="••••••••"></div>
@@ -45,7 +45,7 @@
 </main>
 <div id="site-footer"></div>
 <script type="module">
-import { sb, initPage, state, $, t, nextTarget, setBusy, showAlert, hideAlert, friendlyError, applyI18n } from './js/app.js';
+import { sb, initPage, state, $, t, nextTarget, setBusy, showAlert, hideAlert, friendlyError, applyI18n, attachCityAutocomplete, attachCountryAutocomplete, isEmailRegistered } from './js/app.js';
 
 await initPage();
 if (state.user) location.replace(nextTarget());
@@ -75,12 +75,35 @@ uname.addEventListener('input', () => {
   }, 350);
 });
 
+// e-posta: canlı kontrol (zaten kayıtlı mı)
+const emailEl = $('#email'), emailHint = $('#emailHint');
+let emailTimer, emailKnownTaken = false;
+const EMAIL_RULE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+emailEl.addEventListener('input', () => {
+  clearTimeout(emailTimer); emailKnownTaken = false; emailHint.className = 'hint'; emailHint.textContent = '';
+  const v = emailEl.value.trim();
+  if (!EMAIL_RULE.test(v)) return;
+  emailHint.textContent = '…';
+  emailTimer = setTimeout(async () => {
+    const taken = await isEmailRegistered(v);
+    if (taken === null) { emailHint.textContent = ''; return; }
+    emailKnownTaken = taken;
+    emailHint.className = taken ? 'field-error' : 'field-ok';
+    emailHint.textContent = taken ? t('err_email_taken') : '';
+  }, 400);
+});
+
+// şehir / ülke otomatik tamamlama
+attachCityAutocomplete($('#city'), { fillMode: 'short' });
+attachCountryAutocomplete($('#country'));
+
 $('#regForm').addEventListener('submit', async (e) => {
   e.preventDefault(); hideAlert(msg);
   const v = id => $('#' + id).value.trim();
   if (!v('fullName') || !v('username') || !v('email') || !$('#password').value) return showAlert(msg, t('err_fill_all'));
   if (!RULE.test(v('username'))) return showAlert(msg, t('username_rule'));
   if (!unameOk) return showAlert(msg, t('username_taken'));
+  if (emailKnownTaken) return showAlert(msg, t('err_email_taken'));
   if ($('#password').value.length < 8) return showAlert(msg, t('err_pw_short'));
   if ($('#password').value !== $('#password2').value) return showAlert(msg, t('err_pw_match'));
   if (!$('#terms').checked) return showAlert(msg, t('err_terms'));
